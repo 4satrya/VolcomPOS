@@ -1,0 +1,785 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33EBA4FD-7AB6-4582-9CD5-5706ACBB6CCB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>VolcomPointOfSale.My.MyApplication</StartupObject>
+    <RootNamespace>VolcomPointOfSale</RootNamespace>
+    <AssemblyName>VolcomPointOfSale</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>VolcomPointOfSale.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>VolcomPointOfSale.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.BonusSkins.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Charts.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v15.1.UI, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPivotGrid.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v15.1.Extensions, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraScheduler.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Software\MySqlBackup.NET 2.0.9.5\Net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF5, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.Entity.EF5.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Fabric.Plugin, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Fabric.Plugin.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>Z:\data\MySqlBackup.NET 2.0.9.5\Net45\MySqlBackup.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassAdj.vb" />
+    <Compile Include="ClassComp.vb" />
+    <Compile Include="ClassCompany.vb" />
+    <Compile Include="ClassItem.vb" />
+    <Compile Include="ClassPOS.vb" />
+    <Compile Include="ClassRawPrint.vb" />
+    <Compile Include="ClassRec.vb" />
+    <Compile Include="ClassRet.vb" />
+    <Compile Include="ClassSO.vb" />
+    <Compile Include="ClassSync.vb" />
+    <Compile Include="ClassTrf.vb" />
+    <Compile Include="ClassUser.vb" />
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAccount.Designer.vb">
+      <DependentUpon>FormAccount.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAccount.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdj.Designer.vb">
+      <DependentUpon>FormAdj.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdj.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdjIn.Designer.vb">
+      <DependentUpon>FormAdjIn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdjIn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdjOut.Designer.vb">
+      <DependentUpon>FormAdjOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdjOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdjSingle.Designer.vb">
+      <DependentUpon>FormAdjSingle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormAdjSingle.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBlack.Designer.vb">
+      <DependentUpon>FormBlack.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormBlack.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDashboard.Designer.vb">
+      <DependentUpon>FormDashboard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDashboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDatabase.designer.vb">
+      <DependentUpon>FormDatabase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDatabase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDept.Designer.vb">
+      <DependentUpon>FormDept.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDept.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEmp.Designer.vb">
+      <DependentUpon>FormEmp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormEmp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFront.Designer.vb">
+      <DependentUpon>FormFront.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormFront.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHome.Designer.vb">
+      <DependentUpon>FormHome.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormHome.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImportExcel.designer.vb">
+      <DependentUpon>FormImportExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormImportExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormItem.Designer.vb">
+      <DependentUpon>FormItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormItemDet.Designer.vb">
+      <DependentUpon>FormItemDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormItemDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.designer.vb">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoginInv.Designer.vb">
+      <DependentUpon>FormLoginInv.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoginInv.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMasterCompany.designer.vb">
+      <DependentUpon>FormMasterCompany.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMasterCompany.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMasterCompanyContact.designer.vb">
+      <DependentUpon>FormMasterCompanyContact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMasterCompanyContact.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMasterCompanySingle.designer.vb">
+      <DependentUpon>FormMasterCompanySingle.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormMasterCompanySingle.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPopUpContact.designer.vb">
+      <DependentUpon>FormPopUpContact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPopUpContact.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOS.Designer.vb">
+      <DependentUpon>FormPOS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSCopy.Designer.vb">
+      <DependentUpon>FormPOSCopy.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSCopy.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSDrawerInfo.Designer.vb">
+      <DependentUpon>FormPOSDrawerInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSDrawerInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSItem.Designer.vb">
+      <DependentUpon>FormPOSItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSRefund.Designer.vb">
+      <DependentUpon>FormPOSRefund.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSRefund.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSSales.Designer.vb">
+      <DependentUpon>FormPOSSales.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSSales.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPOSShift.Designer.vb">
+      <DependentUpon>FormPOSShift.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPOSShift.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrint.Designer.vb">
+      <DependentUpon>FormPrint.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormPrint.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRec.Designer.vb">
+      <DependentUpon>FormRec.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRec.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRecDet.Designer.vb">
+      <DependentUpon>FormRecDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRecDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportCopyReceipt.Designer.vb">
+      <DependentUpon>FormReportCopyReceipt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportCopyReceipt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportDaily.Designer.vb">
+      <DependentUpon>FormReportDaily.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportDaily.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportTransDetail.Designer.vb">
+      <DependentUpon>FormReportTransDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportTransDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportTransSum.Designer.vb">
+      <DependentUpon>FormReportTransSum.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportTransSum.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRet.Designer.vb">
+      <DependentUpon>FormRet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRetDet.Designer.vb">
+      <DependentUpon>FormRetDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRetDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSO.Designer.vb">
+      <DependentUpon>FormSO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormSO.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSODet.Designer.vb">
+      <DependentUpon>FormSODet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormSODet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStart.Designer.vb">
+      <DependentUpon>FormStart.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormStart.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStock.Designer.vb">
+      <DependentUpon>FormStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTemp.Designer.vb">
+      <DependentUpon>FormTemp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormTemp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTrf.Designer.vb">
+      <DependentUpon>FormTrf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormTrf.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTrfDet.Designer.vb">
+      <DependentUpon>FormTrfDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormTrfDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUser.Designer.vb">
+      <DependentUpon>FormUser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUserDet.Designer.vb">
+      <DependentUpon>FormUserDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormUserDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUserRole.Designer.vb">
+      <DependentUpon>FormUserRole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormUserRole.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Library\Common.vb" />
+    <Compile Include="Library\Database.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ReportAdjIn.Designer.vb">
+      <DependentUpon>ReportAdjIn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAdjIn.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportAdjOut.Designer.vb">
+      <DependentUpon>ReportAdjOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportAdjOut.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportDaily.Designer.vb">
+      <DependentUpon>ReportDaily.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDaily.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportFGRepair.designer.vb">
+      <DependentUpon>ReportFGRepair.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportFGRepair.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportFGRepairDet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportFGRepairDet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPOSCopy.Designer.vb">
+      <DependentUpon>ReportPOSCopy.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPOSCopy.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportPOSDrawerInfo.Designer.vb">
+      <DependentUpon>ReportPOSDrawerInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportPOSDrawerInfo.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportRec.Designer.vb">
+      <DependentUpon>ReportRec.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRec.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportRet.Designer.vb">
+      <DependentUpon>ReportRet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRet.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportSO.Designer.vb">
+      <DependentUpon>ReportSO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportSO.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportStock.Designer.vb">
+      <DependentUpon>ReportStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportStock.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportStockCard.Designer.vb">
+      <DependentUpon>ReportStockCard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportStockCard.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportTransDetail.Designer.vb">
+      <DependentUpon>ReportTransDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTransDetail.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportTransSum.Designer.vb">
+      <DependentUpon>ReportTransSum.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTransSum.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportTrf.Designer.vb">
+      <DependentUpon>ReportTrf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportTrf.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SplashScreen1.Designer.vb">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreen1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitForm1.Designer.vb">
+      <DependentUpon>WaitForm1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WaitForm1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitSyncItem.Designer.vb">
+      <DependentUpon>WaitSyncItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WaitSyncItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormAccount.resx">
+      <DependentUpon>FormAccount.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdj.resx">
+      <DependentUpon>FormAdj.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdjIn.resx">
+      <DependentUpon>FormAdjIn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdjOut.resx">
+      <DependentUpon>FormAdjOut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAdjSingle.resx">
+      <DependentUpon>FormAdjSingle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBlack.resx">
+      <DependentUpon>FormBlack.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDashboard.resx">
+      <DependentUpon>FormDashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDatabase.resx">
+      <DependentUpon>FormDatabase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDept.resx">
+      <DependentUpon>FormDept.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEmp.resx">
+      <DependentUpon>FormEmp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFront.resx">
+      <DependentUpon>FormFront.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHome.resx">
+      <DependentUpon>FormHome.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImportExcel.resx">
+      <DependentUpon>FormImportExcel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormItem.resx">
+      <DependentUpon>FormItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormItemDet.resx">
+      <DependentUpon>FormItemDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoginInv.resx">
+      <DependentUpon>FormLoginInv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMasterCompany.resx">
+      <DependentUpon>FormMasterCompany.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMasterCompanyContact.resx">
+      <DependentUpon>FormMasterCompanyContact.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMasterCompanySingle.resx">
+      <DependentUpon>FormMasterCompanySingle.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPopUpContact.resx">
+      <DependentUpon>FormPopUpContact.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOS.resx">
+      <DependentUpon>FormPOS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSCopy.resx">
+      <DependentUpon>FormPOSCopy.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSDrawerInfo.resx">
+      <DependentUpon>FormPOSDrawerInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSItem.resx">
+      <DependentUpon>FormPOSItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSRefund.resx">
+      <DependentUpon>FormPOSRefund.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSSales.resx">
+      <DependentUpon>FormPOSSales.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPOSShift.resx">
+      <DependentUpon>FormPOSShift.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPrint.resx">
+      <DependentUpon>FormPrint.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRec.resx">
+      <DependentUpon>FormRec.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRecDet.resx">
+      <DependentUpon>FormRecDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportCopyReceipt.resx">
+      <DependentUpon>FormReportCopyReceipt.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportDaily.resx">
+      <DependentUpon>FormReportDaily.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportTransDetail.resx">
+      <DependentUpon>FormReportTransDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportTransSum.resx">
+      <DependentUpon>FormReportTransSum.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRet.resx">
+      <DependentUpon>FormRet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRetDet.resx">
+      <DependentUpon>FormRetDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSO.resx">
+      <DependentUpon>FormSO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSODet.resx">
+      <DependentUpon>FormSODet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStart.resx">
+      <DependentUpon>FormStart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStock.resx">
+      <DependentUpon>FormStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTemp.resx">
+      <DependentUpon>FormTemp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTrf.resx">
+      <DependentUpon>FormTrf.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTrfDet.resx">
+      <DependentUpon>FormTrfDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUser.resx">
+      <DependentUpon>FormUser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUserDet.resx">
+      <DependentUpon>FormUserDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUserRole.resx">
+      <DependentUpon>FormUserRole.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportAdjIn.resx">
+      <DependentUpon>ReportAdjIn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportAdjOut.resx">
+      <DependentUpon>ReportAdjOut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportDaily.resx">
+      <DependentUpon>ReportDaily.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportFGRepair.resx">
+      <DependentUpon>ReportFGRepair.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportFGRepairDet.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReportFGRepairDet.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportPOSCopy.resx">
+      <DependentUpon>ReportPOSCopy.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportRec.resx">
+      <DependentUpon>ReportRec.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportRet.resx">
+      <DependentUpon>ReportRet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportSO.resx">
+      <DependentUpon>ReportSO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportStock.resx">
+      <DependentUpon>ReportStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportStockCard.resx">
+      <DependentUpon>ReportStockCard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTransDetail.resx">
+      <DependentUpon>ReportTransDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTransSum.resx">
+      <DependentUpon>ReportTransSum.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportTrf.resx">
+      <DependentUpon>ReportTrf.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.resx">
+      <DependentUpon>WaitForm1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitSyncItem.resx">
+      <DependentUpon>WaitSyncItem.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blurred_purple-wallpaper-1366x768.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minimalist_green_iii-wallpaper-1366x768.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="point-of-sale-icon-10651-16x16.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
