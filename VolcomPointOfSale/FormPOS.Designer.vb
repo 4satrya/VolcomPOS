@@ -390,7 +390,7 @@ Partial Class FormPOS
         Me.LabelControl19.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl19.Location = New System.Drawing.Point(222, 11)
         Me.LabelControl19.Name = "LabelControl19"
-        Me.LabelControl19.Size = New System.Drawing.Size(18, 13)
+        Me.LabelControl19.Size = New System.Drawing.Size(17, 13)
         Me.LabelControl19.TabIndex = 10
         Me.LabelControl19.Text = "Qty"
         '

@@ -553,7 +553,12 @@
         If qty = "-" Then
             LabelInfoLeft.Text = name.ToString
         Else
-            LabelInfoLeft.Text = name.Substring(0, 13) + " @" + qty.ToString
+            If name.Length < 13 Then
+                name = name
+            Else
+                name = name.Substring(0, 13)
+            End If
+            LabelInfoLeft.Text = name + " @" + qty.ToString
         End If
         LabelControlPrice.Text = price.ToString
 
