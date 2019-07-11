@@ -8,8 +8,10 @@ Public Class ClassSync
     Dim username_main As String = ""
     Dim pass_main As String = ""
     Dim db_main As String = ""
+    Dim db_sync_main As String = ""
     Public splash As String = "-1"
     Dim is_reset_config As String = "-1"
+    Dim dtl As DataTable
 
     Public Sub New()
         Dim query As String = "SELECT * FROM tb_opt"
@@ -18,7 +20,12 @@ Public Class ClassSync
         username_main = data.Rows(0)("username_main").ToString
         pass_main = data.Rows(0)("pass_main").ToString
         db_main = data.Rows(0)("db_main").ToString
+        db_sync_main = data.Rows(0)("db_sync_main").ToString
         is_reset_config = data.Rows(0)("is_reset_config").ToString
+
+        'get sync list
+        Dim qs As String = "SELECT * FROM tb_sync_data d ORDER BY d.`index` ASC "
+        dtl = execute_query(qs, -1, True, "", "", "", "")
     End Sub
 
     Public Sub syncCodeDet()
@@ -433,36 +440,49 @@ Public Class ClassSync
         execute_non_query(qlast, True, "", "", "", "")
     End Sub
 
+    Sub syncDS()
+        Dim err As String = ""
+
+    End Sub
+
     Public Sub startofSync()
-        For i As Integer = 0 To sync_list.Count - 1
-            If sync_list(i) = "1" Then 'code det
+        For i As Integer = 0 To dtl.Rows.Count - 1
+            Dim ix As String = dtl.Rows(i)("id_sync_data").ToString
+            If ix = "1" Then 'code det
                 If splash = "-1" Then
                     FormFront.SplashScreenManager1.SetWaitFormDescription("Sync master data")
                 ElseIf splash = "1" Then
                     FormUser.SplashScreenManager1.SetWaitFormDescription("Sync master data")
                 End If
                 syncCodeDet()
-            ElseIf sync_list(i) = "2" Then 'comp
+            ElseIf ix = "2" Then 'delivery slip
                 If splash = "-1" Then
-                    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync company account")
+                    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync delivery slip")
                 ElseIf splash = "1" Then
-                    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync company account")
+                    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync delivery slip")
                 End If
-                syncComp()
-            ElseIf sync_list(i) = "3" Then 'item
-                If splash = "-1" Then
-                    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync products")
-                ElseIf splash = "1" Then
-                    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync products")
-                End If
-                syncItem()
-            ElseIf sync_list(i) = "4" Then 'emp
-                If splash = "-1" Then
-                    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync employee")
-                ElseIf splash = "1" Then
-                    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync employee")
-                End If
-                syncEmp()
+                syncDS()
+
+                'If splash = "-1" Then
+                '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync company account")
+                'ElseIf splash = "1" Then
+                '    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync company account")
+                'End If
+                'syncComp()
+            ElseIf ix = "3" Then 'item
+                'If splash = "-1" Then
+                '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync products")
+                'ElseIf splash = "1" Then
+                '    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync products")
+                'End If
+                'syncItem()
+            ElseIf ix = "4" Then 'emp
+                'If splash = "-1" Then
+                '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync employee")
+                'ElseIf splash = "1" Then
+                '    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync employee")
+                'End If
+                'syncEmp()
             End If
         Next
     End Sub
@@ -485,8 +505,10 @@ Public Class ClassSync
 
         'dictionary
         Dim dic As New Dictionary(Of String, String)()
-        For i As Integer = 0 To sync_list.Count - 1
-            If sync_list(i) = "1" Then 'code det
+        For i As Integer = 0 To dtl.Rows.Count - 1
+            Dim ix As String = dtl.Rows(i)("id_sync_data").ToString
+
+            If ix = "1" Then 'code det
                 Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=1 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
                 Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
                 If dql.Rows.Count > 0 Then
@@ -495,7 +517,7 @@ Public Class ClassSync
                     last_upd = "1945-08-17 00:00:10"
                 End If
                 dic.Add("tb_m_code_detail", "SELECT cd.* FROM tb_m_code_detail cd JOIN tb_opt o WHERE (cd.id_code= 14 OR cd.id_code=30 OR id_code=33) AND cd.last_updated>'" + last_upd + "';")
-            ElseIf sync_list(i) = "2" Then 'acc
+            ElseIf ix = "2" Then 'delivery slip
                 Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=2 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
                 Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
                 If dql.Rows.Count > 0 Then
@@ -503,27 +525,67 @@ Public Class ClassSync
                 Else
                     last_upd = "1945-08-17 00:00:10"
                 End If
-                dic.Add("tb_m_comp", "SELECT * FROM tb_m_comp comp WHERE comp.last_updated>'" + last_upd + "';")
-            ElseIf sync_list(i) = "3" Then 'item
-                Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
-                Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
-                If dql.Rows.Count > 0 Then
-                    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
-                Else
-                    last_upd = "1945-08-17 00:00:10"
-                End If
-                execute_non_query("CALL set_product_sync('" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
-                dic.Add("tb_product_sync", "SELECT * FROM tb_product_sync;")
-            ElseIf sync_list(i) = "4" Then 'item
-                Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=4 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
-                Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
-                If dql.Rows.Count > 0 Then
-                    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
-                Else
-                    last_upd = "1945-08-17 00:00:10"
-                End If
-                Dim id_outlet As String = execute_query("SELECT id_outlet FROM tb_opt", 0, True, "", "", "", "")
-                dic.Add("tb_m_employee", "SELECT * FROM tb_m_employee emp WHERE id_departement=" + id_outlet + " AND emp.last_updated>'" + last_upd + "';")
+
+                'get account origin normal & sale
+                Dim qa As String = "SELECT o.acc_normal_origin, o.acc_sale_origin FROM tb_opt o "
+                Dim da As DataTable = execute_query(qa, -1, True, "", "", "", "")
+                Dim acc_normal As String = da.Rows(0)("acc_normal_origin").ToString
+                Dim acc_sale As String = da.Rows(0)("acc_sale_origin").ToString
+
+                'main delivery
+                dic.Add("tb_pl_sales_order_del", "SELECT * 
+                FROM tb_pl_sales_order_del d
+                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
+                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
+                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
+                AND d.last_update>'" + last_upd + "';")
+
+                'detail delivery
+                dic.Add("tb_pl_sales_order_del", "SELECT dd.*
+                FROM tb_pl_sales_order_del d
+                INNER JOIN tb_pl_sales_order_del_det dd ON dd.id_pl_sales_order_del = d.id_pl_sales_order_del
+                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
+                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
+                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
+                AND d.last_update>'" + last_upd + "';")
+
+                'unik delivery
+                dic.Add("tb_pl_sales_order_del", "SELECT ddc.* 
+                FROM tb_pl_sales_order_del d
+                INNER JOIN tb_pl_sales_order_del_det dd ON dd.id_pl_sales_order_del = d.id_pl_sales_order_del
+                INNER JOIN tb_pl_sales_order_del_det_counting ddc ON ddc.id_pl_sales_order_del_det = dd.id_pl_sales_order_del_det
+                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
+                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
+                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
+                AND d.last_update>'" + last_upd + "';")
+
+                'combine delivery
+                dic.Add("tb_pl_sales_order_del", "SELECT * 
+                FROM tb_pl_sales_order_del_combine d
+                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
+                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
+                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
+                AND d.last_update>'" + last_upd + "';")
+            ElseIf ix = "3" Then 'item
+                'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
+                'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
+                'If dql.Rows.Count > 0 Then
+                '    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
+                'Else
+                '    last_upd = "1945-08-17 00:00:10"
+                'End If
+                'execute_non_query("CALL set_product_sync('" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
+                'dic.Add("tb_product_sync", "SELECT * FROM tb_product_sync;")
+            ElseIf ix = "4" Then 'item
+                'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=4 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
+                'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
+                'If dql.Rows.Count > 0 Then
+                '    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
+                'Else
+                '    last_upd = "1945-08-17 00:00:10"
+                'End If
+                'Dim id_outlet As String = execute_query("SELECT id_outlet FROM tb_opt", 0, True, "", "", "", "")
+                'dic.Add("tb_m_employee", "SELECT * FROM tb_m_employee emp WHERE id_departement=" + id_outlet + " AND emp.last_updated>'" + last_upd + "';")
             End If
         Next
 
@@ -551,7 +613,7 @@ Public Class ClassSync
 
 
     Public Sub RestoreCustomTable()
-        Dim constring As String = "server=localhost;user=root;pwd=bangcat48;database=db_sync;"
+        Dim constring As String = "server=" + host_main + ";user=" + username_main + ";pwd=" + pass_main + ";database=" + db_sync_main + ";"
         Dim path_root As String = Application.StartupPath
         Dim fileName As String = "bup" + ".sql"
         Dim file As String = IO.Path.Combine(path_root, fileName)
