@@ -8,6 +8,9 @@ Public Class ClassSync
     Dim username_main As String = ""
     Dim pass_main As String = ""
     Dim db_main As String = ""
+    Dim host_sync_main As String = ""
+    Dim username_sync_main As String = ""
+    Dim pass_sync_main As String = ""
     Dim db_sync_main As String = ""
     Public splash As String = "-1"
     Dim is_reset_config As String = "-1"
@@ -16,11 +19,18 @@ Public Class ClassSync
     Public Sub New()
         Dim query As String = "SELECT * FROM tb_opt"
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        'koneksi office
         host_main = data.Rows(0)("host_main").ToString
         username_main = data.Rows(0)("username_main").ToString
         pass_main = data.Rows(0)("pass_main").ToString
         db_main = data.Rows(0)("db_main").ToString
+
+        'koneksi local
+        host_sync_main = data.Rows(0)("host_sync_main").ToString
+        username_sync_main = data.Rows(0)("username_sync_main").ToString
+        pass_sync_main = data.Rows(0)("pass_sync_main").ToString
         db_sync_main = data.Rows(0)("db_sync_main").ToString
+
         is_reset_config = data.Rows(0)("is_reset_config").ToString
 
         'get sync list
@@ -462,13 +472,6 @@ Public Class ClassSync
                     FormUser.SplashScreenManager1.SetWaitFormDescription("Sync delivery slip")
                 End If
                 syncDS()
-
-                'If splash = "-1" Then
-                '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync company account")
-                'ElseIf splash = "1" Then
-                '    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync company account")
-                'End If
-                'syncComp()
             ElseIf ix = "3" Then 'item
                 'If splash = "-1" Then
                 '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync products")
@@ -532,40 +535,8 @@ Public Class ClassSync
                 Dim acc_normal As String = da.Rows(0)("acc_normal_origin").ToString
                 Dim acc_sale As String = da.Rows(0)("acc_sale_origin").ToString
 
-                'main delivery
-                dic.Add("tb_pl_sales_order_del", "SELECT * 
-                FROM tb_pl_sales_order_del d
-                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
-                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
-                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
-                AND d.last_update>'" + last_upd + "';")
-
-                'detail delivery
-                dic.Add("tb_pl_sales_order_del", "SELECT dd.*
-                FROM tb_pl_sales_order_del d
-                INNER JOIN tb_pl_sales_order_del_det dd ON dd.id_pl_sales_order_del = d.id_pl_sales_order_del
-                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
-                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
-                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
-                AND d.last_update>'" + last_upd + "';")
-
-                'unik delivery
-                dic.Add("tb_pl_sales_order_del", "SELECT ddc.* 
-                FROM tb_pl_sales_order_del d
-                INNER JOIN tb_pl_sales_order_del_det dd ON dd.id_pl_sales_order_del = d.id_pl_sales_order_del
-                INNER JOIN tb_pl_sales_order_del_det_counting ddc ON ddc.id_pl_sales_order_del_det = dd.id_pl_sales_order_del_det
-                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
-                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
-                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
-                AND d.last_update>'" + last_upd + "';")
-
-                'combine delivery
-                dic.Add("tb_pl_sales_order_del", "SELECT * 
-                FROM tb_pl_sales_order_del_combine d
-                INNER JOIN tb_m_comp_contact cc ON cc.id_comp_contact = d.id_store_contact_to
-                INNER JOIN tb_m_comp c ON c.id_comp = cc.id_comp
-                WHERE (c.id_comp=" + acc_normal + " OR c.id_comp=" + acc_sale + ") AND d.id_report_status=6 
-                AND d.last_update>'" + last_upd + "';")
+                execute_non_query("CALL generate_delivery_slip(" + acc_normal + ", " + acc_sale + ", '" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
+                dic.Add("tb_sync_delivery", "SELECT * FROM tb_sync_delivery;")
             ElseIf ix = "3" Then 'item
                 'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
                 'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
@@ -613,7 +584,7 @@ Public Class ClassSync
 
 
     Public Sub RestoreCustomTable()
-        Dim constring As String = "server=" + host_main + ";user=" + username_main + ";pwd=" + pass_main + ";database=" + db_sync_main + ";"
+        Dim constring As String = "server=" + host_sync_main + ";user=" + username_sync_main + ";pwd=" + pass_sync_main + ";database=" + db_sync_main + ";"
         Dim path_root As String = Application.StartupPath
         Dim fileName As String = "bup" + ".sql"
         Dim file As String = IO.Path.Combine(path_root, fileName)
