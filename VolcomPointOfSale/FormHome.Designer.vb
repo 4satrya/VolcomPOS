@@ -712,12 +712,13 @@ Partial Class FormHome
         Me.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Metropolis Dark"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
         Me.Name = "FormHome"
         Me.Opacity = 0R
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Point of Sale - Volcom Indonesia"
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlTop.ResumeLayout(False)
         Me.PanelControlTop.PerformLayout()

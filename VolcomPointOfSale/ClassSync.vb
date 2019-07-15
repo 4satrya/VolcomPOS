@@ -452,7 +452,21 @@ Public Class ClassSync
 
     Sub syncDS()
         Dim err As String = ""
+        Try
+            Dim query As String = "INSERT INTO tb_delivery_slip SELECT * FROM db_sync.tb_sync_delivery "
+            execute_non_query(query, True, "", "", "", "")
+        Catch ex As Exception
+            err += ex.ToString + "; "
+        End Try
 
+        Dim is_success = ""
+        If err = "" Then
+            is_success = "1"
+        Else
+            is_success = "2"
+        End If
+        Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '2', '" + is_success + "','" + addSlashes(err) + "') "
+        execute_non_query(qlast, True, "", "", "", "")
     End Sub
 
     Public Sub startofSync()
