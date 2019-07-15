@@ -24,16 +24,6 @@ Partial Class FormRec
         Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
-        Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
-        Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl11 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl12 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl9 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
-        Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.GCRec = New DevExpress.XtraGrid.GridControl()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,27 +41,64 @@ Partial Class FormRec
         Me.GridColumnStt = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnReference = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnPreparedBy = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnNew = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnRefresh = New DevExpress.XtraEditors.SimpleButton()
+        Me.XTCRec = New DevExpress.XtraTab.XtraTabControl()
+        Me.XTPOwn = New DevExpress.XtraTab.XtraTabPage()
+        Me.XTPOther = New DevExpress.XtraTab.XtraTabPage()
+        Me.XTCOwn = New DevExpress.XtraTab.XtraTabControl()
+        Me.XTPRecList = New DevExpress.XtraTab.XtraTabPage()
+        Me.XTPPL = New DevExpress.XtraTab.XtraTabPage()
+        Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
+        Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
+        Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
+        Me.DateEdit2 = New DevExpress.XtraEditors.DateEdit()
+        Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
+        Me.GCRecOwn = New DevExpress.XtraGrid.GridControl()
+        Me.GVRecOwn = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GCPL = New DevExpress.XtraGrid.GridControl()
+        Me.GVPL = New DevExpress.XtraGrid.Views.Grid.GridView()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
         CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl1.SuspendLayout()
-        CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl2.SuspendLayout()
         CType(Me.GCRec, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.GVRec, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl1.SuspendLayout()
+        CType(Me.XTCRec, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XTCRec.SuspendLayout()
+        Me.XTPOwn.SuspendLayout()
+        Me.XTPOther.SuspendLayout()
+        CType(Me.XTCOwn, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XTCOwn.SuspendLayout()
+        Me.XTPRecList.SuspendLayout()
+        Me.XTPPL.SuspendLayout()
+        CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl2.SuspendLayout()
+        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DateEdit2.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DateEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCRecOwn, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVRecOwn, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCPL, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVPL, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelControl3
         '
         Me.PanelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl3.Controls.Add(Me.PanelControl1)
         Me.PanelControl3.Controls.Add(Me.LabelControl13)
         Me.PanelControl3.Controls.Add(Me.PanelControlBack)
         Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControl3.Location = New System.Drawing.Point(20, 20)
         Me.PanelControl3.Name = "PanelControl3"
-        Me.PanelControl3.Size = New System.Drawing.Size(621, 45)
+        Me.PanelControl3.Size = New System.Drawing.Size(875, 45)
         Me.PanelControl3.TabIndex = 4
         '
         'LabelControl13
@@ -87,8 +114,6 @@ Partial Class FormRec
         '
         'PanelControlBack
         '
-        Me.PanelControlBack.Appearance.BackColor = System.Drawing.Color.White
-        Me.PanelControlBack.Appearance.Options.UseBackColor = True
         Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
         Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
@@ -97,115 +122,16 @@ Partial Class FormRec
         Me.PanelControlBack.Size = New System.Drawing.Size(40, 45)
         Me.PanelControlBack.TabIndex = 5
         '
-        'PanelControl1
-        '
-        Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl1.Controls.Add(Me.PanelControl2)
-        Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(20, 320)
-        Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(621, 35)
-        Me.PanelControl1.TabIndex = 5
-        '
-        'PanelControl2
-        '
-        Me.PanelControl2.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl2.Controls.Add(Me.LabelControl11)
-        Me.PanelControl2.Controls.Add(Me.LabelControl4)
-        Me.PanelControl2.Controls.Add(Me.LabelControl12)
-        Me.PanelControl2.Controls.Add(Me.LabelControl3)
-        Me.PanelControl2.Controls.Add(Me.LabelControl8)
-        Me.PanelControl2.Controls.Add(Me.LabelControl9)
-        Me.PanelControl2.Controls.Add(Me.LabelControl2)
-        Me.PanelControl2.Controls.Add(Me.LabelControl1)
-        Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl2.Location = New System.Drawing.Point(362, 0)
-        Me.PanelControl2.Name = "PanelControl2"
-        Me.PanelControl2.Size = New System.Drawing.Size(259, 35)
-        Me.PanelControl2.TabIndex = 7
-        '
-        'LabelControl11
-        '
-        Me.LabelControl11.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl11.Location = New System.Drawing.Point(159, 11)
-        Me.LabelControl11.Name = "LabelControl11"
-        Me.LabelControl11.Size = New System.Drawing.Size(24, 13)
-        Me.LabelControl11.TabIndex = 19
-        Me.LabelControl11.Text = "Print"
-        '
-        'LabelControl4
-        '
-        Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl4.Location = New System.Drawing.Point(18, 11)
-        Me.LabelControl4.Name = "LabelControl4"
-        Me.LabelControl4.Size = New System.Drawing.Size(12, 13)
-        Me.LabelControl4.TabIndex = 9
-        Me.LabelControl4.Text = "F7"
-        '
-        'LabelControl12
-        '
-        Me.LabelControl12.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl12.Location = New System.Drawing.Point(135, 11)
-        Me.LabelControl12.Name = "LabelControl12"
-        Me.LabelControl12.Size = New System.Drawing.Size(18, 13)
-        Me.LabelControl12.TabIndex = 18
-        Me.LabelControl12.Text = "F10"
-        '
-        'LabelControl3
-        '
-        Me.LabelControl3.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl3.Location = New System.Drawing.Point(36, 11)
-        Me.LabelControl3.Name = "LabelControl3"
-        Me.LabelControl3.Size = New System.Drawing.Size(30, 13)
-        Me.LabelControl3.TabIndex = 10
-        Me.LabelControl3.Text = "Detail"
-        '
-        'LabelControl8
-        '
-        Me.LabelControl8.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl8.Location = New System.Drawing.Point(219, 11)
-        Me.LabelControl8.Name = "LabelControl8"
-        Me.LabelControl8.Size = New System.Drawing.Size(28, 13)
-        Me.LabelControl8.TabIndex = 15
-        Me.LabelControl8.Text = "Close"
-        '
-        'LabelControl9
-        '
-        Me.LabelControl9.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl9.Location = New System.Drawing.Point(197, 11)
-        Me.LabelControl9.Name = "LabelControl9"
-        Me.LabelControl9.Size = New System.Drawing.Size(16, 13)
-        Me.LabelControl9.TabIndex = 14
-        Me.LabelControl9.Text = "Esc"
-        '
-        'LabelControl2
-        '
-        Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl2.Location = New System.Drawing.Point(100, 11)
-        Me.LabelControl2.Name = "LabelControl2"
-        Me.LabelControl2.Size = New System.Drawing.Size(23, 13)
-        Me.LabelControl2.TabIndex = 8
-        Me.LabelControl2.Text = "New"
-        '
-        'LabelControl1
-        '
-        Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl1.Location = New System.Drawing.Point(82, 11)
-        Me.LabelControl1.Name = "LabelControl1"
-        Me.LabelControl1.Size = New System.Drawing.Size(12, 13)
-        Me.LabelControl1.TabIndex = 7
-        Me.LabelControl1.Text = "F8"
-        '
         'GCRec
         '
         Me.GCRec.ContextMenuStrip = Me.ContextMenuStrip1
         Me.GCRec.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCRec.Location = New System.Drawing.Point(20, 65)
+        Me.GCRec.Location = New System.Drawing.Point(0, 0)
         Me.GCRec.LookAndFeel.SkinName = "Office 2010 Blue"
         Me.GCRec.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCRec.MainView = Me.GVRec
         Me.GCRec.Name = "GCRec"
-        Me.GCRec.Size = New System.Drawing.Size(621, 255)
+        Me.GCRec.Size = New System.Drawing.Size(593, 288)
         Me.GCRec.TabIndex = 6
         Me.GCRec.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVRec})
         '
@@ -339,13 +265,212 @@ Partial Class FormRec
         Me.GridColumnPreparedBy.VisibleIndex = 5
         Me.GridColumnPreparedBy.Width = 93
         '
+        'PanelControl1
+        '
+        Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl1.Controls.Add(Me.BtnPrint)
+        Me.PanelControl1.Controls.Add(Me.BtnRefresh)
+        Me.PanelControl1.Controls.Add(Me.BtnNew)
+        Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl1.Location = New System.Drawing.Point(552, 0)
+        Me.PanelControl1.Name = "PanelControl1"
+        Me.PanelControl1.Size = New System.Drawing.Size(323, 45)
+        Me.PanelControl1.TabIndex = 6
+        '
+        'BtnNew
+        '
+        Me.BtnNew.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnNew.Image = CType(resources.GetObject("BtnNew.Image"), System.Drawing.Image)
+        Me.BtnNew.Location = New System.Drawing.Point(239, 0)
+        Me.BtnNew.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnNew.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(84, 45)
+        Me.BtnNew.TabIndex = 9
+        Me.BtnNew.Text = "New"
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
+        Me.BtnPrint.Location = New System.Drawing.Point(54, 0)
+        Me.BtnPrint.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(92, 45)
+        Me.BtnPrint.TabIndex = 10
+        Me.BtnPrint.Text = "Print"
+        '
+        'BtnRefresh
+        '
+        Me.BtnRefresh.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnRefresh.Image = CType(resources.GetObject("BtnRefresh.Image"), System.Drawing.Image)
+        Me.BtnRefresh.Location = New System.Drawing.Point(146, 0)
+        Me.BtnRefresh.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnRefresh.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnRefresh.Name = "BtnRefresh"
+        Me.BtnRefresh.Size = New System.Drawing.Size(93, 45)
+        Me.BtnRefresh.TabIndex = 8
+        Me.BtnRefresh.Text = "Refresh"
+        '
+        'XTCRec
+        '
+        Me.XTCRec.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.XTCRec.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left
+        Me.XTCRec.Location = New System.Drawing.Point(20, 65)
+        Me.XTCRec.Name = "XTCRec"
+        Me.XTCRec.SelectedTabPage = Me.XTPOwn
+        Me.XTCRec.Size = New System.Drawing.Size(875, 460)
+        Me.XTCRec.TabIndex = 7
+        Me.XTCRec.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPOwn, Me.XTPOther})
+        '
+        'XTPOwn
+        '
+        Me.XTPOwn.Appearance.Header.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.XTPOwn.Appearance.Header.Options.UseFont = True
+        Me.XTPOwn.Controls.Add(Me.XTCOwn)
+        Me.XTPOwn.Name = "XTPOwn"
+        Me.XTPOwn.Size = New System.Drawing.Size(847, 458)
+        Me.XTPOwn.Text = "Own Product"
+        '
+        'XTPOther
+        '
+        Me.XTPOther.Controls.Add(Me.GCRec)
+        Me.XTPOther.Name = "XTPOther"
+        Me.XTPOther.Size = New System.Drawing.Size(593, 288)
+        Me.XTPOther.Text = "Other Product"
+        '
+        'XTCOwn
+        '
+        Me.XTCOwn.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.XTCOwn.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Bottom
+        Me.XTCOwn.Location = New System.Drawing.Point(0, 0)
+        Me.XTCOwn.Name = "XTCOwn"
+        Me.XTCOwn.SelectedTabPage = Me.XTPRecList
+        Me.XTCOwn.Size = New System.Drawing.Size(847, 458)
+        Me.XTCOwn.TabIndex = 0
+        Me.XTCOwn.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPRecList, Me.XTPPL})
+        '
+        'XTPRecList
+        '
+        Me.XTPRecList.Controls.Add(Me.GCRecOwn)
+        Me.XTPRecList.Controls.Add(Me.PanelControl2)
+        Me.XTPRecList.Name = "XTPRecList"
+        Me.XTPRecList.Size = New System.Drawing.Size(845, 433)
+        Me.XTPRecList.Text = "Received List"
+        '
+        'XTPPL
+        '
+        Me.XTPPL.Controls.Add(Me.GCPL)
+        Me.XTPPL.Name = "XTPPL"
+        Me.XTPPL.Size = New System.Drawing.Size(845, 433)
+        Me.XTPPL.Text = "Packing List"
+        '
+        'PanelControl2
+        '
+        Me.PanelControl2.Controls.Add(Me.BtnView)
+        Me.PanelControl2.Controls.Add(Me.DateEdit2)
+        Me.PanelControl2.Controls.Add(Me.LabelControl2)
+        Me.PanelControl2.Controls.Add(Me.DateEdit1)
+        Me.PanelControl2.Controls.Add(Me.LabelControl1)
+        Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PanelControl2.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControl2.Name = "PanelControl2"
+        Me.PanelControl2.Size = New System.Drawing.Size(845, 42)
+        Me.PanelControl2.TabIndex = 0
+        '
+        'LabelControl1
+        '
+        Me.LabelControl1.Location = New System.Drawing.Point(12, 14)
+        Me.LabelControl1.Name = "LabelControl1"
+        Me.LabelControl1.Size = New System.Drawing.Size(24, 13)
+        Me.LabelControl1.TabIndex = 1
+        Me.LabelControl1.Text = "From"
+        '
+        'LabelControl2
+        '
+        Me.LabelControl2.Location = New System.Drawing.Point(210, 14)
+        Me.LabelControl2.Name = "LabelControl2"
+        Me.LabelControl2.Size = New System.Drawing.Size(21, 13)
+        Me.LabelControl2.TabIndex = 2
+        Me.LabelControl2.Text = "Until"
+        '
+        'DateEdit1
+        '
+        Me.DateEdit1.EditValue = Nothing
+        Me.DateEdit1.Location = New System.Drawing.Point(42, 11)
+        Me.DateEdit1.Name = "DateEdit1"
+        Me.DateEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit1.Size = New System.Drawing.Size(160, 20)
+        Me.DateEdit1.TabIndex = 3
+        '
+        'DateEdit2
+        '
+        Me.DateEdit2.EditValue = Nothing
+        Me.DateEdit2.Location = New System.Drawing.Point(237, 11)
+        Me.DateEdit2.Name = "DateEdit2"
+        Me.DateEdit2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit2.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DateEdit2.Size = New System.Drawing.Size(160, 20)
+        Me.DateEdit2.TabIndex = 4
+        '
+        'BtnView
+        '
+        Me.BtnView.Location = New System.Drawing.Point(401, 11)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(75, 20)
+        Me.BtnView.TabIndex = 1
+        Me.BtnView.Text = "View"
+        '
+        'GCRecOwn
+        '
+        Me.GCRecOwn.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCRecOwn.Location = New System.Drawing.Point(0, 42)
+        Me.GCRecOwn.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCRecOwn.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.GCRecOwn.MainView = Me.GVRecOwn
+        Me.GCRecOwn.Name = "GCRecOwn"
+        Me.GCRecOwn.Size = New System.Drawing.Size(845, 391)
+        Me.GCRecOwn.TabIndex = 1
+        Me.GCRecOwn.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVRecOwn})
+        '
+        'GVRecOwn
+        '
+        Me.GVRecOwn.GridControl = Me.GCRecOwn
+        Me.GVRecOwn.Name = "GVRecOwn"
+        Me.GVRecOwn.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVRecOwn.OptionsBehavior.Editable = False
+        Me.GVRecOwn.OptionsFind.AlwaysVisible = True
+        Me.GVRecOwn.OptionsView.ShowGroupPanel = False
+        '
+        'GCPL
+        '
+        Me.GCPL.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCPL.Location = New System.Drawing.Point(0, 0)
+        Me.GCPL.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCPL.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.GCPL.MainView = Me.GVPL
+        Me.GCPL.Name = "GCPL"
+        Me.GCPL.Size = New System.Drawing.Size(845, 433)
+        Me.GCPL.TabIndex = 2
+        Me.GCPL.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVPL})
+        '
+        'GVPL
+        '
+        Me.GVPL.GridControl = Me.GCPL
+        Me.GVPL.Name = "GVPL"
+        Me.GVPL.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVPL.OptionsBehavior.Editable = False
+        Me.GVPL.OptionsFind.AlwaysVisible = True
+        Me.GVPL.OptionsView.ShowGroupPanel = False
+        '
         'FormRec
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(661, 375)
-        Me.Controls.Add(Me.GCRec)
-        Me.Controls.Add(Me.PanelControl1)
+        Me.ClientSize = New System.Drawing.Size(915, 545)
+        Me.Controls.Add(Me.XTCRec)
         Me.Controls.Add(Me.PanelControl3)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
@@ -360,30 +485,36 @@ Partial Class FormRec
         Me.PanelControl3.ResumeLayout(False)
         Me.PanelControl3.PerformLayout()
         CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl1.ResumeLayout(False)
-        CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl2.ResumeLayout(False)
-        Me.PanelControl2.PerformLayout()
         CType(Me.GCRec, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.GVRec, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl1.ResumeLayout(False)
+        CType(Me.XTCRec, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XTCRec.ResumeLayout(False)
+        Me.XTPOwn.ResumeLayout(False)
+        Me.XTPOther.ResumeLayout(False)
+        CType(Me.XTCOwn, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XTCOwn.ResumeLayout(False)
+        Me.XTPRecList.ResumeLayout(False)
+        Me.XTPPL.ResumeLayout(False)
+        CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl2.ResumeLayout(False)
+        Me.PanelControl2.PerformLayout()
+        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DateEdit2.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DateEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCRecOwn, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVRecOwn, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCPL, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVPL, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents PanelControl3 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents PanelControl1 As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl11 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl12 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl9 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl3 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl4 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents GCRec As DevExpress.XtraGrid.GridControl
     Friend WithEvents GVRec As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
@@ -402,4 +533,24 @@ Partial Class FormRec
     Friend WithEvents GridColumnReference As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnPreparedBy As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents PanelControl1 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents BtnNew As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BtnRefresh As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents XTCRec As DevExpress.XtraTab.XtraTabControl
+    Friend WithEvents XTPOwn As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents XTCOwn As DevExpress.XtraTab.XtraTabControl
+    Friend WithEvents XTPRecList As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents XTPPL As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents XTPOther As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents GCRecOwn As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GVRecOwn As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents BtnView As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents DateEdit2 As DevExpress.XtraEditors.DateEdit
+    Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents DateEdit1 As DevExpress.XtraEditors.DateEdit
+    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents GCPL As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GVPL As DevExpress.XtraGrid.Views.Grid.GridView
 End Class

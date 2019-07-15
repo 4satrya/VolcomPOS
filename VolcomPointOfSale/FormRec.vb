@@ -98,4 +98,8 @@
     Private Sub PanelControlBack_MouseLeave(sender As Object, e As EventArgs) Handles PanelControlBack.MouseLeave
         PanelControlBack.Cursor = Cursors.Default
     End Sub
+
+    Private Sub SimpleButton2_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+
+    End Sub
 End Class
