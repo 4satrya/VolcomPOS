@@ -24,14 +24,26 @@
     End Sub
 
     Sub insert()
-        FormRecDet.action = "ins"
-        FormRecDet.ShowDialog()
+        Cursor = Cursors.WaitCursor
+        If XTCRec.SelectedTabPageIndex = 0 Then
+
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            FormRecDet.action = "ins"
+            FormRecDet.ShowDialog()
+        End If
+        Cursor = Cursors.Default
     End Sub
 
     Sub edit()
-        FormRecDet.action = "upd"
-        FormRecDet.id = GVRec.GetFocusedRowCellValue("id_rec").ToString
-        FormRecDet.ShowDialog()
+        Cursor = Cursors.WaitCursor
+        If XTCRec.SelectedTabPageIndex = 0 Then
+
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            FormRecDet.action = "upd"
+            FormRecDet.id = GVRec.GetFocusedRowCellValue("id_rec").ToString
+            FormRecDet.ShowDialog()
+        End If
+        Cursor = Cursors.Default
     End Sub
 
     Sub delete()
@@ -48,6 +60,14 @@
         '        End Try
         '    End If
         'End If
+    End Sub
+
+    Sub refreshData()
+        If XTCRec.SelectedTabPageIndex = 0 Then
+
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            viewRec()
+        End If
     End Sub
 
     Sub exitForm()
@@ -99,7 +119,15 @@
         PanelControlBack.Cursor = Cursors.Default
     End Sub
 
-    Private Sub SimpleButton2_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+    Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
+        refreshData()
+    End Sub
 
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
+    End Sub
+
+    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+        insert()
     End Sub
 End Class

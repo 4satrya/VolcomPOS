@@ -453,7 +453,46 @@ Public Class ClassSync
     Sub syncDS()
         Dim err As String = ""
         Try
-            Dim query As String = "INSERT INTO tb_delivery_slip SELECT * FROM db_sync.tb_sync_delivery "
+            Dim query As String = "INSERT INTO tb_delivery_slip (
+	            `id_pl_sales_order_del`,
+	            `number`,
+	            `id_wh`,
+	            `id_store`,
+	            `created_date`,
+	            `approved_date`,
+	            `id_product`,
+	            `id_design`,
+	            `id_pl_prod_order_rec_det_unique`,
+	            `id_class`,
+	            `id_color`,
+	            `id_size`,
+	            `item_code`,
+	            `item_name`,
+	            `qty`,
+	            `id_design_cat`,
+	            `price`,
+	            `is_combine`
+            ) 
+            SELECT 
+            `id_pl_sales_order_del`,
+            `number`,
+            `id_wh`,
+            `id_store`,
+            `created_date`,
+            `approved_date`,
+            `id_product`,
+            `id_design`,
+            `id_pl_prod_order_rec_det_unique`,
+            `id_class`,
+            `id_color`,
+            `id_size`,
+            `item_code`,
+            `item_name`,
+            `qty`,
+            `id_design_cat`,
+            `price`,
+            `is_combine`
+            FROM db_sync.tb_sync_delivery "
             execute_non_query(query, True, "", "", "", "")
         Catch ex As Exception
             err += ex.ToString + "; "
