@@ -58,8 +58,11 @@ Partial Class FormRec
         Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.XTPPL = New DevExpress.XtraTab.XtraTabPage()
-        Me.GCPL = New DevExpress.XtraGrid.GridControl()
-        Me.GVPL = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GCDS = New DevExpress.XtraGrid.GridControl()
+        Me.GVDS = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumnid_pl_sales_order_del = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnnumberDS = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumncreated_date = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.XTPOther = New DevExpress.XtraTab.XtraTabPage()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
@@ -84,8 +87,8 @@ Partial Class FormRec
         CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XTPPL.SuspendLayout()
-        CType(Me.GCPL, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GVPL, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCDS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GVDS, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XTPOther.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -96,9 +99,9 @@ Partial Class FormRec
         Me.PanelControl3.Controls.Add(Me.LabelControl13)
         Me.PanelControl3.Controls.Add(Me.PanelControlBack)
         Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControl3.Location = New System.Drawing.Point(20, 20)
+        Me.PanelControl3.Location = New System.Drawing.Point(0, 0)
         Me.PanelControl3.Name = "PanelControl3"
-        Me.PanelControl3.Size = New System.Drawing.Size(875, 45)
+        Me.PanelControl3.Size = New System.Drawing.Size(915, 45)
         Me.PanelControl3.TabIndex = 4
         '
         'PanelControl1
@@ -108,7 +111,7 @@ Partial Class FormRec
         Me.PanelControl1.Controls.Add(Me.BtnRefresh)
         Me.PanelControl1.Controls.Add(Me.BtnNew)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl1.Location = New System.Drawing.Point(552, 0)
+        Me.PanelControl1.Location = New System.Drawing.Point(592, 0)
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(323, 45)
         Me.PanelControl1.TabIndex = 6
@@ -118,7 +121,7 @@ Partial Class FormRec
         Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
         Me.BtnPrint.Location = New System.Drawing.Point(54, 0)
-        Me.BtnPrint.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnPrint.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
         Me.BtnPrint.Name = "BtnPrint"
         Me.BtnPrint.Size = New System.Drawing.Size(92, 45)
@@ -130,7 +133,7 @@ Partial Class FormRec
         Me.BtnRefresh.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnRefresh.Image = CType(resources.GetObject("BtnRefresh.Image"), System.Drawing.Image)
         Me.BtnRefresh.Location = New System.Drawing.Point(146, 0)
-        Me.BtnRefresh.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnRefresh.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.BtnRefresh.LookAndFeel.UseDefaultLookAndFeel = False
         Me.BtnRefresh.Name = "BtnRefresh"
         Me.BtnRefresh.Size = New System.Drawing.Size(93, 45)
@@ -142,7 +145,7 @@ Partial Class FormRec
         Me.BtnNew.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnNew.Image = CType(resources.GetObject("BtnNew.Image"), System.Drawing.Image)
         Me.BtnNew.Location = New System.Drawing.Point(239, 0)
-        Me.BtnNew.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.BtnNew.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.BtnNew.LookAndFeel.UseDefaultLookAndFeel = False
         Me.BtnNew.Name = "BtnNew"
         Me.BtnNew.Size = New System.Drawing.Size(84, 45)
@@ -159,6 +162,7 @@ Partial Class FormRec
         Me.LabelControl13.Size = New System.Drawing.Size(87, 37)
         Me.LabelControl13.TabIndex = 1
         Me.LabelControl13.Text = "Receive"
+        Me.LabelControl13.Visible = False
         '
         'PanelControlBack
         '
@@ -169,17 +173,18 @@ Partial Class FormRec
         Me.PanelControlBack.Name = "PanelControlBack"
         Me.PanelControlBack.Size = New System.Drawing.Size(40, 45)
         Me.PanelControlBack.TabIndex = 5
+        Me.PanelControlBack.Visible = False
         '
         'GCRec
         '
         Me.GCRec.ContextMenuStrip = Me.ContextMenuStrip1
         Me.GCRec.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCRec.Location = New System.Drawing.Point(0, 0)
-        Me.GCRec.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCRec.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCRec.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCRec.MainView = Me.GVRec
         Me.GCRec.Name = "GCRec"
-        Me.GCRec.Size = New System.Drawing.Size(847, 458)
+        Me.GCRec.Size = New System.Drawing.Size(887, 498)
         Me.GCRec.TabIndex = 6
         Me.GCRec.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVRec})
         '
@@ -317,10 +322,12 @@ Partial Class FormRec
         '
         Me.XTCRec.Dock = System.Windows.Forms.DockStyle.Fill
         Me.XTCRec.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left
-        Me.XTCRec.Location = New System.Drawing.Point(20, 65)
+        Me.XTCRec.Location = New System.Drawing.Point(0, 45)
+        Me.XTCRec.LookAndFeel.SkinName = "Metropolis"
+        Me.XTCRec.LookAndFeel.UseDefaultLookAndFeel = False
         Me.XTCRec.Name = "XTCRec"
         Me.XTCRec.SelectedTabPage = Me.XTPOwn
-        Me.XTCRec.Size = New System.Drawing.Size(875, 460)
+        Me.XTCRec.Size = New System.Drawing.Size(915, 500)
         Me.XTCRec.TabIndex = 7
         Me.XTCRec.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPOwn, Me.XTPOther})
         '
@@ -330,7 +337,7 @@ Partial Class FormRec
         Me.XTPOwn.Appearance.Header.Options.UseFont = True
         Me.XTPOwn.Controls.Add(Me.XTCOwn)
         Me.XTPOwn.Name = "XTPOwn"
-        Me.XTPOwn.Size = New System.Drawing.Size(847, 458)
+        Me.XTPOwn.Size = New System.Drawing.Size(887, 498)
         Me.XTPOwn.Text = "Own Product"
         '
         'XTCOwn
@@ -338,9 +345,11 @@ Partial Class FormRec
         Me.XTCOwn.Dock = System.Windows.Forms.DockStyle.Fill
         Me.XTCOwn.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Bottom
         Me.XTCOwn.Location = New System.Drawing.Point(0, 0)
+        Me.XTCOwn.LookAndFeel.SkinName = "Metropolis"
+        Me.XTCOwn.LookAndFeel.UseDefaultLookAndFeel = False
         Me.XTCOwn.Name = "XTCOwn"
         Me.XTCOwn.SelectedTabPage = Me.XTPRecList
-        Me.XTCOwn.Size = New System.Drawing.Size(847, 458)
+        Me.XTCOwn.Size = New System.Drawing.Size(887, 498)
         Me.XTCOwn.TabIndex = 0
         Me.XTCOwn.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPRecList, Me.XTPPL})
         '
@@ -349,18 +358,18 @@ Partial Class FormRec
         Me.XTPRecList.Controls.Add(Me.GCRecOwn)
         Me.XTPRecList.Controls.Add(Me.PanelControl2)
         Me.XTPRecList.Name = "XTPRecList"
-        Me.XTPRecList.Size = New System.Drawing.Size(845, 433)
+        Me.XTPRecList.Size = New System.Drawing.Size(885, 473)
         Me.XTPRecList.Text = "Received List"
         '
         'GCRecOwn
         '
         Me.GCRecOwn.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCRecOwn.Location = New System.Drawing.Point(0, 42)
-        Me.GCRecOwn.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCRecOwn.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCRecOwn.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCRecOwn.MainView = Me.GVRecOwn
         Me.GCRecOwn.Name = "GCRecOwn"
-        Me.GCRecOwn.Size = New System.Drawing.Size(845, 391)
+        Me.GCRecOwn.Size = New System.Drawing.Size(885, 431)
         Me.GCRecOwn.TabIndex = 1
         Me.GCRecOwn.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVRecOwn})
         '
@@ -382,8 +391,10 @@ Partial Class FormRec
         Me.PanelControl2.Controls.Add(Me.LabelControl1)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControl2.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControl2.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.PanelControl2.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControl2.Name = "PanelControl2"
-        Me.PanelControl2.Size = New System.Drawing.Size(845, 42)
+        Me.PanelControl2.Size = New System.Drawing.Size(885, 42)
         Me.PanelControl2.TabIndex = 0
         '
         'BtnView
@@ -432,37 +443,62 @@ Partial Class FormRec
         '
         'XTPPL
         '
-        Me.XTPPL.Controls.Add(Me.GCPL)
+        Me.XTPPL.Controls.Add(Me.GCDS)
         Me.XTPPL.Name = "XTPPL"
-        Me.XTPPL.Size = New System.Drawing.Size(845, 433)
-        Me.XTPPL.Text = "Packing List"
+        Me.XTPPL.Size = New System.Drawing.Size(885, 473)
+        Me.XTPPL.Text = "Delivery Slip"
         '
-        'GCPL
+        'GCDS
         '
-        Me.GCPL.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCPL.Location = New System.Drawing.Point(0, 0)
-        Me.GCPL.LookAndFeel.SkinName = "Office 2010 Blue"
-        Me.GCPL.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.GCPL.MainView = Me.GVPL
-        Me.GCPL.Name = "GCPL"
-        Me.GCPL.Size = New System.Drawing.Size(845, 433)
-        Me.GCPL.TabIndex = 2
-        Me.GCPL.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVPL})
+        Me.GCDS.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCDS.Location = New System.Drawing.Point(0, 0)
+        Me.GCDS.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.GCDS.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.GCDS.MainView = Me.GVDS
+        Me.GCDS.Name = "GCDS"
+        Me.GCDS.Size = New System.Drawing.Size(885, 473)
+        Me.GCDS.TabIndex = 2
+        Me.GCDS.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVDS})
         '
-        'GVPL
+        'GVDS
         '
-        Me.GVPL.GridControl = Me.GCPL
-        Me.GVPL.Name = "GVPL"
-        Me.GVPL.OptionsBehavior.AutoExpandAllGroups = True
-        Me.GVPL.OptionsBehavior.Editable = False
-        Me.GVPL.OptionsFind.AlwaysVisible = True
-        Me.GVPL.OptionsView.ShowGroupPanel = False
+        Me.GVDS.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_pl_sales_order_del, Me.GridColumnnumberDS, Me.GridColumncreated_date})
+        Me.GVDS.GridControl = Me.GCDS
+        Me.GVDS.Name = "GVDS"
+        Me.GVDS.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVDS.OptionsBehavior.Editable = False
+        Me.GVDS.OptionsFind.AlwaysVisible = True
+        Me.GVDS.OptionsView.ShowGroupPanel = False
+        '
+        'GridColumnid_pl_sales_order_del
+        '
+        Me.GridColumnid_pl_sales_order_del.Caption = "id_pl_sales_order_del"
+        Me.GridColumnid_pl_sales_order_del.FieldName = "id_pl_sales_order_del"
+        Me.GridColumnid_pl_sales_order_del.Name = "GridColumnid_pl_sales_order_del"
+        '
+        'GridColumnnumberDS
+        '
+        Me.GridColumnnumberDS.Caption = "Number"
+        Me.GridColumnnumberDS.FieldName = "number"
+        Me.GridColumnnumberDS.Name = "GridColumnnumberDS"
+        Me.GridColumnnumberDS.Visible = True
+        Me.GridColumnnumberDS.VisibleIndex = 0
+        '
+        'GridColumncreated_date
+        '
+        Me.GridColumncreated_date.Caption = "Date"
+        Me.GridColumncreated_date.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.GridColumncreated_date.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.GridColumncreated_date.FieldName = "created_date"
+        Me.GridColumncreated_date.Name = "GridColumncreated_date"
+        Me.GridColumncreated_date.Visible = True
+        Me.GridColumncreated_date.VisibleIndex = 1
         '
         'XTPOther
         '
         Me.XTPOther.Controls.Add(Me.GCRec)
         Me.XTPOther.Name = "XTPOther"
-        Me.XTPOther.Size = New System.Drawing.Size(847, 458)
+        Me.XTPOther.Size = New System.Drawing.Size(887, 498)
         Me.XTPOther.Text = "Other Product"
         '
         'FormRec
@@ -472,14 +508,13 @@ Partial Class FormRec
         Me.ClientSize = New System.Drawing.Size(915, 545)
         Me.Controls.Add(Me.XTCRec)
         Me.Controls.Add(Me.PanelControl3)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.MinimizeBox = False
         Me.Name = "FormRec"
-        Me.Padding = New System.Windows.Forms.Padding(20)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "FormRec"
+        Me.Text = "Receive Product"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl3.ResumeLayout(False)
@@ -506,8 +541,8 @@ Partial Class FormRec
         CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XTPPL.ResumeLayout(False)
-        CType(Me.GCPL, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GVPL, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCDS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GVDS, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XTPOther.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -551,6 +586,9 @@ Partial Class FormRec
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents DateEdit1 As DevExpress.XtraEditors.DateEdit
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents GCPL As DevExpress.XtraGrid.GridControl
-    Friend WithEvents GVPL As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents GCDS As DevExpress.XtraGrid.GridControl
+    Friend WithEvents GVDS As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents GridColumnid_pl_sales_order_del As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnnumberDS As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumncreated_date As DevExpress.XtraGrid.Columns.GridColumn
 End Class

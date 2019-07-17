@@ -26,7 +26,12 @@
     Sub insert()
         Cursor = Cursors.WaitCursor
         If XTCRec.SelectedTabPageIndex = 0 Then
-
+            If XTCOwn.SelectedTabPageIndex = 1 And GVDS.RowCount > 0 And GVDS.FocusedRowHandle >= 0 Then
+                Cursor = Cursors.WaitCursor
+                FormRecOwnProduct.id_pl_sales_order_del = GVDS.GetFocusedRowCellValue("id_pl_sales_order_del").ToString
+                FormRecOwnProduct.ShowDialog()
+                Cursor = Cursors.Default
+            End If
         ElseIf XTCRec.SelectedTabPageIndex = 1 Then
             FormRecDet.action = "ins"
             FormRecDet.ShowDialog()
@@ -129,5 +134,43 @@
 
     Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
         insert()
+    End Sub
+
+    Sub viewDS()
+        Cursor = Cursors.WaitCursor
+        Dim query As String = "SELECT a.id_pl_sales_order_del, a.number, a.created_date 
+        FROM (
+	        SELECT d.id_pl_sales_order_del, d.number, d.created_date, (d.qty-IFNULL(r.qty,0)) AS `bal`
+	        FROM tb_delivery_slip d
+	        LEFT JOIN (
+		        SELECT rd.id_delivery_slip, SUM(rd.qty) AS `qty`
+		        FROM tb_rec_own_det rd
+		        INNER JOIN tb_rec_own r ON r.id_rec_own = rd.id_rec_own
+		        WHERE r.id_report_status!=5
+		        GROUP BY rd.id_delivery_slip
+	        ) r ON r.id_delivery_slip = d.id_delivery_slip
+	        HAVING bal>0
+        ) a
+        GROUP BY a.id_pl_sales_order_del "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        GCDS.DataSource = data
+        GVDS.BestFitColumns()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub XTCOwn_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCOwn.SelectedPageChanged
+        If XTCOwn.SelectedTabPageIndex = 0 Then
+        ElseIf XTCOwn.SelectedTabPageIndex = 1 Then
+            viewDS()
+        End If
+    End Sub
+
+    Private Sub GVDS_DoubleClick(sender As Object, e As EventArgs) Handles GVDS.DoubleClick
+        If GVDS.RowCount > 0 And GVDS.FocusedRowHandle >= 0 Then
+            Cursor = Cursors.WaitCursor
+            FormDeliverySlip.id = GVDS.GetFocusedRowCellValue("id_pl_sales_order_del").ToString
+            FormDeliverySlip.ShowDialog()
+            Cursor = Cursors.Default
+        End If
     End Sub
 End Class

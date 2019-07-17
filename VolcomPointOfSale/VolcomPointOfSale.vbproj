@@ -192,6 +192,12 @@
     <Compile Include="FormDatabase.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormDeliverySlip.Designer.vb">
+      <DependentUpon>FormDeliverySlip.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDeliverySlip.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormDept.Designer.vb">
       <DependentUpon>FormDept.vb</DependentUpon>
     </Compile>
@@ -328,6 +334,12 @@
       <DependentUpon>FormRecDet.vb</DependentUpon>
     </Compile>
     <Compile Include="FormRecDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRecOwnProduct.Designer.vb">
+      <DependentUpon>FormRecOwnProduct.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRecOwnProduct.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReportCopyReceipt.Designer.vb">
@@ -576,6 +588,9 @@
     <EmbeddedResource Include="FormDatabase.resx">
       <DependentUpon>FormDatabase.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDeliverySlip.resx">
+      <DependentUpon>FormDeliverySlip.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDept.resx">
       <DependentUpon>FormDept.vb</DependentUpon>
     </EmbeddedResource>
@@ -644,6 +659,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormRecDet.resx">
       <DependentUpon>FormRecDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRecOwnProduct.resx">
+      <DependentUpon>FormRecOwnProduct.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportCopyReceipt.resx">
       <DependentUpon>FormReportCopyReceipt.vb</DependentUpon>

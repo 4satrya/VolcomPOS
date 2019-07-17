@@ -710,9 +710,8 @@ Partial Class FormHome
         Me.Controls.Add(Me.barDockControlTop)
         Me.DoubleBuffered = True
         Me.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis Dark"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Light"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
         Me.Name = "FormHome"
         Me.Opacity = 0R
