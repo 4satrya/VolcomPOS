@@ -4,6 +4,9 @@
     End Sub
 
     Private Sub FormRec_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim dt_now As DateTime = getTimeDB()
+        DEFromOwn.EditValue = dt_now
+        DEUntilOwn.EditValue = dt_now
         viewRec()
     End Sub
 
@@ -28,6 +31,7 @@
         If XTCRec.SelectedTabPageIndex = 0 Then
             If XTCOwn.SelectedTabPageIndex = 1 And GVDS.RowCount > 0 And GVDS.FocusedRowHandle >= 0 Then
                 Cursor = Cursors.WaitCursor
+                FormRecOwnProduct.action = "ins"
                 FormRecOwnProduct.id_pl_sales_order_del = GVDS.GetFocusedRowCellValue("id_pl_sales_order_del").ToString
                 FormRecOwnProduct.ShowDialog()
                 Cursor = Cursors.Default
@@ -69,7 +73,11 @@
 
     Sub refreshData()
         If XTCRec.SelectedTabPageIndex = 0 Then
-
+            If XTCOwn.SelectedTabPageIndex = 0 Then
+                viewRecOwn()
+            ElseIf XTCOwn.SelectedTabPageIndex = 1 Then
+                viewDS()
+            End If
         ElseIf XTCRec.SelectedTabPageIndex = 1 Then
             viewRec()
         End If
@@ -83,6 +91,29 @@
         FormBlack.Show()
         print(GCRec, "Product List")
         FormBlack.Close()
+    End Sub
+
+    Sub viewRecOwn()
+        Cursor = Cursors.WaitCursor
+
+        Dim date_from As String = ""
+        Try
+            date_from = DateTime.Parse(DEFromOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+        Dim date_until As String = ""
+        Try
+            date_until = DateTime.Parse(DEUntilOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+
+        Dim cond As String = "AND (r.rec_date>='" + date_from + "' AND r.rec_date<='" + date_until + "' )"
+        Dim r As New ClassRec()
+        Dim query As String = r.queryMainOwn(cond, "2")
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        GCRecOwn.DataSource = data
+        GVRecOwn.BestFitColumns()
+        Cursor = Cursors.Default
     End Sub
 
     Sub viewRec()
@@ -172,5 +203,9 @@
             FormDeliverySlip.ShowDialog()
             Cursor = Cursors.Default
         End If
+    End Sub
+
+    Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
+        viewRecOwn()
     End Sub
 End Class

@@ -53,9 +53,9 @@ Partial Class FormRec
         Me.GVRecOwn = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
-        Me.DateEdit2 = New DevExpress.XtraEditors.DateEdit()
+        Me.DEUntilOwn = New DevExpress.XtraEditors.DateEdit()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
-        Me.DateEdit1 = New DevExpress.XtraEditors.DateEdit()
+        Me.DEFromOwn = New DevExpress.XtraEditors.DateEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.XTPPL = New DevExpress.XtraTab.XtraTabPage()
         Me.GCDS = New DevExpress.XtraGrid.GridControl()
@@ -64,6 +64,15 @@ Partial Class FormRec
         Me.GridColumnnumberDS = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumncreated_date = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.XTPOther = New DevExpress.XtraTab.XtraTabPage()
+        Me.GridColumnid_rec_own = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnrec_number = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnrec_date = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumncomp_from = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumncomp_to = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnprepared_by = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnreport_status = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumntotal_qty = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,10 +91,10 @@ Partial Class FormRec
         CType(Me.GVRecOwn, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
-        CType(Me.DateEdit2.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DateEdit2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DEUntilOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DEUntilOwn.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DEFromOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DEFromOwn.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.XTPPL.SuspendLayout()
         CType(Me.GCDS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVDS, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -375,19 +384,21 @@ Partial Class FormRec
         '
         'GVRecOwn
         '
+        Me.GVRecOwn.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_rec_own, Me.GridColumnrec_number, Me.GridColumn1, Me.GridColumnrec_date, Me.GridColumncomp_from, Me.GridColumncomp_to, Me.GridColumnprepared_by, Me.GridColumnreport_status, Me.GridColumntotal_qty})
         Me.GVRecOwn.GridControl = Me.GCRecOwn
         Me.GVRecOwn.Name = "GVRecOwn"
         Me.GVRecOwn.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVRecOwn.OptionsBehavior.Editable = False
         Me.GVRecOwn.OptionsFind.AlwaysVisible = True
+        Me.GVRecOwn.OptionsView.ShowFooter = True
         Me.GVRecOwn.OptionsView.ShowGroupPanel = False
         '
         'PanelControl2
         '
         Me.PanelControl2.Controls.Add(Me.BtnView)
-        Me.PanelControl2.Controls.Add(Me.DateEdit2)
+        Me.PanelControl2.Controls.Add(Me.DEUntilOwn)
         Me.PanelControl2.Controls.Add(Me.LabelControl2)
-        Me.PanelControl2.Controls.Add(Me.DateEdit1)
+        Me.PanelControl2.Controls.Add(Me.DEFromOwn)
         Me.PanelControl2.Controls.Add(Me.LabelControl1)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControl2.Location = New System.Drawing.Point(0, 0)
@@ -405,15 +416,17 @@ Partial Class FormRec
         Me.BtnView.TabIndex = 1
         Me.BtnView.Text = "View"
         '
-        'DateEdit2
+        'DEUntilOwn
         '
-        Me.DateEdit2.EditValue = Nothing
-        Me.DateEdit2.Location = New System.Drawing.Point(237, 11)
-        Me.DateEdit2.Name = "DateEdit2"
-        Me.DateEdit2.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit2.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit2.Size = New System.Drawing.Size(160, 20)
-        Me.DateEdit2.TabIndex = 4
+        Me.DEUntilOwn.EditValue = Nothing
+        Me.DEUntilOwn.Location = New System.Drawing.Point(237, 11)
+        Me.DEUntilOwn.Name = "DEUntilOwn"
+        Me.DEUntilOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEUntilOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEUntilOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DEUntilOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.DEUntilOwn.Size = New System.Drawing.Size(160, 20)
+        Me.DEUntilOwn.TabIndex = 4
         '
         'LabelControl2
         '
@@ -423,15 +436,17 @@ Partial Class FormRec
         Me.LabelControl2.TabIndex = 2
         Me.LabelControl2.Text = "Until"
         '
-        'DateEdit1
+        'DEFromOwn
         '
-        Me.DateEdit1.EditValue = Nothing
-        Me.DateEdit1.Location = New System.Drawing.Point(42, 11)
-        Me.DateEdit1.Name = "DateEdit1"
-        Me.DateEdit1.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit1.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DateEdit1.Size = New System.Drawing.Size(160, 20)
-        Me.DateEdit1.TabIndex = 3
+        Me.DEFromOwn.EditValue = Nothing
+        Me.DEFromOwn.Location = New System.Drawing.Point(42, 11)
+        Me.DEFromOwn.Name = "DEFromOwn"
+        Me.DEFromOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEFromOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEFromOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DEFromOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.DEFromOwn.Size = New System.Drawing.Size(160, 20)
+        Me.DEFromOwn.TabIndex = 3
         '
         'LabelControl1
         '
@@ -501,6 +516,81 @@ Partial Class FormRec
         Me.XTPOther.Size = New System.Drawing.Size(887, 498)
         Me.XTPOther.Text = "Other Product"
         '
+        'GridColumnid_rec_own
+        '
+        Me.GridColumnid_rec_own.Caption = "Id"
+        Me.GridColumnid_rec_own.FieldName = "id_rec_own"
+        Me.GridColumnid_rec_own.Name = "GridColumnid_rec_own"
+        '
+        'GridColumnrec_number
+        '
+        Me.GridColumnrec_number.Caption = "Number"
+        Me.GridColumnrec_number.FieldName = "rec_number"
+        Me.GridColumnrec_number.Name = "GridColumnrec_number"
+        Me.GridColumnrec_number.Visible = True
+        Me.GridColumnrec_number.VisibleIndex = 0
+        '
+        'GridColumnrec_date
+        '
+        Me.GridColumnrec_date.Caption = "Created Date"
+        Me.GridColumnrec_date.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.GridColumnrec_date.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.GridColumnrec_date.FieldName = "rec_date"
+        Me.GridColumnrec_date.Name = "GridColumnrec_date"
+        Me.GridColumnrec_date.Visible = True
+        Me.GridColumnrec_date.VisibleIndex = 2
+        '
+        'GridColumn1
+        '
+        Me.GridColumn1.Caption = "Delivery Slip#"
+        Me.GridColumn1.FieldName = "ref"
+        Me.GridColumn1.Name = "GridColumn1"
+        Me.GridColumn1.Visible = True
+        Me.GridColumn1.VisibleIndex = 1
+        '
+        'GridColumncomp_from
+        '
+        Me.GridColumncomp_from.Caption = "From"
+        Me.GridColumncomp_from.FieldName = "comp_from"
+        Me.GridColumncomp_from.Name = "GridColumncomp_from"
+        Me.GridColumncomp_from.Visible = True
+        Me.GridColumncomp_from.VisibleIndex = 3
+        '
+        'GridColumncomp_to
+        '
+        Me.GridColumncomp_to.Caption = "To"
+        Me.GridColumncomp_to.FieldName = "comp_to"
+        Me.GridColumncomp_to.Name = "GridColumncomp_to"
+        Me.GridColumncomp_to.Visible = True
+        Me.GridColumncomp_to.VisibleIndex = 4
+        '
+        'GridColumnprepared_by
+        '
+        Me.GridColumnprepared_by.Caption = "Prepared By"
+        Me.GridColumnprepared_by.FieldName = "prepared_by"
+        Me.GridColumnprepared_by.Name = "GridColumnprepared_by"
+        Me.GridColumnprepared_by.Visible = True
+        Me.GridColumnprepared_by.VisibleIndex = 6
+        '
+        'GridColumnreport_status
+        '
+        Me.GridColumnreport_status.Caption = "Status"
+        Me.GridColumnreport_status.FieldName = "report_status"
+        Me.GridColumnreport_status.Name = "GridColumnreport_status"
+        Me.GridColumnreport_status.Visible = True
+        Me.GridColumnreport_status.VisibleIndex = 7
+        '
+        'GridColumntotal_qty
+        '
+        Me.GridColumntotal_qty.Caption = "Total Qty"
+        Me.GridColumntotal_qty.DisplayFormat.FormatString = "N0"
+        Me.GridColumntotal_qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumntotal_qty.FieldName = "total_qty"
+        Me.GridColumntotal_qty.Name = "GridColumntotal_qty"
+        Me.GridColumntotal_qty.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "total_qty", "{0:N0}")})
+        Me.GridColumntotal_qty.Visible = True
+        Me.GridColumntotal_qty.VisibleIndex = 5
+        '
         'FormRec
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -536,10 +626,10 @@ Partial Class FormRec
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
-        CType(Me.DateEdit2.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DateEdit2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DateEdit1.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DateEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DEUntilOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DEUntilOwn.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DEFromOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DEFromOwn.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.XTPPL.ResumeLayout(False)
         CType(Me.GCDS, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVDS, System.ComponentModel.ISupportInitialize).EndInit()
@@ -582,13 +672,22 @@ Partial Class FormRec
     Friend WithEvents GVRecOwn As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents BtnView As DevExpress.XtraEditors.SimpleButton
-    Friend WithEvents DateEdit2 As DevExpress.XtraEditors.DateEdit
+    Friend WithEvents DEUntilOwn As DevExpress.XtraEditors.DateEdit
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents DateEdit1 As DevExpress.XtraEditors.DateEdit
+    Friend WithEvents DEFromOwn As DevExpress.XtraEditors.DateEdit
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents GCDS As DevExpress.XtraGrid.GridControl
     Friend WithEvents GVDS As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents GridColumnid_pl_sales_order_del As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnnumberDS As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumncreated_date As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnid_rec_own As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnrec_number As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumn1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnrec_date As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumncomp_from As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumncomp_to As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnprepared_by As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnreport_status As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumntotal_qty As DevExpress.XtraGrid.Columns.GridColumn
 End Class

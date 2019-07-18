@@ -457,4 +457,8 @@
             TxtItemCode.Focus()
         End If
     End Sub
+
+    Private Sub PanelControl3_Paint(sender As Object, e As PaintEventArgs) Handles PanelControl3.Paint
+
+    End Sub
 End Class
