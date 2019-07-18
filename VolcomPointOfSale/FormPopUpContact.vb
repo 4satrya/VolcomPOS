@@ -152,6 +152,15 @@
             Close()
         ElseIf id_pop_up = "10" Then
             ' receive own product
+            If FormRecOwnProduct.GVData.RowCount > 0 Then
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("This action will be remove all product scanned. Are you sure you want to continue this action ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    FormRecOwnProduct.viewDetail()
+                Else
+                    Close()
+                    Exit Sub
+                End If
+            End If
             FormRecOwnProduct.id_comp_to = GVCompany.GetFocusedRowCellValue("id_comp").ToString
             FormRecOwnProduct.TxtToCode.Text =GVCompany.GetFocusedRowCellValue("comp_number").ToString
             FormRecOwnProduct.TxtToName.Text = GVCompany.GetFocusedRowCellValue("comp_name").ToString

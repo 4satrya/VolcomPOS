@@ -51,6 +51,15 @@ Partial Class FormRec
         Me.XTPRecList = New DevExpress.XtraTab.XtraTabPage()
         Me.GCRecOwn = New DevExpress.XtraGrid.GridControl()
         Me.GVRecOwn = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumnid_rec_own = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnrec_number = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnrec_date = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumncomp_from = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumncomp_to = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnprepared_by = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnreport_status = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumntotal_qty = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
         Me.DEUntilOwn = New DevExpress.XtraEditors.DateEdit()
@@ -64,15 +73,6 @@ Partial Class FormRec
         Me.GridColumnnumberDS = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumncreated_date = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.XTPOther = New DevExpress.XtraTab.XtraTabPage()
-        Me.GridColumnid_rec_own = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnrec_number = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnrec_date = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumncomp_from = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumncomp_to = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnprepared_by = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnreport_status = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumntotal_qty = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -393,6 +393,81 @@ Partial Class FormRec
         Me.GVRecOwn.OptionsView.ShowFooter = True
         Me.GVRecOwn.OptionsView.ShowGroupPanel = False
         '
+        'GridColumnid_rec_own
+        '
+        Me.GridColumnid_rec_own.Caption = "Id"
+        Me.GridColumnid_rec_own.FieldName = "id_rec_own"
+        Me.GridColumnid_rec_own.Name = "GridColumnid_rec_own"
+        '
+        'GridColumnrec_number
+        '
+        Me.GridColumnrec_number.Caption = "Number"
+        Me.GridColumnrec_number.FieldName = "rec_number"
+        Me.GridColumnrec_number.Name = "GridColumnrec_number"
+        Me.GridColumnrec_number.Visible = True
+        Me.GridColumnrec_number.VisibleIndex = 0
+        '
+        'GridColumn1
+        '
+        Me.GridColumn1.Caption = "Delivery Slip#"
+        Me.GridColumn1.FieldName = "ref"
+        Me.GridColumn1.Name = "GridColumn1"
+        Me.GridColumn1.Visible = True
+        Me.GridColumn1.VisibleIndex = 1
+        '
+        'GridColumnrec_date
+        '
+        Me.GridColumnrec_date.Caption = "Created Date"
+        Me.GridColumnrec_date.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.GridColumnrec_date.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.GridColumnrec_date.FieldName = "rec_date"
+        Me.GridColumnrec_date.Name = "GridColumnrec_date"
+        Me.GridColumnrec_date.Visible = True
+        Me.GridColumnrec_date.VisibleIndex = 2
+        '
+        'GridColumncomp_from
+        '
+        Me.GridColumncomp_from.Caption = "From"
+        Me.GridColumncomp_from.FieldName = "comp_from"
+        Me.GridColumncomp_from.Name = "GridColumncomp_from"
+        Me.GridColumncomp_from.Visible = True
+        Me.GridColumncomp_from.VisibleIndex = 3
+        '
+        'GridColumncomp_to
+        '
+        Me.GridColumncomp_to.Caption = "To"
+        Me.GridColumncomp_to.FieldName = "comp_to"
+        Me.GridColumncomp_to.Name = "GridColumncomp_to"
+        Me.GridColumncomp_to.Visible = True
+        Me.GridColumncomp_to.VisibleIndex = 4
+        '
+        'GridColumnprepared_by
+        '
+        Me.GridColumnprepared_by.Caption = "Prepared By"
+        Me.GridColumnprepared_by.FieldName = "prepared_by"
+        Me.GridColumnprepared_by.Name = "GridColumnprepared_by"
+        Me.GridColumnprepared_by.Visible = True
+        Me.GridColumnprepared_by.VisibleIndex = 6
+        '
+        'GridColumnreport_status
+        '
+        Me.GridColumnreport_status.Caption = "Status"
+        Me.GridColumnreport_status.FieldName = "report_status"
+        Me.GridColumnreport_status.Name = "GridColumnreport_status"
+        Me.GridColumnreport_status.Visible = True
+        Me.GridColumnreport_status.VisibleIndex = 7
+        '
+        'GridColumntotal_qty
+        '
+        Me.GridColumntotal_qty.Caption = "Total Qty"
+        Me.GridColumntotal_qty.DisplayFormat.FormatString = "N0"
+        Me.GridColumntotal_qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumntotal_qty.FieldName = "total_qty"
+        Me.GridColumntotal_qty.Name = "GridColumntotal_qty"
+        Me.GridColumntotal_qty.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "total_qty", "{0:N0}")})
+        Me.GridColumntotal_qty.Visible = True
+        Me.GridColumntotal_qty.VisibleIndex = 5
+        '
         'PanelControl2
         '
         Me.PanelControl2.Controls.Add(Me.BtnView)
@@ -515,81 +590,6 @@ Partial Class FormRec
         Me.XTPOther.Name = "XTPOther"
         Me.XTPOther.Size = New System.Drawing.Size(887, 498)
         Me.XTPOther.Text = "Other Product"
-        '
-        'GridColumnid_rec_own
-        '
-        Me.GridColumnid_rec_own.Caption = "Id"
-        Me.GridColumnid_rec_own.FieldName = "id_rec_own"
-        Me.GridColumnid_rec_own.Name = "GridColumnid_rec_own"
-        '
-        'GridColumnrec_number
-        '
-        Me.GridColumnrec_number.Caption = "Number"
-        Me.GridColumnrec_number.FieldName = "rec_number"
-        Me.GridColumnrec_number.Name = "GridColumnrec_number"
-        Me.GridColumnrec_number.Visible = True
-        Me.GridColumnrec_number.VisibleIndex = 0
-        '
-        'GridColumnrec_date
-        '
-        Me.GridColumnrec_date.Caption = "Created Date"
-        Me.GridColumnrec_date.DisplayFormat.FormatString = "dd MMMM yyyy"
-        Me.GridColumnrec_date.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-        Me.GridColumnrec_date.FieldName = "rec_date"
-        Me.GridColumnrec_date.Name = "GridColumnrec_date"
-        Me.GridColumnrec_date.Visible = True
-        Me.GridColumnrec_date.VisibleIndex = 2
-        '
-        'GridColumn1
-        '
-        Me.GridColumn1.Caption = "Delivery Slip#"
-        Me.GridColumn1.FieldName = "ref"
-        Me.GridColumn1.Name = "GridColumn1"
-        Me.GridColumn1.Visible = True
-        Me.GridColumn1.VisibleIndex = 1
-        '
-        'GridColumncomp_from
-        '
-        Me.GridColumncomp_from.Caption = "From"
-        Me.GridColumncomp_from.FieldName = "comp_from"
-        Me.GridColumncomp_from.Name = "GridColumncomp_from"
-        Me.GridColumncomp_from.Visible = True
-        Me.GridColumncomp_from.VisibleIndex = 3
-        '
-        'GridColumncomp_to
-        '
-        Me.GridColumncomp_to.Caption = "To"
-        Me.GridColumncomp_to.FieldName = "comp_to"
-        Me.GridColumncomp_to.Name = "GridColumncomp_to"
-        Me.GridColumncomp_to.Visible = True
-        Me.GridColumncomp_to.VisibleIndex = 4
-        '
-        'GridColumnprepared_by
-        '
-        Me.GridColumnprepared_by.Caption = "Prepared By"
-        Me.GridColumnprepared_by.FieldName = "prepared_by"
-        Me.GridColumnprepared_by.Name = "GridColumnprepared_by"
-        Me.GridColumnprepared_by.Visible = True
-        Me.GridColumnprepared_by.VisibleIndex = 6
-        '
-        'GridColumnreport_status
-        '
-        Me.GridColumnreport_status.Caption = "Status"
-        Me.GridColumnreport_status.FieldName = "report_status"
-        Me.GridColumnreport_status.Name = "GridColumnreport_status"
-        Me.GridColumnreport_status.Visible = True
-        Me.GridColumnreport_status.VisibleIndex = 7
-        '
-        'GridColumntotal_qty
-        '
-        Me.GridColumntotal_qty.Caption = "Total Qty"
-        Me.GridColumntotal_qty.DisplayFormat.FormatString = "N0"
-        Me.GridColumntotal_qty.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumntotal_qty.FieldName = "total_qty"
-        Me.GridColumntotal_qty.Name = "GridColumntotal_qty"
-        Me.GridColumntotal_qty.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "total_qty", "{0:N0}")})
-        Me.GridColumntotal_qty.Visible = True
-        Me.GridColumntotal_qty.VisibleIndex = 5
         '
         'FormRec
         '

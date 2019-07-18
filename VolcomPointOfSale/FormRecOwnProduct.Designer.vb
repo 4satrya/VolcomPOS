@@ -67,6 +67,18 @@ Partial Class FormRecOwnProduct
         Me.GridColumnamount = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumndiff = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnno = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_rec_own_det = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_delivery_slipdet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_product = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_design = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnitem_codedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnitem_namedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnsizedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnpricedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumndesign_catdet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnqtydet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnamountdet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnis_unique_code = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -329,6 +341,7 @@ Partial Class FormRecOwnProduct
         '
         'GVData
         '
+        Me.GVData.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_rec_own_det, Me.GridColumnid_delivery_slipdet, Me.GridColumnid_product, Me.GridColumnid_design, Me.GridColumnitem_codedet, Me.GridColumnitem_namedet, Me.GridColumnsizedet, Me.GridColumnpricedet, Me.GridColumndesign_catdet, Me.GridColumnqtydet, Me.GridColumnamountdet})
         Me.GVData.GridControl = Me.GCData
         Me.GVData.Name = "GVData"
         Me.GVData.OptionsBehavior.AutoExpandAllGroups = True
@@ -460,7 +473,7 @@ Partial Class FormRecOwnProduct
         '
         'GVSummary
         '
-        Me.GVSummary.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_delivery_slip, Me.GridColumnitem_code, Me.GridColumnitem_name, Me.GridColumnsize, Me.GridColumnprice, Me.GridColumndesign_cat, Me.GridColumnqty_avl, Me.GridColumnqty, Me.GridColumnamount, Me.GridColumndiff, Me.GridColumnno})
+        Me.GVSummary.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_delivery_slip, Me.GridColumnitem_code, Me.GridColumnitem_name, Me.GridColumnsize, Me.GridColumnprice, Me.GridColumndesign_cat, Me.GridColumnqty_avl, Me.GridColumnqty, Me.GridColumnamount, Me.GridColumndiff, Me.GridColumnno, Me.GridColumnis_unique_code})
         Me.GVSummary.GridControl = Me.GCSummary
         Me.GVSummary.Name = "GVSummary"
         Me.GVSummary.OptionsBehavior.AutoExpandAllGroups = True
@@ -572,6 +585,94 @@ Partial Class FormRecOwnProduct
         Me.GridColumnno.Visible = True
         Me.GridColumnno.VisibleIndex = 0
         '
+        'GridColumnid_rec_own_det
+        '
+        Me.GridColumnid_rec_own_det.Caption = "id_rec_own_det"
+        Me.GridColumnid_rec_own_det.FieldName = "id_rec_own_det"
+        Me.GridColumnid_rec_own_det.Name = "GridColumnid_rec_own_det"
+        '
+        'GridColumnid_delivery_slipdet
+        '
+        Me.GridColumnid_delivery_slipdet.Caption = "id_delivery_slip"
+        Me.GridColumnid_delivery_slipdet.FieldName = "id_delivery_slip"
+        Me.GridColumnid_delivery_slipdet.Name = "GridColumnid_delivery_slipdet"
+        '
+        'GridColumnid_product
+        '
+        Me.GridColumnid_product.Caption = "id_product"
+        Me.GridColumnid_product.FieldName = "id_product"
+        Me.GridColumnid_product.Name = "GridColumnid_product"
+        '
+        'GridColumnid_design
+        '
+        Me.GridColumnid_design.Caption = "id_design"
+        Me.GridColumnid_design.FieldName = "id_design"
+        Me.GridColumnid_design.Name = "GridColumnid_design"
+        '
+        'GridColumnitem_codedet
+        '
+        Me.GridColumnitem_codedet.Caption = "Code"
+        Me.GridColumnitem_codedet.FieldName = "item_code"
+        Me.GridColumnitem_codedet.Name = "GridColumnitem_codedet"
+        Me.GridColumnitem_codedet.Visible = True
+        Me.GridColumnitem_codedet.VisibleIndex = 0
+        '
+        'GridColumnitem_namedet
+        '
+        Me.GridColumnitem_namedet.Caption = "Name"
+        Me.GridColumnitem_namedet.FieldName = "item_name"
+        Me.GridColumnitem_namedet.Name = "GridColumnitem_namedet"
+        Me.GridColumnitem_namedet.Visible = True
+        Me.GridColumnitem_namedet.VisibleIndex = 1
+        '
+        'GridColumnsizedet
+        '
+        Me.GridColumnsizedet.Caption = "Size"
+        Me.GridColumnsizedet.FieldName = "size"
+        Me.GridColumnsizedet.Name = "GridColumnsizedet"
+        Me.GridColumnsizedet.Visible = True
+        Me.GridColumnsizedet.VisibleIndex = 2
+        '
+        'GridColumnpricedet
+        '
+        Me.GridColumnpricedet.Caption = "Price"
+        Me.GridColumnpricedet.DisplayFormat.FormatString = "N2"
+        Me.GridColumnpricedet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnpricedet.FieldName = "price"
+        Me.GridColumnpricedet.Name = "GridColumnpricedet"
+        '
+        'GridColumndesign_catdet
+        '
+        Me.GridColumndesign_catdet.Caption = "Price Type"
+        Me.GridColumndesign_catdet.FieldName = "design_cat"
+        Me.GridColumndesign_catdet.Name = "GridColumndesign_catdet"
+        '
+        'GridColumnqtydet
+        '
+        Me.GridColumnqtydet.Caption = "Qty"
+        Me.GridColumnqtydet.DisplayFormat.FormatString = "N0"
+        Me.GridColumnqtydet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnqtydet.FieldName = "qty"
+        Me.GridColumnqtydet.Name = "GridColumnqtydet"
+        Me.GridColumnqtydet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty", "{0:N0}")})
+        '
+        'GridColumnamountdet
+        '
+        Me.GridColumnamountdet.Caption = "Amount"
+        Me.GridColumnamountdet.DisplayFormat.FormatString = "N2"
+        Me.GridColumnamountdet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnamountdet.FieldName = "amount"
+        Me.GridColumnamountdet.Name = "GridColumnamountdet"
+        Me.GridColumnamountdet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "amount", "{0:N2}")})
+        Me.GridColumnamountdet.UnboundExpression = "[qty] * [price]"
+        Me.GridColumnamountdet.UnboundType = DevExpress.Data.UnboundColumnType.[Decimal]
+        '
+        'GridColumnis_unique_code
+        '
+        Me.GridColumnis_unique_code.Caption = "is_unique_code"
+        Me.GridColumnis_unique_code.FieldName = "is_unique_code"
+        Me.GridColumnis_unique_code.Name = "GridColumnis_unique_code"
+        '
         'FormRecOwnProduct
         '
         Me.Appearance.Options.UseFont = True
@@ -673,4 +774,16 @@ Partial Class FormRecOwnProduct
     Friend WithEvents GridColumnamount As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumndiff As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnno As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnid_rec_own_det As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnid_delivery_slipdet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnid_product As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnid_design As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnitem_codedet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnitem_namedet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnsizedet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnpricedet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumndesign_catdet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnqtydet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnamountdet As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnis_unique_code As DevExpress.XtraGrid.Columns.GridColumn
 End Class

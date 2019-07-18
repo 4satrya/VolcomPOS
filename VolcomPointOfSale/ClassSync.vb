@@ -471,7 +471,8 @@ Public Class ClassSync
 	            `qty`,
 	            `id_design_cat`,
 	            `price`,
-	            `is_combine`
+	            `is_combine`,
+                `is_unique_code`
             ) 
             SELECT 
             `id_pl_sales_order_del`,
@@ -491,7 +492,8 @@ Public Class ClassSync
             `qty`,
             `id_design_cat`,
             `price`,
-            `is_combine`
+            `is_combine`,
+            `is_unique_code`
             FROM db_sync.tb_sync_delivery "
             execute_non_query(query, True, "", "", "", "")
         Catch ex As Exception

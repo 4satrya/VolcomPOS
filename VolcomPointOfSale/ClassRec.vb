@@ -67,7 +67,7 @@
 
     Public Function dataBalRecOwnProduct(ByVal id_pl As String) As DataTable
         Dim query As String = "SELECT del.id_delivery_slip, del.id_product, del.id_design, del.item_code, del.item_name, del.id_size, sz.size, 
-        del.price, del.id_design_cat, dcat.design_cat, (del.qty-IFNULL(rec.qty_rec,0)) AS `qty_avl`, 0 AS `qty`
+        del.price, del.id_design_cat, dcat.design_cat, (del.qty-IFNULL(rec.qty_rec,0)) AS `qty_avl`, 0 AS `qty`, del.is_unique_code
         FROM tb_delivery_slip del
         INNER JOIN tb_size sz ON sz.id_code_detail = del.id_size
         INNER JOIN tb_lookup_design_cat dcat ON dcat.id_design_cat = del.id_design_cat
