@@ -397,12 +397,40 @@
                 Cursor = Cursors.WaitCursor
                 Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to save changes this transaction and set status to '" + LEReportStatus.Text + "' ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
                 If confirm = DialogResult.Yes Then
+                    'jika completed masuk master dan stok
+                    If id_report_status_saved = "6" Then
+                        'masuk ke master
+                        Dim qf As String = "/*master*/
+                        INSERT INTO tb_item (`id_size`,`id_class`,`id_color`,`id_comp_sup`,`id_so_type`,`id_design_cat`,`item_code` ,
+                        `item_name`,`price`,`price_date`,`comm`,`id_product`,`is_active`,`is_own_product`, `is_unique_code`,`last_updated`)
+                        SELECT sz.`id_size`,cls.`id_class`,ds.`id_color`, str.id_comp AS `id_comp_sup`, 1 AS `id_so_type`, ds.id_design_cat, ds.item_code,
+                        ds.`item_name`,ds.`price`, NOW() AS `price_date`, str.comp_commission AS `comm`, ds.id_product, 1, 1, ds.is_unique_code, NOW()
+                        FROM tb_rec_own_det rd 
+                        INNER JOIN tb_delivery_slip ds ON ds.id_delivery_slip = rd.id_delivery_slip
+                        INNER JOIN tb_size sz ON sz.id_code_detail = ds.id_size
+                        INNER JOIN tb_class cls ON cls.id_code_detail = ds.id_class
+                        INNER JOIN tb_m_comp str ON str.id_comp = ds.id_store
+                        LEFT JOIN tb_item i ON i.item_code = ds.item_code
+                        WHERE rd.id_rec_own=" + id + " AND ISNULL(i.id_item);
+                        /*storage*/
+                        INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status)
+                        SELECT r.id_comp_to, 1, i.id_item, 8, r.id_rec_own, rd.qty, NOW(), 1
+                        FROM tb_rec_own_det rd 
+                        INNER JOIN tb_rec_own r ON r.id_rec_own = rd.id_rec_own
+                        INNER JOIN tb_delivery_slip ds ON ds.id_delivery_slip = rd.id_delivery_slip
+                        INNER JOIN tb_m_comp str ON str.id_comp = ds.id_store
+                        INNER JOIN tb_item i ON i.item_code = ds.item_code
+                        WHERE rd.id_rec_own=" + id + "; "
+                        execute_non_query(qf, True, "", "", "", "")
+                    End If
+
                     Dim query As String = "UPDATE tb_rec_own SET rec_note='" + rec_note + "', id_report_status=" + id_report_status_saved + " "
-                    If id_report_status = "6" Or id_report_status = "5" Then
+                    If id_report_status_saved = "6" Or id_report_status_saved = "5" Then
                         query += ", final_status_time=NOW() "
                     End If
                     query += "WHERE id_rec_own=" + id + " "
                     execute_non_query(query, True, "", "", "", "")
+
 
                     'refresh
                     action = "upd"
