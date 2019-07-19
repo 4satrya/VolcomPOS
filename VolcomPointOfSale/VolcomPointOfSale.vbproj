@@ -508,6 +508,12 @@
     <Compile Include="ReportRec.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportRecOwn.Designer.vb">
+      <DependentUpon>ReportRecOwn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRecOwn.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ReportRet.Designer.vb">
       <DependentUpon>ReportRet.vb</DependentUpon>
     </Compile>
@@ -748,6 +754,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReportRec.resx">
       <DependentUpon>ReportRec.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportRecOwn.resx">
+      <DependentUpon>ReportRecOwn.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportRet.resx">
       <DependentUpon>ReportRet.vb</DependentUpon>

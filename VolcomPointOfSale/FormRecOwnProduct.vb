@@ -6,6 +6,8 @@
     Dim ref_date As String = ""
     Public action As String = "-1"
     Dim id_report_status As String = "-1"
+    Dim role_prepared As String = ""
+    Dim spv As String = ""
 
     Private Sub FormRecOwnProduct_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         viewReportStatus()
@@ -57,6 +59,8 @@
             MENote.Text = data.Rows(0)("rec_note").ToString
             id_report_status = data.Rows(0)("id_report_status").ToString
             LEReportStatus.ItemIndex = LEReportStatus.Properties.GetDataSourceRowIndex("id_report_status", data.Rows(0)("id_report_status").ToString)
+            role_prepared = data.Rows(0)("role").ToString
+            spv = get_setup_field("spv").ToString
 
             viewSummary()
             viewDetail()
@@ -276,7 +280,43 @@
     End Sub
 
     Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        Cursor = Cursors.WaitCursor
+        FormBlack.Show()
+        ReportRecOwn.id = id
+        ReportRecOwn.dt = GCSummary.DataSource
+        Dim Report As New ReportRecOwn()
 
+        ' '... 
+        ' ' creating and saving the view's layout to a new memory stream 
+        Dim str As System.IO.Stream
+        str = New System.IO.MemoryStream()
+        GVSummary.SaveLayoutToStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
+        str.Seek(0, System.IO.SeekOrigin.Begin)
+        Report.GVSummary.RestoreLayoutFromStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
+        str.Seek(0, System.IO.SeekOrigin.Begin)
+
+        'Grid Detail
+        ReportStyleGridview(Report.GVSummary)
+
+        'Parse val
+        Report.LabelFrom.Text = TxtFromCode.Text + " - " + TxtFromName.Text
+        Report.LabelTo.Text = TxtToCode.Text + " - " + TxtToName.Text
+        Report.LRecNumber.Text = TxtRecNumber.Text
+        Report.LRecDate.Text = DECreated.Text
+        Report.LabelNote.Text = MENote.Text
+        Report.LabelRef.Text = TxtDelSlip.Text
+        Report.LabelStatus.Text = LEReportStatus.Text
+        Report.LabelPreparedBy.Text = TxtPreparedBy.Text.ToUpper
+        Report.LabelRoleBy.Text = role_prepared
+        'Report.LabelAckFrom.Text = TxtNameCompFrom.Text
+        Report.LabelSpv.Text = spv.ToUpper
+
+
+        ' Show the report's preview. 
+        Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
+        Tool.ShowPreviewDialog()
+        FormBlack.Close()
+        Cursor = Cursors.Default
     End Sub
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click

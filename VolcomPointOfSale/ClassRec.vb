@@ -49,13 +49,14 @@
         r.id_comp_from, cfr.comp_number AS `comp_number_from`, cfr.comp_name AS `comp_name_from`, CONCAT(cfr.comp_number, ' - ', cfr.comp_name) AS `comp_from`,
         r.id_comp_to, cto.comp_number AS `comp_number_to`, cto.comp_name AS `comp_name_to`, CONCAT(cto.comp_number, ' - ', cto.comp_name) AS `comp_to`,
         r.rec_number, r.rec_date,
-        r.id_pl_sales_order_del, r.ref, r.rec_note, r.id_prepared_by, emp.employee_name AS `prepared_by`, 
+        r.id_pl_sales_order_del, r.ref, r.rec_note, r.id_prepared_by, emp.employee_name AS `prepared_by`, rl.role,
         r.id_report_status, stt.report_status, r.final_status_time, SUM(rd.qty) AS `total_qty`
         FROM tb_rec_own r
         INNER JOIN tb_rec_own_det rd ON rd.id_rec_own = r.id_rec_own
         INNER JOIN tb_m_comp cfr ON cfr.id_comp = r.id_comp_from
         INNER JOIN tb_m_comp cto ON cto.id_comp = r.id_comp_to
         INNER JOIN tb_user u ON u.id_user = r.id_prepared_by
+        INNER JOIN tb_role rl ON rl.id_role = u.id_role
         INNER JOIN tb_m_employee emp ON emp.id_employee = u.id_employee
         INNER JOIN tb_lookup_report_status stt ON stt.id_report_status = r.id_report_status
         WHERE r.id_rec_own>0 "

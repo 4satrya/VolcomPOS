@@ -56,6 +56,7 @@ Partial Public Class ReportRec
         Me.BottomMargin = New DevExpress.XtraReports.UI.BottomMarginBand()
         Me.XrPageInfo1 = New DevExpress.XtraReports.UI.XRPageInfo()
         Me.PageFooter = New DevExpress.XtraReports.UI.PageFooterBand()
+        Me.LabelRoleBy = New DevExpress.XtraReports.UI.XRLabel()
         Me.LabelSpv = New DevExpress.XtraReports.UI.XRLabel()
         Me.XrLabel19 = New DevExpress.XtraReports.UI.XRLabel()
         Me.XrLabel13 = New DevExpress.XtraReports.UI.XRLabel()
@@ -67,7 +68,6 @@ Partial Public Class ReportRec
         Me.LabelNote = New DevExpress.XtraReports.UI.XRLabel()
         Me.XrLabel9 = New DevExpress.XtraReports.UI.XRLabel()
         Me.XrLabel14 = New DevExpress.XtraReports.UI.XRLabel()
-        Me.LabelRoleBy = New DevExpress.XtraReports.UI.XRLabel()
         CType(Me.GCScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -506,6 +506,20 @@ Partial Public Class ReportRec
         Me.PageFooter.HeightF = 188.3335!
         Me.PageFooter.Name = "PageFooter"
         '
+        'LabelRoleBy
+        '
+        Me.LabelRoleBy.Borders = DevExpress.XtraPrinting.BorderSide.None
+        Me.LabelRoleBy.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelRoleBy.LocationFloat = New DevExpress.Utils.PointFloat(2.000014!, 169.1666!)
+        Me.LabelRoleBy.Name = "LabelRoleBy"
+        Me.LabelRoleBy.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100.0!)
+        Me.LabelRoleBy.SizeF = New System.Drawing.SizeF(179.5138!, 15.00009!)
+        Me.LabelRoleBy.StylePriority.UseBorders = False
+        Me.LabelRoleBy.StylePriority.UseFont = False
+        Me.LabelRoleBy.StylePriority.UseTextAlignment = False
+        Me.LabelRoleBy.Text = "Role Name"
+        Me.LabelRoleBy.TextAlignment = DevExpress.XtraPrinting.TextAlignment.BottomLeft
+        '
         'LabelSpv
         '
         Me.LabelSpv.Borders = DevExpress.XtraPrinting.BorderSide.None
@@ -547,6 +561,7 @@ Partial Public Class ReportRec
         Me.XrLabel13.StylePriority.UseTextAlignment = False
         Me.XrLabel13.Text = "Vendor"
         Me.XrLabel13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.BottomLeft
+        Me.XrLabel13.Visible = False
         '
         'LabelAckFrom
         '
@@ -561,12 +576,13 @@ Partial Public Class ReportRec
         Me.LabelAckFrom.StylePriority.UseTextAlignment = False
         Me.LabelAckFrom.Text = "PT VOLCOM INDO"
         Me.LabelAckFrom.TextAlignment = DevExpress.XtraPrinting.TextAlignment.BottomLeft
+        Me.LabelAckFrom.Visible = False
         '
         'XrLabel18
         '
         Me.XrLabel18.Borders = DevExpress.XtraPrinting.BorderSide.None
         Me.XrLabel18.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.XrLabel18.LocationFloat = New DevExpress.Utils.PointFloat(435.3687!, 63.33917!)
+        Me.XrLabel18.LocationFloat = New DevExpress.Utils.PointFloat(312.1492!, 63.33917!)
         Me.XrLabel18.Name = "XrLabel18"
         Me.XrLabel18.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100.0!)
         Me.XrLabel18.SizeF = New System.Drawing.SizeF(166.222!, 19.16673!)
@@ -651,20 +667,6 @@ Partial Public Class ReportRec
         Me.XrLabel14.StylePriority.UseBorders = False
         Me.XrLabel14.StylePriority.UseFont = False
         Me.XrLabel14.Text = ":"
-        '
-        'LabelRoleBy
-        '
-        Me.LabelRoleBy.Borders = DevExpress.XtraPrinting.BorderSide.None
-        Me.LabelRoleBy.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelRoleBy.LocationFloat = New DevExpress.Utils.PointFloat(2.000014!, 169.1666!)
-        Me.LabelRoleBy.Name = "LabelRoleBy"
-        Me.LabelRoleBy.Padding = New DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100.0!)
-        Me.LabelRoleBy.SizeF = New System.Drawing.SizeF(179.5138!, 15.00009!)
-        Me.LabelRoleBy.StylePriority.UseBorders = False
-        Me.LabelRoleBy.StylePriority.UseFont = False
-        Me.LabelRoleBy.StylePriority.UseTextAlignment = False
-        Me.LabelRoleBy.Text = "Role Name"
-        Me.LabelRoleBy.TextAlignment = DevExpress.XtraPrinting.TextAlignment.BottomLeft
         '
         'ReportRec
         '
