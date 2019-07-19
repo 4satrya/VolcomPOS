@@ -43,10 +43,21 @@ Partial Class FormRecOwnProduct
         Me.TxtFromCode = New DevExpress.XtraEditors.TextEdit()
         Me.GCData = New DevExpress.XtraGrid.GridControl()
         Me.GVData = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumnid_rec_own_det = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_delivery_slipdet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_product = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnid_design = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnitem_codedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnitem_namedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnsizedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnpricedet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumndesign_catdet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnqtydet = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnamountdet = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
         Me.LEReportStatus = New DevExpress.XtraEditors.LookUpEdit()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
-        Me.MemoEdit1 = New DevExpress.XtraEditors.MemoEdit()
+        Me.MENote = New DevExpress.XtraEditors.MemoEdit()
         Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlNav = New DevExpress.XtraEditors.PanelControl()
         Me.TxtItemCode = New DevExpress.XtraEditors.TextEdit()
@@ -67,17 +78,6 @@ Partial Class FormRecOwnProduct
         Me.GridColumnamount = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumndiff = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnno = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnid_rec_own_det = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnid_delivery_slipdet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnid_product = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnid_design = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnitem_codedet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnitem_namedet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnsizedet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnpricedet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumndesign_catdet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnqtydet = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnamountdet = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnis_unique_code = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
@@ -99,7 +99,7 @@ Partial Class FormRecOwnProduct
         CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl4.SuspendLayout()
         CType(Me.LEReportStatus.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.MemoEdit1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MENote.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlNav, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlNav.SuspendLayout()
         CType(Me.TxtItemCode.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -348,11 +348,93 @@ Partial Class FormRecOwnProduct
         Me.GVData.OptionsBehavior.Editable = False
         Me.GVData.OptionsView.ShowGroupPanel = False
         '
+        'GridColumnid_rec_own_det
+        '
+        Me.GridColumnid_rec_own_det.Caption = "id_rec_own_det"
+        Me.GridColumnid_rec_own_det.FieldName = "id_rec_own_det"
+        Me.GridColumnid_rec_own_det.Name = "GridColumnid_rec_own_det"
+        '
+        'GridColumnid_delivery_slipdet
+        '
+        Me.GridColumnid_delivery_slipdet.Caption = "id_delivery_slip"
+        Me.GridColumnid_delivery_slipdet.FieldName = "id_delivery_slip"
+        Me.GridColumnid_delivery_slipdet.Name = "GridColumnid_delivery_slipdet"
+        '
+        'GridColumnid_product
+        '
+        Me.GridColumnid_product.Caption = "id_product"
+        Me.GridColumnid_product.FieldName = "id_product"
+        Me.GridColumnid_product.Name = "GridColumnid_product"
+        '
+        'GridColumnid_design
+        '
+        Me.GridColumnid_design.Caption = "id_design"
+        Me.GridColumnid_design.FieldName = "id_design"
+        Me.GridColumnid_design.Name = "GridColumnid_design"
+        '
+        'GridColumnitem_codedet
+        '
+        Me.GridColumnitem_codedet.Caption = "Code"
+        Me.GridColumnitem_codedet.FieldName = "item_code"
+        Me.GridColumnitem_codedet.Name = "GridColumnitem_codedet"
+        Me.GridColumnitem_codedet.Visible = True
+        Me.GridColumnitem_codedet.VisibleIndex = 0
+        '
+        'GridColumnitem_namedet
+        '
+        Me.GridColumnitem_namedet.Caption = "Name"
+        Me.GridColumnitem_namedet.FieldName = "item_name"
+        Me.GridColumnitem_namedet.Name = "GridColumnitem_namedet"
+        Me.GridColumnitem_namedet.Visible = True
+        Me.GridColumnitem_namedet.VisibleIndex = 1
+        '
+        'GridColumnsizedet
+        '
+        Me.GridColumnsizedet.Caption = "Size"
+        Me.GridColumnsizedet.FieldName = "size"
+        Me.GridColumnsizedet.Name = "GridColumnsizedet"
+        Me.GridColumnsizedet.Visible = True
+        Me.GridColumnsizedet.VisibleIndex = 2
+        '
+        'GridColumnpricedet
+        '
+        Me.GridColumnpricedet.Caption = "Price"
+        Me.GridColumnpricedet.DisplayFormat.FormatString = "N2"
+        Me.GridColumnpricedet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnpricedet.FieldName = "price"
+        Me.GridColumnpricedet.Name = "GridColumnpricedet"
+        '
+        'GridColumndesign_catdet
+        '
+        Me.GridColumndesign_catdet.Caption = "Price Type"
+        Me.GridColumndesign_catdet.FieldName = "design_cat"
+        Me.GridColumndesign_catdet.Name = "GridColumndesign_catdet"
+        '
+        'GridColumnqtydet
+        '
+        Me.GridColumnqtydet.Caption = "Qty"
+        Me.GridColumnqtydet.DisplayFormat.FormatString = "N0"
+        Me.GridColumnqtydet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnqtydet.FieldName = "qty"
+        Me.GridColumnqtydet.Name = "GridColumnqtydet"
+        Me.GridColumnqtydet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty", "{0:N0}")})
+        '
+        'GridColumnamountdet
+        '
+        Me.GridColumnamountdet.Caption = "Amount"
+        Me.GridColumnamountdet.DisplayFormat.FormatString = "N2"
+        Me.GridColumnamountdet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnamountdet.FieldName = "amount"
+        Me.GridColumnamountdet.Name = "GridColumnamountdet"
+        Me.GridColumnamountdet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "amount", "{0:N2}")})
+        Me.GridColumnamountdet.UnboundExpression = "[qty] * [price]"
+        Me.GridColumnamountdet.UnboundType = DevExpress.Data.UnboundColumnType.[Decimal]
+        '
         'PanelControl4
         '
         Me.PanelControl4.Controls.Add(Me.LEReportStatus)
         Me.PanelControl4.Controls.Add(Me.LabelControl7)
-        Me.PanelControl4.Controls.Add(Me.MemoEdit1)
+        Me.PanelControl4.Controls.Add(Me.MENote)
         Me.PanelControl4.Controls.Add(Me.LabelControl8)
         Me.PanelControl4.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PanelControl4.Location = New System.Drawing.Point(0, 467)
@@ -378,12 +460,12 @@ Partial Class FormRecOwnProduct
         Me.LabelControl7.TabIndex = 21
         Me.LabelControl7.Text = "Status"
         '
-        'MemoEdit1
+        'MENote
         '
-        Me.MemoEdit1.Location = New System.Drawing.Point(73, 8)
-        Me.MemoEdit1.Name = "MemoEdit1"
-        Me.MemoEdit1.Size = New System.Drawing.Size(767, 32)
-        Me.MemoEdit1.TabIndex = 23
+        Me.MENote.Location = New System.Drawing.Point(73, 8)
+        Me.MENote.Name = "MENote"
+        Me.MENote.Size = New System.Drawing.Size(767, 32)
+        Me.MENote.TabIndex = 23
         '
         'LabelControl8
         '
@@ -585,88 +667,6 @@ Partial Class FormRecOwnProduct
         Me.GridColumnno.Visible = True
         Me.GridColumnno.VisibleIndex = 0
         '
-        'GridColumnid_rec_own_det
-        '
-        Me.GridColumnid_rec_own_det.Caption = "id_rec_own_det"
-        Me.GridColumnid_rec_own_det.FieldName = "id_rec_own_det"
-        Me.GridColumnid_rec_own_det.Name = "GridColumnid_rec_own_det"
-        '
-        'GridColumnid_delivery_slipdet
-        '
-        Me.GridColumnid_delivery_slipdet.Caption = "id_delivery_slip"
-        Me.GridColumnid_delivery_slipdet.FieldName = "id_delivery_slip"
-        Me.GridColumnid_delivery_slipdet.Name = "GridColumnid_delivery_slipdet"
-        '
-        'GridColumnid_product
-        '
-        Me.GridColumnid_product.Caption = "id_product"
-        Me.GridColumnid_product.FieldName = "id_product"
-        Me.GridColumnid_product.Name = "GridColumnid_product"
-        '
-        'GridColumnid_design
-        '
-        Me.GridColumnid_design.Caption = "id_design"
-        Me.GridColumnid_design.FieldName = "id_design"
-        Me.GridColumnid_design.Name = "GridColumnid_design"
-        '
-        'GridColumnitem_codedet
-        '
-        Me.GridColumnitem_codedet.Caption = "Code"
-        Me.GridColumnitem_codedet.FieldName = "item_code"
-        Me.GridColumnitem_codedet.Name = "GridColumnitem_codedet"
-        Me.GridColumnitem_codedet.Visible = True
-        Me.GridColumnitem_codedet.VisibleIndex = 0
-        '
-        'GridColumnitem_namedet
-        '
-        Me.GridColumnitem_namedet.Caption = "Name"
-        Me.GridColumnitem_namedet.FieldName = "item_name"
-        Me.GridColumnitem_namedet.Name = "GridColumnitem_namedet"
-        Me.GridColumnitem_namedet.Visible = True
-        Me.GridColumnitem_namedet.VisibleIndex = 1
-        '
-        'GridColumnsizedet
-        '
-        Me.GridColumnsizedet.Caption = "Size"
-        Me.GridColumnsizedet.FieldName = "size"
-        Me.GridColumnsizedet.Name = "GridColumnsizedet"
-        Me.GridColumnsizedet.Visible = True
-        Me.GridColumnsizedet.VisibleIndex = 2
-        '
-        'GridColumnpricedet
-        '
-        Me.GridColumnpricedet.Caption = "Price"
-        Me.GridColumnpricedet.DisplayFormat.FormatString = "N2"
-        Me.GridColumnpricedet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumnpricedet.FieldName = "price"
-        Me.GridColumnpricedet.Name = "GridColumnpricedet"
-        '
-        'GridColumndesign_catdet
-        '
-        Me.GridColumndesign_catdet.Caption = "Price Type"
-        Me.GridColumndesign_catdet.FieldName = "design_cat"
-        Me.GridColumndesign_catdet.Name = "GridColumndesign_catdet"
-        '
-        'GridColumnqtydet
-        '
-        Me.GridColumnqtydet.Caption = "Qty"
-        Me.GridColumnqtydet.DisplayFormat.FormatString = "N0"
-        Me.GridColumnqtydet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumnqtydet.FieldName = "qty"
-        Me.GridColumnqtydet.Name = "GridColumnqtydet"
-        Me.GridColumnqtydet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty", "{0:N0}")})
-        '
-        'GridColumnamountdet
-        '
-        Me.GridColumnamountdet.Caption = "Amount"
-        Me.GridColumnamountdet.DisplayFormat.FormatString = "N2"
-        Me.GridColumnamountdet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumnamountdet.FieldName = "amount"
-        Me.GridColumnamountdet.Name = "GridColumnamountdet"
-        Me.GridColumnamountdet.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "amount", "{0:N2}")})
-        Me.GridColumnamountdet.UnboundExpression = "[qty] * [price]"
-        Me.GridColumnamountdet.UnboundType = DevExpress.Data.UnboundColumnType.[Decimal]
-        '
         'GridColumnis_unique_code
         '
         Me.GridColumnis_unique_code.Caption = "is_unique_code"
@@ -714,7 +714,7 @@ Partial Class FormRecOwnProduct
         Me.PanelControl4.ResumeLayout(False)
         Me.PanelControl4.PerformLayout()
         CType(Me.LEReportStatus.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.MemoEdit1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MENote.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlNav, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlNav.ResumeLayout(False)
         Me.PanelControlNav.PerformLayout()
@@ -758,7 +758,7 @@ Partial Class FormRecOwnProduct
     Friend WithEvents BtnScan As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents LEReportStatus As DevExpress.XtraEditors.LookUpEdit
     Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents MemoEdit1 As DevExpress.XtraEditors.MemoEdit
+    Friend WithEvents MENote As DevExpress.XtraEditors.MemoEdit
     Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents SplitContainerControl1 As DevExpress.XtraEditors.SplitContainerControl
     Friend WithEvents GCSummary As DevExpress.XtraGrid.GridControl

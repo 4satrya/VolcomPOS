@@ -192,6 +192,12 @@
     <Compile Include="FormDatabase.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormDeleteScan.Designer.vb">
+      <DependentUpon>FormDeleteScan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDeleteScan.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormDeliverySlip.Designer.vb">
       <DependentUpon>FormDeliverySlip.vb</DependentUpon>
     </Compile>
@@ -587,6 +593,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormDatabase.resx">
       <DependentUpon>FormDatabase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeleteScan.resx">
+      <DependentUpon>FormDeleteScan.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDeliverySlip.resx">
       <DependentUpon>FormDeliverySlip.vb</DependentUpon>

@@ -40,6 +40,24 @@
             viewSummary()
             viewDetail()
         ElseIf action = "upd" Then
+            Dim r As New ClassRec()
+            Dim query As String = r.queryMainOwn("AND r.id_rec_own=" + id + " ", "1")
+            Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+            id_pl_sales_order_del = data.Rows(0)("id_pl_sales_order_del").ToString
+            TxtDelSlip.Text = data.Rows(0)("ref").ToString
+            id_comp_from = data.Rows(0)("id_comp_from").ToString
+            TxtFromCode.Text = data.Rows(0)("comp_number_from").ToString
+            TxtFromName.Text = data.Rows(0)("comp_name_from").ToString
+            id_comp_to = data.Rows(0)("id_comp_to").ToString
+            TxtToCode.Text = data.Rows(0)("comp_number_to").ToString
+            TxtToName.Text = data.Rows(0)("comp_name_to").ToString
+            TxtRecNumber.Text = data.Rows(0)("rec_number").ToString
+            DECreated.EditValue = data.Rows(0)("rec_date")
+            TxtPreparedBy.Text = data.Rows(0)("prepared_by").ToString
+            MENote.Text = data.Rows(0)("rec_note").ToString
+            id_report_status = data.Rows(0)("id_report_status").ToString
+            LEReportStatus.ItemIndex = LEReportStatus.Properties.GetDataSourceRowIndex("id_report_status", data.Rows(0)("id_report_status").ToString)
+
             viewSummary()
             viewDetail()
             allowStatus()
@@ -88,7 +106,23 @@
     End Sub
 
     Sub allowStatus()
+        BtnPrint.Enabled = True
+        BtnBrowseTo.Enabled = False
+        PanelControlNav.Visible = False
+        If id_report_status = "1" Then
+            MENote.Enabled = True
+            LEReportStatus.Enabled = True
+            BtnSave.Enabled = True
+        Else
+            MENote.Enabled = False
+            LEReportStatus.Enabled = False
+            BtnSave.Enabled = False
+        End If
 
+        'jika completed
+        If id_report_status = "5" Then
+            BtnPrint.Enabled = False
+        End If
     End Sub
 
     Private Sub GVSummary_CustomColumnDisplayText(sender As Object, e As DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs) Handles GVSummary.CustomColumnDisplayText
@@ -221,5 +255,116 @@
         makeSafeGV(GVData)
         GVSummary.FocusedRowHandle = find_row(GVSummary, "id_delivery_slip", id_delivery_slip_par)
         GVSummary.SetFocusedRowCellValue("qty", tot)
+    End Sub
+
+    Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
+        Cursor = Cursors.WaitCursor
+        FormDeleteScan.id_pop_up = "1"
+        FormDeleteScan.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
+        Close()
+    End Sub
+
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+
+    End Sub
+
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        makeSafeGV(GVData)
+        makeSafeGV(GVSummary)
+
+        'cek limit
+        Dim cond_limit As Boolean = True
+        If action = "ins" Then
+            Dim r As New ClassRec()
+            Dim dt As DataTable = r.dataBalRecOwnProduct(id_pl_sales_order_del)
+            For i As Integer = 0 To GVSummary.RowCount - 1
+                Dim item_code As String = GVSummary.GetRowCellValue(i, "item_code").ToString
+                Dim dtf As DataRow() = dt.Select("[item_code]='" + item_code + "'")
+
+                If dtf.Length > 0 Then
+                    GVSummary.SetRowCellValue(i, "qty_avl", dtf(0)("qty_avl"))
+                Else
+                    GVSummary.SetRowCellValue(i, "qty_avl", 0)
+                End If
+            Next
+
+            'cari diff > 0
+            makeSafeGV(GVSummary)
+            GVSummary.ActiveFilterString = "[diff]>0"
+            If GVSummary.RowCount > 0 Then
+                cond_limit = False
+            End If
+            makeSafeGV(GVSummary)
+        End If
+
+
+        If GVData.RowCount <= 0 Then
+            stopCustom("Item data can't blank")
+        ElseIf id_comp_to = "-1" Then
+            stopCustom("Please select destination account first")
+        ElseIf Not cond_limit Then
+            stopCustom("Some items exceed available qty, please correct them first")
+        Else
+            Dim rec_note As String = addSlashes(MENote.Text)
+            Dim id_report_status_saved As String = LEReportStatus.EditValue.ToString
+
+            If action = "ins" Then
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to save this transaction?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    Cursor = Cursors.WaitCursor
+
+                    'save header
+                    Dim ref As String = addSlashes(TxtDelSlip.Text)
+                    Dim query As String = "INSERT INTO tb_rec_own(id_comp_from, id_comp_to, rec_date, id_pl_sales_order_del, ref, rec_note, id_prepared_by, id_report_status) 
+                    VALUES(" + id_comp_from + ", " + id_comp_to + ", NOW(), " + id_pl_sales_order_del + ", '" + ref + "', '" + rec_note + "', " + id_user + ", " + id_report_status_saved + "); SELECT LAST_INSERT_ID(); "
+                    Dim id As String = execute_query(query, 0, True, "", "", "", "")
+                    execute_non_query("CALL gen_number(" + id + ", 8)", True, "", "", "", "")
+
+                    'save detil
+                    Dim query_det As String = "INSERT INTO tb_rec_own_det(id_rec_own, id_delivery_slip, qty) VALUES "
+                    For j As Integer = 0 To GVData.RowCount - 1
+                        Dim id_delivery_slip As String = GVData.GetRowCellValue(j, "id_delivery_slip").ToString
+                        If j > 0 Then
+                            query_det += ", "
+                        End If
+                        query_det += "(" + id + ", " + id_delivery_slip + ", 1) "
+                    Next
+                    If GVData.RowCount > 0 Then
+                        execute_non_query(query_det, True, "", "", "", "")
+                    End If
+
+                    'refresh
+                    action = "upd"
+                    actionLoad()
+                    FormRec.XTCOwn.SelectedTabPageIndex = 0
+                    FormRec.viewRecOwn()
+                    FormRec.GVRecOwn.FocusedRowHandle = find_row(FormRec.GVRecOwn, "id_rec_own", id)
+                    infoCustom("Document #" + TxtRecNumber.Text + " was created successfully.")
+                    Cursor = Cursors.Default
+                End If
+            ElseIf action = "upd" Then
+                Cursor = Cursors.WaitCursor
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to save changes this transaction and set status to '" + LEReportStatus.Text + "' ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    Dim query As String = "UPDATE tb_rec_own SET rec_note='" + rec_note + "', id_report_status=" + id_report_status_saved + " "
+                    If id_report_status = "6" Then
+                        query += ", final_status_time=NOW() "
+                    End If
+                    query += "WHERE id_rec_own=" + id + " "
+                    execute_non_query(query, True, "", "", "", "")
+
+                    'refresh
+                    action = "upd"
+                    actionLoad()
+                    FormRec.viewRecOwn()
+                    FormRec.GVRecOwn.FocusedRowHandle = find_row(FormRec.GVRecOwn, "id_rec_own", id)
+                End If
+                Cursor = Cursors.Default
+            End If
+        End If
     End Sub
 End Class
