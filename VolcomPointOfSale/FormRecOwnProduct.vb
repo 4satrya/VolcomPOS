@@ -40,7 +40,6 @@
             viewSummary()
             viewDetail()
         ElseIf action = "upd" Then
-            MsgBox(id)
             Dim r As New ClassRec()
             Dim query As String = r.queryMainOwn("AND r.id_rec_own=" + id + " ", "1")
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
@@ -329,7 +328,7 @@
                     Dim ref As String = addSlashes(TxtDelSlip.Text)
                     Dim query As String = "INSERT INTO tb_rec_own(id_comp_from, id_comp_to, rec_date, id_pl_sales_order_del, ref, rec_note, id_prepared_by, id_report_status) 
                     VALUES(" + id_comp_from + ", " + id_comp_to + ", NOW(), " + id_pl_sales_order_del + ", '" + ref + "', '" + rec_note + "', " + id_user + ", " + id_report_status_saved + "); SELECT LAST_INSERT_ID(); "
-                    Dim id As String = execute_query(query, 0, True, "", "", "", "")
+                    id = execute_query(query, 0, True, "", "", "", "")
                     execute_non_query("CALL gen_number(" + id + ", 8)", True, "", "", "", "")
 
                     'save detil
@@ -347,7 +346,6 @@
 
                     'refresh
                     action = "upd"
-                    MsgBox("a=" + id)
                     actionLoad()
                     FormRec.XTCOwn.SelectedTabPageIndex = 0
                     FormRec.viewRecOwn()
