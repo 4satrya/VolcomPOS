@@ -561,6 +561,7 @@ Partial Class FormRecOwnProduct
         Me.GVSummary.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVSummary.OptionsBehavior.Editable = False
         Me.GVSummary.OptionsSelection.EnableAppearanceFocusedRow = False
+        Me.GVSummary.OptionsView.ShowFooter = True
         Me.GVSummary.OptionsView.ShowGroupPanel = False
         '
         'GridColumnid_delivery_slip

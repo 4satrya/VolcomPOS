@@ -40,6 +40,7 @@
             viewSummary()
             viewDetail()
         ElseIf action = "upd" Then
+            MsgBox(id)
             Dim r As New ClassRec()
             Dim query As String = r.queryMainOwn("AND r.id_rec_own=" + id + " ", "1")
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
@@ -81,8 +82,8 @@
             WHERE rd.id_rec_own=" + id + " 
             GROUP BY rd.id_delivery_slip "
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
-            GCData.DataSource = data
-            GVData.BestFitColumns()
+            GCSummary.DataSource = data
+            GVSummary.BestFitColumns()
         End If
         Cursor = Cursors.Default
     End Sub
@@ -106,6 +107,8 @@
     End Sub
 
     Sub allowStatus()
+        GridColumndiff.Visible = False
+        GridColumnqty_avl.Visible = False
         BtnPrint.Enabled = True
         BtnBrowseTo.Enabled = False
         PanelControlNav.Visible = False
@@ -139,7 +142,7 @@
     End Sub
 
     Private Sub GVSummary_RowCellStyle(sender As Object, e As DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs) Handles GVSummary.RowCellStyle
-        If e.Column.FieldName = "diff" Then
+        If e.Column.FieldName = "diff" And action = "ins" Then
             If e.CellValue < 0 Then
                 e.Appearance.BackColor = Color.Yellow
             ElseIf e.CellValue > 0 Then
@@ -244,6 +247,11 @@
                 countQty(id_delivery_slip)
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
+            Else
+                stopCustom("No qty available")
+                TxtItemCode.Text = ""
+                TxtItemCode.Focus()
+                Exit Sub
             End If
         End If
     End Sub
@@ -339,6 +347,7 @@
 
                     'refresh
                     action = "upd"
+                    MsgBox("a=" + id)
                     actionLoad()
                     FormRec.XTCOwn.SelectedTabPageIndex = 0
                     FormRec.viewRecOwn()
@@ -351,7 +360,7 @@
                 Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to save changes this transaction and set status to '" + LEReportStatus.Text + "' ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
                 If confirm = DialogResult.Yes Then
                     Dim query As String = "UPDATE tb_rec_own SET rec_note='" + rec_note + "', id_report_status=" + id_report_status_saved + " "
-                    If id_report_status = "6" Then
+                    If id_report_status = "6" Or id_report_status = "5" Then
                         query += ", final_status_time=NOW() "
                     End If
                     query += "WHERE id_rec_own=" + id + " "

@@ -46,7 +46,11 @@
     Sub edit()
         Cursor = Cursors.WaitCursor
         If XTCRec.SelectedTabPageIndex = 0 Then
-
+            If XTCOwn.SelectedTabPageIndex = 0 Then
+                FormRecOwnProduct.action = "upd"
+                FormRecOwnProduct.id = GVRecOwn.GetFocusedRowCellValue("id_rec_own").ToString
+                FormRecOwnProduct.ShowDialog()
+            End If
         ElseIf XTCRec.SelectedTabPageIndex = 1 Then
             FormRecDet.action = "upd"
             FormRecDet.id = GVRec.GetFocusedRowCellValue("id_rec").ToString
@@ -107,7 +111,7 @@
         Catch ex As Exception
         End Try
 
-        Dim cond As String = "AND (r.rec_date>='" + date_from + "' AND r.rec_date<='" + date_until + "' )"
+        Dim cond As String = "AND (DATE(r.rec_date)>='" + date_from + "' AND DATE(r.rec_date)<='" + date_until + "' )"
         Dim r As New ClassRec()
         Dim query As String = r.queryMainOwn(cond, "2")
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
@@ -207,5 +211,11 @@
 
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
         viewRecOwn()
+    End Sub
+
+    Private Sub GVRecOwn_DoubleClick(sender As Object, e As EventArgs) Handles GVRecOwn.DoubleClick
+        If GVRecOwn.RowCount > 0 And GVRecOwn.FocusedRowHandle >= 0 Then
+            edit()
+        End If
     End Sub
 End Class
