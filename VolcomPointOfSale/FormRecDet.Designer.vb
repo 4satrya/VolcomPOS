@@ -20,9 +20,6 @@ Partial Class FormRecDet
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormRecDet))
-        Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
-        Me.PCClose = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlTop = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControlTopFill = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl10 = New DevExpress.XtraEditors.LabelControl()
@@ -84,9 +81,6 @@ Partial Class FormRecDet
         Me.GridColumn6 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn7 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnCodeSum = New DevExpress.XtraGrid.Columns.GridColumn()
-        CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl3.SuspendLayout()
-        CType(Me.PCClose, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlTop.SuspendLayout()
         CType(Me.PanelControlTopFill, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -127,48 +121,13 @@ Partial Class FormRecDet
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'PanelControl3
-        '
-        Me.PanelControl3.Appearance.BackColor = System.Drawing.Color.MidnightBlue
-        Me.PanelControl3.Appearance.Options.UseBackColor = True
-        Me.PanelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl3.Controls.Add(Me.PCClose)
-        Me.PanelControl3.Controls.Add(Me.LabelControl7)
-        Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControl3.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControl3.Name = "PanelControl3"
-        Me.PanelControl3.Padding = New System.Windows.Forms.Padding(7, 5, 0, 5)
-        Me.PanelControl3.Size = New System.Drawing.Size(808, 24)
-        Me.PanelControl3.TabIndex = 6
-        '
-        'PCClose
-        '
-        Me.PCClose.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PCClose.ContentImage = CType(resources.GetObject("PCClose.ContentImage"), System.Drawing.Image)
-        Me.PCClose.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PCClose.Location = New System.Drawing.Point(784, 5)
-        Me.PCClose.Name = "PCClose"
-        Me.PCClose.Size = New System.Drawing.Size(24, 14)
-        Me.PCClose.TabIndex = 1
-        '
-        'LabelControl7
-        '
-        Me.LabelControl7.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl7.Appearance.ForeColor = System.Drawing.Color.White
-        Me.LabelControl7.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LabelControl7.Location = New System.Drawing.Point(7, 5)
-        Me.LabelControl7.Name = "LabelControl7"
-        Me.LabelControl7.Size = New System.Drawing.Size(39, 13)
-        Me.LabelControl7.TabIndex = 0
-        Me.LabelControl7.Text = "Receive"
-        '
         'PanelControlTop
         '
         Me.PanelControlTop.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControlTop.Controls.Add(Me.PanelControlTopFill)
         Me.PanelControlTop.Controls.Add(Me.PanelControTopLeft)
         Me.PanelControlTop.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlTop.Location = New System.Drawing.Point(0, 24)
+        Me.PanelControlTop.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlTop.Name = "PanelControlTop"
         Me.PanelControlTop.Size = New System.Drawing.Size(808, 103)
         Me.PanelControlTop.TabIndex = 0
@@ -205,16 +164,11 @@ Partial Class FormRecDet
         '
         'BtnBrowseTo
         '
-        Me.BtnBrowseTo.Appearance.BackColor = System.Drawing.Color.MidnightBlue
-        Me.BtnBrowseTo.Appearance.BorderColor = System.Drawing.Color.MidnightBlue
         Me.BtnBrowseTo.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnBrowseTo.Appearance.ForeColor = System.Drawing.Color.White
-        Me.BtnBrowseTo.Appearance.Options.UseBackColor = True
-        Me.BtnBrowseTo.Appearance.Options.UseBorderColor = True
+        Me.BtnBrowseTo.Appearance.ForeColor = System.Drawing.Color.Black
         Me.BtnBrowseTo.Appearance.Options.UseFont = True
         Me.BtnBrowseTo.Appearance.Options.UseForeColor = True
         Me.BtnBrowseTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnBrowseTo.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat
         Me.BtnBrowseTo.Location = New System.Drawing.Point(412, 38)
         Me.BtnBrowseTo.Name = "BtnBrowseTo"
         Me.BtnBrowseTo.Size = New System.Drawing.Size(29, 19)
@@ -223,16 +177,11 @@ Partial Class FormRecDet
         '
         'BtnBrowseFrom
         '
-        Me.BtnBrowseFrom.Appearance.BackColor = System.Drawing.Color.MidnightBlue
-        Me.BtnBrowseFrom.Appearance.BorderColor = System.Drawing.Color.MidnightBlue
         Me.BtnBrowseFrom.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnBrowseFrom.Appearance.ForeColor = System.Drawing.Color.White
-        Me.BtnBrowseFrom.Appearance.Options.UseBackColor = True
-        Me.BtnBrowseFrom.Appearance.Options.UseBorderColor = True
+        Me.BtnBrowseFrom.Appearance.ForeColor = System.Drawing.Color.Black
         Me.BtnBrowseFrom.Appearance.Options.UseFont = True
         Me.BtnBrowseFrom.Appearance.Options.UseForeColor = True
         Me.BtnBrowseFrom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.BtnBrowseFrom.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat
         Me.BtnBrowseFrom.Location = New System.Drawing.Point(412, 12)
         Me.BtnBrowseFrom.Name = "BtnBrowseFrom"
         Me.BtnBrowseFrom.Size = New System.Drawing.Size(29, 19)
@@ -280,6 +229,7 @@ Partial Class FormRecDet
         '
         'TxtCodeCompTo
         '
+        Me.TxtCodeCompTo.Enabled = False
         Me.TxtCodeCompTo.Location = New System.Drawing.Point(103, 38)
         Me.TxtCodeCompTo.Name = "TxtCodeCompTo"
         Me.TxtCodeCompTo.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -318,6 +268,7 @@ Partial Class FormRecDet
         '
         'TxtCodeCompFrom
         '
+        Me.TxtCodeCompFrom.Enabled = False
         Me.TxtCodeCompFrom.Location = New System.Drawing.Point(103, 12)
         Me.TxtCodeCompFrom.Name = "TxtCodeCompFrom"
         Me.TxtCodeCompFrom.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -420,9 +371,9 @@ Partial Class FormRecDet
         Me.PanelControlBottom.Controls.Add(Me.BtnClose)
         Me.PanelControlBottom.Controls.Add(Me.BtnSave)
         Me.PanelControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControlBottom.Location = New System.Drawing.Point(0, 563)
+        Me.PanelControlBottom.Location = New System.Drawing.Point(0, 559)
         Me.PanelControlBottom.Name = "PanelControlBottom"
-        Me.PanelControlBottom.Size = New System.Drawing.Size(808, 37)
+        Me.PanelControlBottom.Size = New System.Drawing.Size(808, 41)
         Me.PanelControlBottom.TabIndex = 4
         '
         'BtnPrint
@@ -438,7 +389,7 @@ Partial Class FormRecDet
         Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
         Me.BtnPrint.Location = New System.Drawing.Point(518, 2)
         Me.BtnPrint.Name = "BtnPrint"
-        Me.BtnPrint.Size = New System.Drawing.Size(102, 33)
+        Me.BtnPrint.Size = New System.Drawing.Size(102, 37)
         Me.BtnPrint.TabIndex = 12
         Me.BtnPrint.Text = "F10 : Print"
         '
@@ -455,7 +406,7 @@ Partial Class FormRecDet
         Me.BtnClose.Image = CType(resources.GetObject("BtnClose.Image"), System.Drawing.Image)
         Me.BtnClose.Location = New System.Drawing.Point(620, 2)
         Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(90, 33)
+        Me.BtnClose.Size = New System.Drawing.Size(90, 37)
         Me.BtnClose.TabIndex = 11
         Me.BtnClose.Text = "Close"
         '
@@ -472,7 +423,7 @@ Partial Class FormRecDet
         Me.BtnSave.Image = CType(resources.GetObject("BtnSave.Image"), System.Drawing.Image)
         Me.BtnSave.Location = New System.Drawing.Point(710, 2)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(96, 33)
+        Me.BtnSave.Size = New System.Drawing.Size(96, 37)
         Me.BtnSave.TabIndex = 10
         Me.BtnSave.Text = "F5 : Save"
         '
@@ -484,7 +435,7 @@ Partial Class FormRecDet
         Me.PanelControlNote.Controls.Add(Me.MENote)
         Me.PanelControlNote.Controls.Add(Me.LabelControl8)
         Me.PanelControlNote.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControlNote.Location = New System.Drawing.Point(0, 473)
+        Me.PanelControlNote.Location = New System.Drawing.Point(0, 469)
         Me.PanelControlNote.Name = "PanelControlNote"
         Me.PanelControlNote.Size = New System.Drawing.Size(808, 90)
         Me.PanelControlNote.TabIndex = 3
@@ -539,10 +490,12 @@ Partial Class FormRecDet
         'XTCItem
         '
         Me.XTCItem.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.XTCItem.Location = New System.Drawing.Point(0, 127)
+        Me.XTCItem.Location = New System.Drawing.Point(0, 103)
+        Me.XTCItem.LookAndFeel.SkinName = "Metropolis"
+        Me.XTCItem.LookAndFeel.UseDefaultLookAndFeel = False
         Me.XTCItem.Name = "XTCItem"
         Me.XTCItem.SelectedTabPage = Me.XTPScanned
-        Me.XTCItem.Size = New System.Drawing.Size(808, 346)
+        Me.XTCItem.Size = New System.Drawing.Size(808, 366)
         Me.XTCItem.TabIndex = 1
         Me.XTCItem.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPScanned, Me.XTPSummary})
         '
@@ -551,7 +504,7 @@ Partial Class FormRecDet
         Me.XTPScanned.Controls.Add(Me.GCScan)
         Me.XTPScanned.Controls.Add(Me.PanelControlItem)
         Me.XTPScanned.Name = "XTPScanned"
-        Me.XTPScanned.Size = New System.Drawing.Size(802, 318)
+        Me.XTPScanned.Size = New System.Drawing.Size(806, 341)
         Me.XTPScanned.Text = "Scanned List"
         '
         'GCScan
@@ -560,7 +513,7 @@ Partial Class FormRecDet
         Me.GCScan.Location = New System.Drawing.Point(0, 0)
         Me.GCScan.MainView = Me.GVScan
         Me.GCScan.Name = "GCScan"
-        Me.GCScan.Size = New System.Drawing.Size(802, 281)
+        Me.GCScan.Size = New System.Drawing.Size(806, 304)
         Me.GCScan.TabIndex = 0
         Me.GCScan.TabStop = False
         Me.GCScan.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVScan})
@@ -665,9 +618,9 @@ Partial Class FormRecDet
         Me.PanelControlItem.Controls.Add(Me.BtnAddScan)
         Me.PanelControlItem.Controls.Add(Me.BtnSelect)
         Me.PanelControlItem.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControlItem.Location = New System.Drawing.Point(0, 281)
+        Me.PanelControlItem.Location = New System.Drawing.Point(0, 304)
         Me.PanelControlItem.Name = "PanelControlItem"
-        Me.PanelControlItem.Size = New System.Drawing.Size(802, 37)
+        Me.PanelControlItem.Size = New System.Drawing.Size(806, 37)
         Me.PanelControlItem.TabIndex = 2
         '
         'PanelControlItemCode
@@ -678,7 +631,7 @@ Partial Class FormRecDet
         Me.PanelControlItemCode.Controls.Add(Me.TxtItemCode)
         Me.PanelControlItemCode.Controls.Add(Me.LabelControl6)
         Me.PanelControlItemCode.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControlItemCode.Location = New System.Drawing.Point(453, 2)
+        Me.PanelControlItemCode.Location = New System.Drawing.Point(457, 2)
         Me.PanelControlItemCode.Name = "PanelControlItemCode"
         Me.PanelControlItemCode.Size = New System.Drawing.Size(347, 33)
         Me.PanelControlItemCode.TabIndex = 11
@@ -756,7 +709,7 @@ Partial Class FormRecDet
         '
         Me.XTPSummary.Controls.Add(Me.GCScanSum)
         Me.XTPSummary.Name = "XTPSummary"
-        Me.XTPSummary.Size = New System.Drawing.Size(802, 318)
+        Me.XTPSummary.Size = New System.Drawing.Size(806, 341)
         Me.XTPSummary.Text = "Summary"
         '
         'GCScanSum
@@ -765,7 +718,7 @@ Partial Class FormRecDet
         Me.GCScanSum.Location = New System.Drawing.Point(0, 0)
         Me.GCScanSum.MainView = Me.GVScanSum
         Me.GCScanSum.Name = "GCScanSum"
-        Me.GCScanSum.Size = New System.Drawing.Size(802, 318)
+        Me.GCScanSum.Size = New System.Drawing.Size(806, 341)
         Me.GCScanSum.TabIndex = 1
         Me.GCScanSum.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVScanSum})
         '
@@ -871,20 +824,15 @@ Partial Class FormRecDet
         Me.Controls.Add(Me.PanelControlNote)
         Me.Controls.Add(Me.PanelControlBottom)
         Me.Controls.Add(Me.PanelControlTop)
-        Me.Controls.Add(Me.PanelControl3)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.MinimizeBox = False
         Me.Name = "FormRecDet"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "FormRecDet"
+        Me.Text = "Receive"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl3.ResumeLayout(False)
-        Me.PanelControl3.PerformLayout()
-        CType(Me.PCClose, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlTop.ResumeLayout(False)
         CType(Me.PanelControlTopFill, System.ComponentModel.ISupportInitialize).EndInit()
@@ -931,10 +879,6 @@ Partial Class FormRecDet
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents PanelControl3 As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents PCClose As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents PanelControlTop As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControlTopFill As DevExpress.XtraEditors.PanelControl
     Friend WithEvents DERefDate As DevExpress.XtraEditors.DateEdit

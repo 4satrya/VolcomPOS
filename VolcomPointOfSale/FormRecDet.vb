@@ -102,7 +102,7 @@
     Private Sub BtnBrowseFrom_Click(sender As Object, e As EventArgs) Handles BtnBrowseFrom.Click
         Cursor = Cursors.WaitCursor
         FormBlack.Show()
-        FormPopUpContact.id_cat = "1"
+        'FormPopUpContact.id_cat = "1"
         FormPopUpContact.id_pop_up = "1"
         FormPopUpContact.ShowDialog()
         FormBlack.Close()
@@ -116,7 +116,7 @@
     Private Sub BtnBrowseTo_Click(sender As Object, e As EventArgs) Handles BtnBrowseTo.Click
         Cursor = Cursors.WaitCursor
         FormBlack.Show()
-        FormPopUpContact.id_cat = "5"
+        'FormPopUpContact.id_cat = "5"
         FormPopUpContact.id_pop_up = "2"
         FormPopUpContact.ShowDialog()
         FormBlack.Close()
@@ -249,8 +249,9 @@
 
                         'main query
                         Dim query As String = "INSERT INTO tb_rec(id_comp_from, id_comp_to, rec_number, rec_date, ref, ref_date, rec_note, id_report_status, id_prepared_by) 
-                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', header_number(1), NOW(), '" + ref + "', '" + ref_date + "', '" + rec_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
+                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', '', NOW(), '" + ref + "', '" + ref_date + "', '" + rec_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
                         id = execute_query(query, 0, True, "", "", "", "")
+                        execute_non_query("CALL gen_number(" + id + ", 1);", True, "", "", "", "")
 
                         'detail
                         Dim query_det As String = "INSERT INTO tb_rec_det(id_rec, id_item, price, rec_qty) VALUES"
@@ -440,15 +441,15 @@
         End If
     End Sub
 
-    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs) Handles PCClose.MouseHover
+    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs) Handles PCClose.MouseLeave
+    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PCClose_Click(sender As Object, e As EventArgs) Handles PCClose.Click
+    Private Sub PCClose_Click(sender As Object, e As EventArgs)
         closeForm()
     End Sub
 
@@ -458,7 +459,7 @@
         End If
     End Sub
 
-    Private Sub PanelControl3_Paint(sender As Object, e As PaintEventArgs) Handles PanelControl3.Paint
+    Private Sub PanelControl3_Paint(sender As Object, e As PaintEventArgs)
 
     End Sub
 End Class
