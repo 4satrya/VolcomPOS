@@ -290,12 +290,12 @@ Partial Class FormRec
         '
         'GridColumnTotal
         '
-        Me.GridColumnTotal.Caption = "Total"
+        Me.GridColumnTotal.Caption = "Total Qty"
         Me.GridColumnTotal.DisplayFormat.FormatString = "{0:N0}"
         Me.GridColumnTotal.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumnTotal.FieldName = "total_rec"
+        Me.GridColumnTotal.FieldName = "total_qty"
         Me.GridColumnTotal.Name = "GridColumnTotal"
-        Me.GridColumnTotal.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "total_rec", "{0:N0}")})
+        Me.GridColumnTotal.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "total_qty", "{0:N0}")})
         Me.GridColumnTotal.Visible = True
         Me.GridColumnTotal.VisibleIndex = 6
         Me.GridColumnTotal.Width = 55

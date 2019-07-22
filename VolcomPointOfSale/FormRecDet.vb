@@ -193,6 +193,11 @@
     End Sub
 
     Sub save()
+        If TxtRef.Text = "" Or DERefDate.EditValue = Nothing Then
+            stopCustom("Please input delivery slip")
+            Exit Sub
+        End If
+
         If id_report_status_glb <> "5" And id_report_status_glb <> "6" Then
             Dim ref As String = addSlashes(TxtRef.Text)
             Dim ref_date As String = DateTime.Parse(DERefDate.EditValue.ToString).ToString("yyyy-MM-dd")
@@ -298,9 +303,9 @@
                         actionLoad()
 
                         'show preview when completed
-                        If id_report_status = "6" Then
-                            print()
-                        End If
+                        'If id_report_status = "6" Then
+                        'print()
+                        'End If
                     End If
                     Cursor = Cursors.Default
                 End If
