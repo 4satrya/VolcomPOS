@@ -29,7 +29,7 @@
         viewSearchLookupQuery(SLEStorage, query_comp, "id_comp", "comp", "id_comp")
 
         'supplier
-        Dim query_supp As String = comp.queryMain("AND comp.id_comp_cat=1", "1", True)
+        Dim query_supp As String = comp.queryMain("-1", "1", True)
         viewSearchLookupQuery(SLESupplier, query_supp, "id_comp", "comp", "id_comp")
     End Sub
 
@@ -82,7 +82,7 @@
     Sub printPreview()
         Cursor = Cursors.WaitCursor
         If XTCStock.SelectedTabPageIndex = 0 Then
-            print(GCSum, "INFO STOCK")
+            print_raw(GCSum, "INFO STOCK")
         ElseIf XTCStock.SelectedTabPageIndex = 1 Then
             FormBlack.Show()
             ReportStock.dt = GCStock.DataSource
@@ -183,9 +183,11 @@
     End Sub
 
     Sub viewSum()
+        Cursor = Cursors.WaitCursor
         Dim query As String = "CALL view_stock_item_sum() "
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         GCSum.DataSource = data
+        Cursor = Cursors.Default
     End Sub
 
     Sub viewStockCard()
@@ -294,5 +296,21 @@
         If e.KeyCode = Keys.Enter Then
             SimpleButton1.Focus()
         End If
+    End Sub
+
+    Private Sub SimpleButton2_Click(sender As Object, e As EventArgs) Handles SimpleButton2.Click
+        viewSum()
+    End Sub
+
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
+    End Sub
+
+    Private Sub BtnPrintSOH_Click(sender As Object, e As EventArgs) Handles BtnPrintSOH.Click
+        printPreview()
+    End Sub
+
+    Private Sub BtnPrintStockCard_Click(sender As Object, e As EventArgs) Handles BtnPrintStockCard.Click
+        printPreview()
     End Sub
 End Class
