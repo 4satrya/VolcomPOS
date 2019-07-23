@@ -1,6 +1,8 @@
 ﻿Public Class FormTrf
     Private Sub FormTrf_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        viewTrf()
+        Dim dt_now As DateTime = getTimeDB()
+        DEFromOwn.EditValue = dt_now
+        DEUntilOwn.EditValue = dt_now
     End Sub
 
     Private Sub FormTrf_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
@@ -70,8 +72,20 @@
 
     Sub viewTrf()
         Cursor = Cursors.WaitCursor
+        Dim date_from As String = ""
+        Try
+            date_from = DateTime.Parse(DEFromOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+        Dim date_until As String = ""
+        Try
+            date_until = DateTime.Parse(DEUntilOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+        Dim cond As String = "AND (DATE(t.trf_date)>='" + date_from + "' AND DATE(t.trf_date)<='" + date_until + "' )"
+
         Dim i As New ClassTrf()
-        Dim query As String = i.queryMain("-1", "2")
+        Dim query As String = i.queryMain(cond, "2")
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         GCTrf.DataSource = data '
         Cursor = Cursors.Default
@@ -107,5 +121,21 @@
 
     Private Sub PanelControlBack_MouseLeave(sender As Object, e As EventArgs) Handles PanelControlBack.MouseLeave
         PanelControlBack.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+        insert()
+    End Sub
+
+    Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
+        viewTrf()
+    End Sub
+
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
+    End Sub
+
+    Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
+        viewTrf()
     End Sub
 End Class

@@ -62,24 +62,24 @@
 
 
     Sub allow_status()
-        If check_status(id_report_status_glb) Then
+        If id_report_status_glb = "1" Then
             MENote.Enabled = True
-            BtnSave.Enabled = True
             LEReportStatus.Enabled = True
+            BtnSave.Enabled = True
         Else
             MENote.Enabled = False
-            BtnSave.Enabled = False
             LEReportStatus.Enabled = False
+            BtnSave.Enabled = False
         End If
+
         PanelControlItem.Enabled = False
         TxtCodeCompFrom.Enabled = False
         TxtCodeCompTo.Enabled = False
         BtnBrowseFrom.Enabled = False
         BtnBrowseTo.Enabled = False
 
-        If check_print_report_status(id_report_status_glb) Then
-            BtnPrint.Enabled = True
-        Else
+        'jika cancell
+        If id_report_status_glb = "5" Then
             BtnPrint.Enabled = False
         End If
     End Sub
@@ -453,9 +453,23 @@
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
         If e.KeyCode = Keys.Enter Then
             Dim code As String = TxtItemCode.Text
-            Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.item_code=" + code + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+            Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.item_code=''" + code + "'' AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
             Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
             If dt.Rows.Count > 0 Then
+                'cek available 
+                makeSafeGV(GVScan)
+                GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
+                If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
+                    stopCustom("No available qty")
+                    makeSafeGV(GVScan)
+                    GVScan.FocusedRowHandle = GVScan.RowCount - 1
+                    TxtItemCode.Text = ""
+                    TxtItemCode.Focus()
+                    Exit Sub
+                End If
+                makeSafeGV(GVScan)
+
+
                 Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
                 newRow("id_trf_det") = "0"
                 newRow("id_item") = dt(0)("id_item").ToString
@@ -467,6 +481,7 @@
                 TryCast(GCScan.DataSource, DataTable).Rows.Add(newRow)
                 GCScan.RefreshDataSource()
                 GVScan.RefreshData()
+                GVScan.FocusedRowHandle = GVScan.RowCount - 1
             Else
                 stopCustom("Code not found")
             End If
@@ -481,15 +496,15 @@
         End If
     End Sub
 
-    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs) Handles PCClose.MouseHover
+    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs) Handles PCClose.MouseLeave
+    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PCClose_Click(sender As Object, e As EventArgs) Handles PCClose.Click
+    Private Sub PCClose_Click(sender As Object, e As EventArgs)
         closeForm()
     End Sub
 End Class

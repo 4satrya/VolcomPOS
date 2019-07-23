@@ -125,7 +125,7 @@
             BtnSave.Enabled = False
         End If
 
-        'jika completed
+        'jika cancell
         If id_report_status = "5" Then
             BtnPrint.Enabled = False
         End If

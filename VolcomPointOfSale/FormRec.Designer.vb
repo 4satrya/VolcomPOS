@@ -477,7 +477,7 @@ Partial Class FormRec
         Me.PanelControl2.Controls.Add(Me.LabelControl1)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControl2.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControl2.LookAndFeel.SkinName = "Visual Studio 2013 Light"
+        Me.PanelControl2.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.PanelControl2.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(885, 42)
