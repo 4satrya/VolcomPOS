@@ -72,6 +72,7 @@
             BtnSave.Enabled = False
         End If
 
+        BtnPrint.Enabled = True
         PanelControlItem.Enabled = False
         TxtCodeCompFrom.Enabled = False
         TxtCodeCompTo.Enabled = False
@@ -271,8 +272,9 @@
                     If action = "ins" Then
                         'main query
                         Dim query As String = "INSERT INTO tb_trf(id_comp_from, id_comp_to, trf_number, trf_date, trf_note, id_report_status, id_prepared_by) 
-                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', header_number(3), NOW(), '" + trf_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
+                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', '', NOW(), '" + trf_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
                         id = execute_query(query, 0, True, "", "", "", "")
+                        execute_non_query("CALL gen_number(" + id + ", 3)", True, "", "", "", "")
 
                         'detail
                         Dim query_det As String = "INSERT INTO tb_trf_det(id_trf, id_item, price, trf_qty) VALUES "
@@ -452,7 +454,7 @@
 
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim code As String = TxtItemCode.Text
+            Dim code As String = addSlashes(TxtItemCode.Text)
             Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.item_code=''" + code + "'' AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
             Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
             If dt.Rows.Count > 0 Then

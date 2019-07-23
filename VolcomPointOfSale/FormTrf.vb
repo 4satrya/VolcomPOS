@@ -138,4 +138,10 @@
     Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
         viewTrf()
     End Sub
+
+    Private Sub GVTrf_DoubleClick(sender As Object, e As EventArgs) Handles GVTrf.DoubleClick
+        If GVTrf.RowCount > 0 And GVTrf.FocusedRowHandle >= 0 Then
+            edit()
+        End If
+    End Sub
 End Class
