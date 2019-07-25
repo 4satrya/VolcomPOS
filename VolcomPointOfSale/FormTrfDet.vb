@@ -73,7 +73,7 @@
         End If
 
         BtnPrint.Enabled = True
-        PanelControlItem.Enabled = False
+        PanelControlItem.Visible = False
         TxtCodeCompFrom.Enabled = False
         TxtCodeCompTo.Enabled = False
         BtnBrowseFrom.Enabled = False
@@ -373,13 +373,17 @@
 
     Sub removeScan()
         If action = "ins" Then
+            'Cursor = Cursors.WaitCursor
+            'Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            'If confirm = DialogResult.Yes Then
+            '    GVScan.DeleteSelectedRows()
+            '    GCScan.RefreshDataSource()
+            '    GVScan.RefreshData()
+            'End If
+            'Cursor = Cursors.Default
             Cursor = Cursors.WaitCursor
-            Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
-            If confirm = DialogResult.Yes Then
-                GVScan.DeleteSelectedRows()
-                GCScan.RefreshDataSource()
-                GVScan.RefreshData()
-            End If
+            FormDeleteScan.id_pop_up = "2"
+            FormDeleteScan.ShowDialog()
             Cursor = Cursors.Default
         End If
     End Sub

@@ -65,7 +65,7 @@
         End If
 
 
-        If id_pop_up = "10" Then 'rec own product
+        If id_pop_up = "5" Or id_pop_up = "6" Or id_pop_up = "10" Then 'rec own product/trf
             Dim query_opt As String = "SELECT id_wh_default, id_display_default FROM tb_opt "
             Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
             query += "AND (tb_m_comp.id_comp=" + data_opt.Rows(0)("id_wh_default").ToString + " OR tb_m_comp.id_comp=" + data_opt.Rows(0)("id_display_default").ToString + ") "
