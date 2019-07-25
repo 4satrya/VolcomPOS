@@ -119,12 +119,10 @@ Partial Class FormPopUpContact
         '
         Me.GVCompany.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.id_company, Me.CompanyCode, Me.company, Me.address_primary, Me.is_active, Me.Category})
         Me.GVCompany.GridControl = Me.GCCompany
-        Me.GVCompany.GroupCount = 1
         Me.GVCompany.Name = "GVCompany"
         Me.GVCompany.OptionsBehavior.Editable = False
         Me.GVCompany.OptionsFind.AlwaysVisible = True
         Me.GVCompany.OptionsView.ShowGroupPanel = False
-        Me.GVCompany.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.Category, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
         'id_company
         '

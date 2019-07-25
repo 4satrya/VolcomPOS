@@ -267,9 +267,9 @@ Partial Class FormRecOwnProduct
         '
         Me.LabelControl2.Location = New System.Drawing.Point(19, 40)
         Me.LabelControl2.Name = "LabelControl2"
-        Me.LabelControl2.Size = New System.Drawing.Size(24, 13)
+        Me.LabelControl2.Size = New System.Drawing.Size(65, 13)
         Me.LabelControl2.TabIndex = 9
-        Me.LabelControl2.Text = "From"
+        Me.LabelControl2.Text = "Receive From"
         '
         'LabelControl1
         '

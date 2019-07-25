@@ -31,9 +31,18 @@ Partial Class FormTrf
         Me.LabelControl9 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
+        Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
+        Me.PanelControlNav = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnRefresh = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnNew = New DevExpress.XtraEditors.SimpleButton()
+        Me.DEUntilOwn = New DevExpress.XtraEditors.DateEdit()
+        Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
+        Me.DEFromOwn = New DevExpress.XtraEditors.DateEdit()
         Me.GCTrf = New DevExpress.XtraGrid.GridControl()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,31 +60,22 @@ Partial Class FormTrf
         Me.GridColumnStt = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnReference = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnPreparedBy = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.PanelControlNav = New DevExpress.XtraEditors.PanelControl()
-        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
-        Me.BtnRefresh = New DevExpress.XtraEditors.SimpleButton()
-        Me.BtnNew = New DevExpress.XtraEditors.SimpleButton()
-        Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
-        Me.DEUntilOwn = New DevExpress.XtraEditors.DateEdit()
-        Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
-        Me.DEFromOwn = New DevExpress.XtraEditors.DateEdit()
-        Me.LabelControl6 = New DevExpress.XtraEditors.LabelControl()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GCTrf, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.GVTrf, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlNav, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlNav.SuspendLayout()
         CType(Me.DEUntilOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DEUntilOwn.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DEFromOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DEFromOwn.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GCTrf, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
+        CType(Me.GVTrf, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelControl1
@@ -180,21 +180,6 @@ Partial Class FormTrf
         Me.LabelControl1.TabIndex = 7
         Me.LabelControl1.Text = "F8"
         '
-        'PanelControl3
-        '
-        Me.PanelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl3.Controls.Add(Me.BtnView)
-        Me.PanelControl3.Controls.Add(Me.PanelControlNav)
-        Me.PanelControl3.Controls.Add(Me.DEUntilOwn)
-        Me.PanelControl3.Controls.Add(Me.LabelControl6)
-        Me.PanelControl3.Controls.Add(Me.LabelControl5)
-        Me.PanelControl3.Controls.Add(Me.DEFromOwn)
-        Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControl3.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControl3.Name = "PanelControl3"
-        Me.PanelControl3.Size = New System.Drawing.Size(842, 45)
-        Me.PanelControl3.TabIndex = 9
-        '
         'LabelControl13
         '
         Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -219,6 +204,119 @@ Partial Class FormTrf
         Me.PanelControlBack.Size = New System.Drawing.Size(40, 10)
         Me.PanelControlBack.TabIndex = 7
         Me.PanelControlBack.Visible = False
+        '
+        'PanelControl3
+        '
+        Me.PanelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl3.Controls.Add(Me.BtnView)
+        Me.PanelControl3.Controls.Add(Me.PanelControlNav)
+        Me.PanelControl3.Controls.Add(Me.DEUntilOwn)
+        Me.PanelControl3.Controls.Add(Me.LabelControl6)
+        Me.PanelControl3.Controls.Add(Me.LabelControl5)
+        Me.PanelControl3.Controls.Add(Me.DEFromOwn)
+        Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PanelControl3.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControl3.Name = "PanelControl3"
+        Me.PanelControl3.Size = New System.Drawing.Size(842, 45)
+        Me.PanelControl3.TabIndex = 9
+        '
+        'BtnView
+        '
+        Me.BtnView.Location = New System.Drawing.Point(370, 12)
+        Me.BtnView.Name = "BtnView"
+        Me.BtnView.Size = New System.Drawing.Size(65, 20)
+        Me.BtnView.TabIndex = 5
+        Me.BtnView.Text = "View"
+        '
+        'PanelControlNav
+        '
+        Me.PanelControlNav.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControlNav.Controls.Add(Me.BtnPrint)
+        Me.PanelControlNav.Controls.Add(Me.BtnRefresh)
+        Me.PanelControlNav.Controls.Add(Me.BtnNew)
+        Me.PanelControlNav.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControlNav.Location = New System.Drawing.Point(554, 0)
+        Me.PanelControlNav.Name = "PanelControlNav"
+        Me.PanelControlNav.Size = New System.Drawing.Size(288, 45)
+        Me.PanelControlNav.TabIndex = 8
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
+        Me.BtnPrint.Location = New System.Drawing.Point(19, 0)
+        Me.BtnPrint.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(92, 45)
+        Me.BtnPrint.TabIndex = 10
+        Me.BtnPrint.Text = "Print"
+        '
+        'BtnRefresh
+        '
+        Me.BtnRefresh.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnRefresh.Image = CType(resources.GetObject("BtnRefresh.Image"), System.Drawing.Image)
+        Me.BtnRefresh.Location = New System.Drawing.Point(111, 0)
+        Me.BtnRefresh.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.BtnRefresh.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnRefresh.Name = "BtnRefresh"
+        Me.BtnRefresh.Size = New System.Drawing.Size(93, 45)
+        Me.BtnRefresh.TabIndex = 8
+        Me.BtnRefresh.Text = "Refresh"
+        '
+        'BtnNew
+        '
+        Me.BtnNew.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnNew.Image = CType(resources.GetObject("BtnNew.Image"), System.Drawing.Image)
+        Me.BtnNew.Location = New System.Drawing.Point(204, 0)
+        Me.BtnNew.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.BtnNew.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnNew.Name = "BtnNew"
+        Me.BtnNew.Size = New System.Drawing.Size(84, 45)
+        Me.BtnNew.TabIndex = 9
+        Me.BtnNew.Text = "New"
+        '
+        'DEUntilOwn
+        '
+        Me.DEUntilOwn.EditValue = Nothing
+        Me.DEUntilOwn.Location = New System.Drawing.Point(215, 12)
+        Me.DEUntilOwn.Name = "DEUntilOwn"
+        Me.DEUntilOwn.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
+        Me.DEUntilOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEUntilOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEUntilOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DEUntilOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.DEUntilOwn.Size = New System.Drawing.Size(150, 20)
+        Me.DEUntilOwn.TabIndex = 9
+        '
+        'LabelControl6
+        '
+        Me.LabelControl6.Location = New System.Drawing.Point(13, 15)
+        Me.LabelControl6.Name = "LabelControl6"
+        Me.LabelControl6.Size = New System.Drawing.Size(24, 13)
+        Me.LabelControl6.TabIndex = 6
+        Me.LabelControl6.Text = "From"
+        '
+        'LabelControl5
+        '
+        Me.LabelControl5.Location = New System.Drawing.Point(188, 15)
+        Me.LabelControl5.Name = "LabelControl5"
+        Me.LabelControl5.Size = New System.Drawing.Size(21, 13)
+        Me.LabelControl5.TabIndex = 7
+        Me.LabelControl5.Text = "Until"
+        '
+        'DEFromOwn
+        '
+        Me.DEFromOwn.EditValue = Nothing
+        Me.DEFromOwn.Location = New System.Drawing.Point(43, 12)
+        Me.DEFromOwn.Name = "DEFromOwn"
+        Me.DEFromOwn.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
+        Me.DEFromOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEFromOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.DEFromOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DEFromOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+        Me.DEFromOwn.Size = New System.Drawing.Size(139, 20)
+        Me.DEFromOwn.TabIndex = 8
         '
         'GCTrf
         '
@@ -361,104 +459,6 @@ Partial Class FormTrf
         Me.GridColumnPreparedBy.VisibleIndex = 4
         Me.GridColumnPreparedBy.Width = 93
         '
-        'PanelControlNav
-        '
-        Me.PanelControlNav.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlNav.Controls.Add(Me.BtnPrint)
-        Me.PanelControlNav.Controls.Add(Me.BtnRefresh)
-        Me.PanelControlNav.Controls.Add(Me.BtnNew)
-        Me.PanelControlNav.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControlNav.Location = New System.Drawing.Point(554, 0)
-        Me.PanelControlNav.Name = "PanelControlNav"
-        Me.PanelControlNav.Size = New System.Drawing.Size(288, 45)
-        Me.PanelControlNav.TabIndex = 8
-        '
-        'BtnPrint
-        '
-        Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
-        Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
-        Me.BtnPrint.Location = New System.Drawing.Point(19, 0)
-        Me.BtnPrint.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.BtnPrint.Name = "BtnPrint"
-        Me.BtnPrint.Size = New System.Drawing.Size(92, 45)
-        Me.BtnPrint.TabIndex = 10
-        Me.BtnPrint.Text = "Print"
-        '
-        'BtnRefresh
-        '
-        Me.BtnRefresh.Dock = System.Windows.Forms.DockStyle.Right
-        Me.BtnRefresh.Image = CType(resources.GetObject("BtnRefresh.Image"), System.Drawing.Image)
-        Me.BtnRefresh.Location = New System.Drawing.Point(111, 0)
-        Me.BtnRefresh.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.BtnRefresh.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.BtnRefresh.Name = "BtnRefresh"
-        Me.BtnRefresh.Size = New System.Drawing.Size(93, 45)
-        Me.BtnRefresh.TabIndex = 8
-        Me.BtnRefresh.Text = "Refresh"
-        '
-        'BtnNew
-        '
-        Me.BtnNew.Dock = System.Windows.Forms.DockStyle.Right
-        Me.BtnNew.Image = CType(resources.GetObject("BtnNew.Image"), System.Drawing.Image)
-        Me.BtnNew.Location = New System.Drawing.Point(204, 0)
-        Me.BtnNew.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
-        Me.BtnNew.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.BtnNew.Name = "BtnNew"
-        Me.BtnNew.Size = New System.Drawing.Size(84, 45)
-        Me.BtnNew.TabIndex = 9
-        Me.BtnNew.Text = "New"
-        '
-        'BtnView
-        '
-        Me.BtnView.Location = New System.Drawing.Point(370, 12)
-        Me.BtnView.Name = "BtnView"
-        Me.BtnView.Size = New System.Drawing.Size(65, 20)
-        Me.BtnView.TabIndex = 5
-        Me.BtnView.Text = "View"
-        '
-        'DEUntilOwn
-        '
-        Me.DEUntilOwn.EditValue = Nothing
-        Me.DEUntilOwn.Location = New System.Drawing.Point(215, 12)
-        Me.DEUntilOwn.Name = "DEUntilOwn"
-        Me.DEUntilOwn.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
-        Me.DEUntilOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DEUntilOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DEUntilOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
-        Me.DEUntilOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-        Me.DEUntilOwn.Size = New System.Drawing.Size(150, 20)
-        Me.DEUntilOwn.TabIndex = 9
-        '
-        'LabelControl5
-        '
-        Me.LabelControl5.Location = New System.Drawing.Point(188, 15)
-        Me.LabelControl5.Name = "LabelControl5"
-        Me.LabelControl5.Size = New System.Drawing.Size(21, 13)
-        Me.LabelControl5.TabIndex = 7
-        Me.LabelControl5.Text = "Until"
-        '
-        'DEFromOwn
-        '
-        Me.DEFromOwn.EditValue = Nothing
-        Me.DEFromOwn.Location = New System.Drawing.Point(43, 12)
-        Me.DEFromOwn.Name = "DEFromOwn"
-        Me.DEFromOwn.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
-        Me.DEFromOwn.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DEFromOwn.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DEFromOwn.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
-        Me.DEFromOwn.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-        Me.DEFromOwn.Size = New System.Drawing.Size(139, 20)
-        Me.DEFromOwn.TabIndex = 8
-        '
-        'LabelControl6
-        '
-        Me.LabelControl6.Location = New System.Drawing.Point(13, 15)
-        Me.LabelControl6.Name = "LabelControl6"
-        Me.LabelControl6.Size = New System.Drawing.Size(24, 13)
-        Me.LabelControl6.TabIndex = 6
-        Me.LabelControl6.Text = "From"
-        '
         'FormTrf
         '
         Me.Appearance.Options.UseFont = True
@@ -482,19 +482,19 @@ Partial Class FormTrf
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl3.ResumeLayout(False)
         Me.PanelControl3.PerformLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GCTrf, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.GVTrf, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlNav, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlNav.ResumeLayout(False)
         CType(Me.DEUntilOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DEUntilOwn.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DEFromOwn.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DEFromOwn.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GCTrf, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
+        CType(Me.GVTrf, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

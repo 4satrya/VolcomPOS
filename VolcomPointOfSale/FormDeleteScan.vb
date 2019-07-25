@@ -57,6 +57,30 @@
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
                 End If
+            ElseIf id_pop_up = "3" Then 'return
+                makeSafeGV(FormRetDet.GVScan)
+                FormRetDet.GVScan.ActiveFilterString = "[item_code]='" + code + "' "
+
+                If FormRetDet.GVScan.RowCount > 0 Then
+                    Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete this item : " + TxtItemCode.Text + " - " + FormRetDet.GVScan.GetFocusedRowCellValue("item_name").ToString + " ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                    If confirm = DialogResult.Yes Then
+                        FormRetDet.GVScan.DeleteSelectedRows()
+                        makeSafeGV(FormRetDet.GVScan)
+                        FormRetDet.GCScan.RefreshDataSource()
+                        FormRetDet.GVScan.RefreshData()
+                        TxtItemCode.Text = ""
+                        TxtItemCode.Focus()
+                    Else
+                        makeSafeGV(FormRetDet.GVScan)
+                        TxtItemCode.Text = ""
+                        TxtItemCode.Focus()
+                    End If
+                Else
+                    stopCustom("Code not found")
+                    makeSafeGV(FormRetDet.GVScan)
+                    TxtItemCode.Text = ""
+                    TxtItemCode.Focus()
+                End If
             End If
         End If
     End Sub

@@ -47,6 +47,7 @@
             GridColumnStatus.Visible = False
             GridColumnAvail.Visible = False
         Else
+            DERefDate.EditValue = getTimeDB()
             LEReportStatus.Enabled = False
             BtnPrint.Enabled = False
             XTPSummary.PageVisible = False
@@ -65,7 +66,7 @@
 
 
     Sub allow_status()
-        If check_status(id_report_status_glb) Then
+        If id_report_status_glb = "1" Then
             MENote.Enabled = True
             BtnSave.Enabled = True
             TxtRef.Enabled = True
@@ -78,15 +79,15 @@
             DERefDate.Enabled = False
             LEReportStatus.Enabled = False
         End If
-        PanelControlItem.Enabled = False
+        BtnPrint.Enabled = True
+        PanelControlItem.Visible = False
         TxtCodeCompFrom.Enabled = False
         TxtCodeCompTo.Enabled = False
         BtnBrowseFrom.Enabled = False
         BtnBrowseTo.Enabled = False
 
-        If check_print_report_status(id_report_status_glb) Then
-            BtnPrint.Enabled = True
-        Else
+        'jika cancell
+        If id_report_status_glb = "5" Then
             BtnPrint.Enabled = False
         End If
     End Sub
@@ -108,7 +109,6 @@
     Private Sub BtnBrowseTo_Click(sender As Object, e As EventArgs) Handles BtnBrowseTo.Click
         Cursor = Cursors.WaitCursor
         FormBlack.Show()
-        FormPopUpContact.id_cat = "1"
         FormPopUpContact.id_pop_up = "4"
         FormPopUpContact.ShowDialog()
         FormBlack.Close()
@@ -287,8 +287,9 @@
                     If action = "ins" Then
                         'main query
                         Dim query As String = "INSERT INTO tb_ret(id_comp_from, id_comp_to, ret_number, ret_date, ref, ref_date, ret_note, id_report_status, id_prepared_by) 
-                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', header_number(2), NOW(), '" + ref + "', '" + ref_date + "', '" + ret_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
+                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', '', NOW(), '" + ref + "', '" + ref_date + "', '" + ret_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
                         id = execute_query(query, 0, True, "", "", "", "")
+                        execute_non_query("CALL gen_number(" + id + ", 2)", True, "", "", "", "")
 
                         'detail
                         Dim query_det As String = "INSERT INTO tb_ret_det(id_ret, id_item, price, ret_qty) VALUES "
@@ -381,13 +382,18 @@
 
     Sub removeScan()
         If (id_report_status_glb = "1" Or id_report_status_glb = "-1") And action = "ins" Then
+            'Cursor = Cursors.WaitCursor
+            'Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            'If confirm = DialogResult.Yes Then
+            '    GVScan.DeleteSelectedRows()
+            '    GCScan.RefreshDataSource()
+            '    GVScan.RefreshData()
+            'End If
+            'Cursor = Cursors.Default
+
             Cursor = Cursors.WaitCursor
-            Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
-            If confirm = DialogResult.Yes Then
-                GVScan.DeleteSelectedRows()
-                GCScan.RefreshDataSource()
-                GVScan.RefreshData()
-            End If
+            FormDeleteScan.id_pop_up = "3"
+            FormDeleteScan.ShowDialog()
             Cursor = Cursors.Default
         End If
     End Sub
@@ -465,10 +471,24 @@
 
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim code As String = TxtItemCode.Text
-            Dim query As String = item.queryMain("AND i.is_active=1 AND i.item_code='" + code + "' AND i.id_comp_sup='" + id_comp_to + "' ", "1", False)
+            Dim code As String = addSlashes(TxtItemCode.Text)
+            Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND f.item_code=''" + code + "'' AND j.id_comp=" + id_comp_from + " AND f.id_comp_sup=" + id_comp_to + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+            'Dim query As String = item.queryMain("AND i.is_active=1 AND i.item_code='" + code + "' AND i.id_comp_sup='" + id_comp_to + "' ", "1", False)
             Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
             If dt.Rows.Count > 0 Then
+                'cek available 
+                makeSafeGV(GVScan)
+                GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
+                If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
+                    stopCustom("No available qty")
+                    makeSafeGV(GVScan)
+                    GVScan.FocusedRowHandle = GVScan.RowCount - 1
+                    TxtItemCode.Text = ""
+                    TxtItemCode.Focus()
+                    Exit Sub
+                End If
+                makeSafeGV(GVScan)
+
                 Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
                 newRow("id_ret_det") = "0"
                 newRow("id_item") = dt(0)("id_item").ToString
@@ -494,15 +514,15 @@
         End If
     End Sub
 
-    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs) Handles PCClose.MouseHover
+    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs) Handles PCClose.MouseLeave
+    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PCClose_Click(sender As Object, e As EventArgs) Handles PCClose.Click
+    Private Sub PCClose_Click(sender As Object, e As EventArgs)
         closeForm()
     End Sub
 

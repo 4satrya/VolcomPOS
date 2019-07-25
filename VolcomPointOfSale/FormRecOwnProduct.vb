@@ -28,16 +28,18 @@
             DECreated.EditValue = getTimeDB()
 
             'get del slip & prepared by
-            Dim query As String = "SELECT d.id_pl_sales_order_del, d.number, d.id_wh, wh.comp_number AS `wh_number`, wh.comp_name AS `wh_name` 
+            Dim query As String = "SELECT d.id_pl_sales_order_del, d.number, d.id_wh, wh.comp_number AS `wh_number`, wh.comp_name AS `wh_name`,
+            d.id_store, store.comp_number AS `store_number`, store.comp_name AS `store_name`
             FROM tb_delivery_slip d
             INNER JOIN tb_m_comp wh ON wh.id_comp = d.id_wh
+            INNER JOIN tb_m_comp store ON store.id_comp = d.id_store
             WHERE d.id_pl_sales_order_del=" + id_pl_sales_order_del + "
             GROUP BY d.id_pl_sales_order_del "
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
             TxtDelSlip.Text = data.Rows(0)("number").ToString
-            id_comp_from = data.Rows(0)("id_wh").ToString
-            TxtFromCode.Text = data.Rows(0)("wh_number").ToString
-            TxtFromName.Text = data.Rows(0)("wh_name").ToString
+            id_comp_from = data.Rows(0)("id_store").ToString
+            TxtFromCode.Text = data.Rows(0)("store_number").ToString
+            TxtFromName.Text = data.Rows(0)("store_name").ToString
             TxtPreparedBy.Text = name_user
             viewSummary()
             viewDetail()
