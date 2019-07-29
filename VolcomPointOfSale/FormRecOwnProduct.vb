@@ -403,9 +403,9 @@
                     If id_report_status_saved = "6" Then
                         'masuk ke master
                         Dim qf As String = "/*master*/
-                        INSERT INTO tb_item (`id_size`,`id_class`,`id_color`,`id_comp_sup`,`id_so_type`,`id_design_cat`,`item_code` ,
+                        INSERT INTO tb_item (`id_size`,`id_class`,`id_color`,`id_comp_sup`,`id_so_type`,`id_design_cat`,`item_code` , `item_code_group`,
                         `item_name`,`price`,`price_date`,`comm`,`id_product`,`is_active`,`is_own_product`, `is_unique_code`,`last_updated`)
-                        SELECT sz.`id_size`,cls.`id_class`,col.`id_color`, str.id_comp AS `id_comp_sup`, 1 AS `id_so_type`, ds.id_design_cat, ds.item_code,
+                        SELECT sz.`id_size`,cls.`id_class`,col.`id_color`, str.id_comp AS `id_comp_sup`, 1 AS `id_so_type`, ds.id_design_cat, ds.item_code, ds.item_code_group,
                         ds.`item_name`,ds.`price`, NOW() AS `price_date`, str.comp_commission AS `comm`, ds.id_product, 1, 1, ds.is_unique_code, NOW()
                         FROM tb_rec_own_det rd 
                         INNER JOIN tb_delivery_slip ds ON ds.id_delivery_slip = rd.id_delivery_slip
