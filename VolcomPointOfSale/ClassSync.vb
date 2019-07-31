@@ -15,6 +15,8 @@ Public Class ClassSync
     Public splash As String = "-1"
     Dim is_reset_config As String = "-1"
     Dim dtl As DataTable
+    Dim id_comp_sup_normal As String = "-1"
+    Dim id_comp_sup_sale As String = "-1"
 
     Public Sub New()
         Dim query As String = "SELECT * FROM tb_opt"
@@ -31,7 +33,10 @@ Public Class ClassSync
         pass_sync_main = data.Rows(0)("pass_sync_main").ToString
         db_sync_main = data.Rows(0)("db_sync_main").ToString
 
+        'other
         is_reset_config = data.Rows(0)("is_reset_config").ToString
+        id_comp_sup_normal = data.Rows(0)("acc_normal_origin").ToString
+        id_comp_sup_sale = data.Rows(0)("acc_sale_origin").ToString
 
         'get sync list
         Dim qs As String = "SELECT * FROM tb_sync_data d ORDER BY d.`index` ASC "
@@ -512,6 +517,26 @@ Public Class ClassSync
         execute_non_query(qlast, True, "", "", "", "")
     End Sub
 
+    Sub syncItemPrice()
+        Dim err As String = ""
+        Try
+            'insert
+            Dim qupd As String = ""
+            execute_non_query(qupd, True, "", "", "", "")
+        Catch ex As Exception
+            err += ex.ToString + "; "
+        End Try
+
+        Dim is_success = ""
+        If err = "" Then
+            is_success = "1"
+        Else
+            is_success = "2"
+        End If
+        Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '3', '" + is_success + "','" + addSlashes(err) + "') "
+        execute_non_query(qlast, True, "", "", "", "")
+    End Sub
+
     Public Sub startofSync()
         For i As Integer = 0 To dtl.Rows.Count - 1
             Dim ix As String = dtl.Rows(i)("id_sync_data").ToString
@@ -529,14 +554,14 @@ Public Class ClassSync
                     FormUser.SplashScreenManager1.SetWaitFormDescription("Sync delivery slip")
                 End If
                 syncDS()
-            ElseIf ix = "3" Then 'item
-                'If splash = "-1" Then
-                '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync products")
-                'ElseIf splash = "1" Then
-                '    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync products")
-                'End If
-                'syncItem()
-            ElseIf ix = "4" Then 'emp
+            ElseIf ix = "3" Then 'item price
+                If splash = "-1" Then
+                    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync product price")
+                ElseIf splash = "1" Then
+                    FormUser.SplashScreenManager1.SetWaitFormDescription("Sync product price")
+                End If
+                syncItemPrice()
+            ElseIf ix = "4" Then 'company
                 'If splash = "-1" Then
                 '    FormFront.SplashScreenManager1.SetWaitFormDescription("Sync employee")
                 'ElseIf splash = "1" Then
@@ -594,16 +619,16 @@ Public Class ClassSync
 
                 execute_non_query("CALL generate_delivery_slip(" + acc_normal + ", " + acc_sale + ", '" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
                 dic.Add("tb_sync_delivery", "SELECT * FROM tb_sync_delivery;")
-            ElseIf ix = "3" Then 'item
-                'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
-                'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
-                'If dql.Rows.Count > 0 Then
-                '    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
-                'Else
-                '    last_upd = "1945-08-17 00:00:10"
-                'End If
-                'execute_non_query("CALL set_product_sync('" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
-                'dic.Add("tb_product_sync", "SELECT * FROM tb_product_sync;")
+            ElseIf ix = "3" Then 'item price    
+                Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
+                Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
+                If dql.Rows.Count > 0 Then
+                    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
+                Else
+                    last_upd = "1945-08-17 00:00:10"
+                End If
+                execute_non_query("CALL generate_design_price('" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
+                dic.Add("tb_sync_design_price", "SELECT * FROM tb_sync_design_price;")
             ElseIf ix = "4" Then 'item
                 'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=4 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
                 'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
