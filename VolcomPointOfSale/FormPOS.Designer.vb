@@ -638,7 +638,7 @@ Partial Class FormPOS
         Me.LabelControl14.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl14.Location = New System.Drawing.Point(9, 29)
         Me.LabelControl14.Name = "LabelControl14"
-        Me.LabelControl14.Size = New System.Drawing.Size(50, 13)
+        Me.LabelControl14.Size = New System.Drawing.Size(51, 13)
         Me.LabelControl14.TabIndex = 21
         Me.LabelControl14.Text = "Card Type"
         '
@@ -907,7 +907,7 @@ Partial Class FormPOS
         Me.LabelControl5.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl5.Location = New System.Drawing.Point(8, 109)
         Me.LabelControl5.Name = "LabelControl5"
-        Me.LabelControl5.Size = New System.Drawing.Size(25, 13)
+        Me.LabelControl5.Size = New System.Drawing.Size(26, 13)
         Me.LabelControl5.TabIndex = 20
         Me.LabelControl5.Text = "Total"
         '
@@ -956,7 +956,7 @@ Partial Class FormPOS
         Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl4.Location = New System.Drawing.Point(8, 83)
         Me.LabelControl4.Name = "LabelControl4"
-        Me.LabelControl4.Size = New System.Drawing.Size(16, 13)
+        Me.LabelControl4.Size = New System.Drawing.Size(17, 13)
         Me.LabelControl4.TabIndex = 18
         Me.LabelControl4.Text = "Tax"
         '

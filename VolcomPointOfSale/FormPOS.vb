@@ -149,8 +149,9 @@
         TxtItemCode.Focus()
         If Not new_trans Then
             Dim query As String = "INSERT INTO tb_pos(id_shift, pos_number, pos_date, id_pos_status, id_pos_cat) 
-            VALUES('" + id_shift + "', header_number(4), NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
+            VALUES('" + id_shift + "', '', NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
             id = execute_query(query, 0, True, "", "", "", "")
+            execute_non_query("CALL gen_number(" + id + ", 4)", True, "", "", "", "")
             new_trans = True
             actionLoad()
         End If
@@ -508,7 +509,7 @@
                     'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
 
                     'insert detail
-                    insertDetail(dt(0)("id_item").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1")
+                    insertDetail(dt(0)("id_item").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString)
 
                     'insert gv
                     Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
@@ -616,7 +617,7 @@
 
             If qty > 0 Then 'plus
                 'insert detail
-                insertDetail("0", "0", qty.ToString, "0", id_pos_det)
+                insertDetail("0", "0", qty.ToString, "0", id_pos_det, "0")
 
                 GVPOS.SetRowCellValue(rh, "qty", qty)
                 GVPOS.SetRowCellValue(rh, "is_edit", "2")
@@ -654,7 +655,7 @@
 
                 If (qty * -1) <= max Then
                     'insert detail
-                    insertDetail("0", "0", qty.ToString, "0", id_pos_det)
+                    insertDetail("0", "0", qty.ToString, "0", id_pos_det, "0")
 
                     GVPOS.SetRowCellValue(rh, "qty", qty)
                     GVPOS.SetRowCellValue(rh, "is_edit", "2")
@@ -731,13 +732,13 @@
         End If
     End Sub
 
-    Sub insertDetail(ByVal id_item_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String)
+    Sub insertDetail(ByVal id_item_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String, ByVal id_comp_sup_par As String)
         If id_pos_det_par <> "-1" Then 'edit only qty
             Dim query As String = "UPDATE tb_pos_det SET qty='" + qty_par + "' WHERE id_pos_det='" + id_pos_det_par + "'"
             execute_non_query(query, True, "", "", "", "")
         Else
-            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, qty, price) 
-            VALUES ('" + id + "', '" + id_item_par + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'); SELECT LAST_INSERT_ID(); "
+            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, qty, price, id_comp_sup) 
+            VALUES ('" + id + "', '" + id_item_par + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'," + id_comp_sup_par + "); SELECT LAST_INSERT_ID(); "
             id_detail_last = execute_query(query, 0, True, "", "", "", "")
         End If
     End Sub
@@ -1075,7 +1076,7 @@
         execute_non_query(query_stc, True, "", "", "", "")
 
         'closed pos
-        Dim query As String = "UPDATE tb_pos SET id_sales='" + id_sales + "', id_country='" + LENation.EditValue.ToString + "', id_pos_status=2 WHERE id_pos=" + id + ""
+        Dim query As String = "UPDATE tb_pos SET id_sales='" + id_sales + "', id_country='" + LENation.EditValue.ToString + "', id_pos_status=2, pos_closed_date=NOW() WHERE id_pos=" + id + ""
         execute_non_query(query, True, "", "", "", "")
         Close()
     End Sub
