@@ -67,15 +67,15 @@
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs) Handles PanelControlBack.Click
+    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs)
         exitForm()
     End Sub
 
-    Private Sub PanelControlBack_MouseHover(sender As Object, e As EventArgs) Handles PanelControlBack.MouseHover
+    Private Sub PanelControlBack_MouseHover(sender As Object, e As EventArgs)
         PanelControlBack.Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PanelControlBack_MouseLeave(sender As Object, e As EventArgs) Handles PanelControlBack.MouseLeave
+    Private Sub PanelControlBack_MouseLeave(sender As Object, e As EventArgs)
         PanelControlBack.Cursor = Cursors.Default
     End Sub
 
@@ -153,9 +153,9 @@
         'status
         cond += "AND p.id_pos_status=" + LEStatus.EditValue.ToString + " "
 
-        Dim query As String = "(SELECT 'Cash' AS `payment`,IFNULL(SUM(p.total-(p.card+p.voucher)),0) AS `cash`, 0 AS `card`, 0 AS `voucher` FROM tb_pos p WHERE p.cash>0 " + cond + ")
+        Dim query As String = "(SELECT 'Cash' AS `payment`,IFNULL(SUM(p.total-(p.card+p.voucher)),0) AS `cash`, 0 AS `card`, 0 AS `voucher` FROM tb_pos p WHERE p.cash!=0 " + cond + ")
         UNION ALL
-        (SELECT 'Voucher' AS `payment`,0 AS `cash`, 0 AS `card`, IFNULL(SUM(p.voucher),0) AS `voucher` FROM tb_pos p WHERE p.voucher>0 " + cond + ")
+        (SELECT 'Voucher' AS `payment`,0 AS `cash`, 0 AS `card`, IFNULL(SUM(p.voucher),0) AS `voucher` FROM tb_pos p WHERE p.voucher!=0 " + cond + ")
         UNION ALL
         (SELECT ct.card_type AS `payment`, 0 AS `cash`, IFNULL(SUM(p.card),0) AS `card`, 0 AS `voucher`
         FROM tb_pos p
@@ -181,5 +181,9 @@
         If e.Column.FieldName = "no" Then
             e.DisplayText = (e.ListSourceRowIndex + 1).ToString()
         End If
+    End Sub
+
+    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
     End Sub
 End Class

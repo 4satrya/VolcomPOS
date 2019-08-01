@@ -118,7 +118,7 @@
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs) Handles PanelControlBack.Click
+    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs)
         exitForm()
     End Sub
 
@@ -168,5 +168,9 @@
         If e.KeyCode = Keys.Enter Then
             BtnView.Focus()
         End If
+    End Sub
+
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
     End Sub
 End Class

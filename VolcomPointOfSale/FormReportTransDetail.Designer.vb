@@ -20,9 +20,6 @@ Partial Class FormReportTransDetail
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReportTransDetail))
-        Me.PanelControlTitle = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl11 = New DevExpress.XtraEditors.LabelControl()
@@ -50,9 +47,9 @@ Partial Class FormReportTransDetail
         Me.GridColumnQty = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnAmount = New DevExpress.XtraGrid.Columns.GridColumn()
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControlTitle.SuspendLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
+        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -68,50 +65,21 @@ Partial Class FormReportTransDetail
         CType(Me.DEFrom.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GCTransDetail, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVTransDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'PanelControlTitle
-        '
-        Me.PanelControlTitle.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlTitle.Controls.Add(Me.LabelControl13)
-        Me.PanelControlTitle.Controls.Add(Me.PanelControlBack)
-        Me.PanelControlTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlTitle.Location = New System.Drawing.Point(20, 20)
-        Me.PanelControlTitle.Name = "PanelControlTitle"
-        Me.PanelControlTitle.Size = New System.Drawing.Size(830, 61)
-        Me.PanelControlTitle.TabIndex = 5
-        '
-        'LabelControl13
-        '
-        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
-        Me.LabelControl13.Name = "LabelControl13"
-        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
-        Me.LabelControl13.Size = New System.Drawing.Size(205, 46)
-        Me.LabelControl13.TabIndex = 1
-        Me.LabelControl13.Text = "Transaction Detail"
-        '
-        'PanelControlBack
-        '
-        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
-        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
-        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControlBack.Name = "PanelControlBack"
-        Me.PanelControlBack.Size = New System.Drawing.Size(40, 61)
-        Me.PanelControlBack.TabIndex = 4
         '
         'PanelControl1
         '
         Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl1.Controls.Add(Me.LabelControl13)
+        Me.PanelControl1.Controls.Add(Me.PanelControlBack)
         Me.PanelControl1.Controls.Add(Me.PanelControl2)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(20, 368)
+        Me.PanelControl1.Location = New System.Drawing.Point(0, 413)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(830, 35)
+        Me.PanelControl1.Size = New System.Drawing.Size(870, 10)
         Me.PanelControl1.TabIndex = 6
+        Me.PanelControl1.Visible = False
         '
         'PanelControl2
         '
@@ -121,9 +89,9 @@ Partial Class FormReportTransDetail
         Me.PanelControl2.Controls.Add(Me.LabelControl8)
         Me.PanelControl2.Controls.Add(Me.LabelControl9)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl2.Location = New System.Drawing.Point(699, 0)
+        Me.PanelControl2.Location = New System.Drawing.Point(739, 0)
         Me.PanelControl2.Name = "PanelControl2"
-        Me.PanelControl2.Size = New System.Drawing.Size(131, 35)
+        Me.PanelControl2.Size = New System.Drawing.Size(131, 10)
         Me.PanelControl2.TabIndex = 8
         '
         'LabelControl11
@@ -164,6 +132,7 @@ Partial Class FormReportTransDetail
         '
         'PanelControlStock
         '
+        Me.PanelControlStock.Controls.Add(Me.BtnPrint)
         Me.PanelControlStock.Controls.Add(Me.LEPOSDev)
         Me.PanelControlStock.Controls.Add(Me.LabelControl5)
         Me.PanelControlStock.Controls.Add(Me.BtnView)
@@ -176,14 +145,14 @@ Partial Class FormReportTransDetail
         Me.PanelControlStock.Controls.Add(Me.LabelControl3)
         Me.PanelControlStock.Controls.Add(Me.DEFrom)
         Me.PanelControlStock.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlStock.Location = New System.Drawing.Point(20, 81)
+        Me.PanelControlStock.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlStock.Name = "PanelControlStock"
-        Me.PanelControlStock.Size = New System.Drawing.Size(830, 69)
+        Me.PanelControlStock.Size = New System.Drawing.Size(870, 69)
         Me.PanelControlStock.TabIndex = 8
         '
         'LEPOSDev
         '
-        Me.LEPOSDev.Location = New System.Drawing.Point(319, 36)
+        Me.LEPOSDev.Location = New System.Drawing.Point(332, 36)
         Me.LEPOSDev.Name = "LEPOSDev"
         Me.LEPOSDev.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LEPOSDev.Properties.Appearance.Options.UseFont = True
@@ -195,7 +164,7 @@ Partial Class FormReportTransDetail
         'LabelControl5
         '
         Me.LabelControl5.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl5.Location = New System.Drawing.Point(292, 39)
+        Me.LabelControl5.Location = New System.Drawing.Point(305, 39)
         Me.LabelControl5.Name = "LabelControl5"
         Me.LabelControl5.Size = New System.Drawing.Size(21, 13)
         Me.LabelControl5.TabIndex = 10
@@ -209,7 +178,7 @@ Partial Class FormReportTransDetail
         Me.BtnView.Appearance.Options.UseBackColor = True
         Me.BtnView.Appearance.Options.UseFont = True
         Me.BtnView.Appearance.Options.UseForeColor = True
-        Me.BtnView.Location = New System.Drawing.Point(409, 22)
+        Me.BtnView.Location = New System.Drawing.Point(422, 22)
         Me.BtnView.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
         Me.BtnView.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
         Me.BtnView.LookAndFeel.SkinName = "Metropolis"
@@ -223,7 +192,7 @@ Partial Class FormReportTransDetail
         'LabelControl4
         '
         Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl4.Location = New System.Drawing.Point(5, 39)
+        Me.LabelControl4.Location = New System.Drawing.Point(18, 39)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(32, 13)
         Me.LabelControl4.TabIndex = 9
@@ -231,7 +200,7 @@ Partial Class FormReportTransDetail
         '
         'LEStatus
         '
-        Me.LEStatus.Location = New System.Drawing.Point(42, 36)
+        Me.LEStatus.Location = New System.Drawing.Point(55, 36)
         Me.LEStatus.Name = "LEStatus"
         Me.LEStatus.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LEStatus.Properties.Appearance.Options.UseFont = True
@@ -242,7 +211,7 @@ Partial Class FormReportTransDetail
         '
         'LEShift
         '
-        Me.LEShift.Location = New System.Drawing.Point(240, 36)
+        Me.LEShift.Location = New System.Drawing.Point(253, 36)
         Me.LEShift.Name = "LEShift"
         Me.LEShift.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LEShift.Properties.Appearance.Options.UseFont = True
@@ -254,7 +223,7 @@ Partial Class FormReportTransDetail
         'LabelControl2
         '
         Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl2.Location = New System.Drawing.Point(209, 39)
+        Me.LabelControl2.Location = New System.Drawing.Point(222, 39)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(24, 13)
         Me.LabelControl2.TabIndex = 7
@@ -263,7 +232,7 @@ Partial Class FormReportTransDetail
         'LabelControl1
         '
         Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl1.Location = New System.Drawing.Point(209, 13)
+        Me.LabelControl1.Location = New System.Drawing.Point(222, 13)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(25, 13)
         Me.LabelControl1.TabIndex = 5
@@ -272,7 +241,7 @@ Partial Class FormReportTransDetail
         'DEUntil
         '
         Me.DEUntil.EditValue = Nothing
-        Me.DEUntil.Location = New System.Drawing.Point(240, 10)
+        Me.DEUntil.Location = New System.Drawing.Point(253, 10)
         Me.DEUntil.Name = "DEUntil"
         Me.DEUntil.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
         Me.DEUntil.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -289,7 +258,7 @@ Partial Class FormReportTransDetail
         'LabelControl3
         '
         Me.LabelControl3.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl3.Location = New System.Drawing.Point(5, 13)
+        Me.LabelControl3.Location = New System.Drawing.Point(18, 13)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(26, 13)
         Me.LabelControl3.TabIndex = 4
@@ -298,7 +267,7 @@ Partial Class FormReportTransDetail
         'DEFrom
         '
         Me.DEFrom.EditValue = Nothing
-        Me.DEFrom.Location = New System.Drawing.Point(42, 10)
+        Me.DEFrom.Location = New System.Drawing.Point(55, 10)
         Me.DEFrom.Name = "DEFrom"
         Me.DEFrom.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.[False]
         Me.DEFrom.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -315,12 +284,12 @@ Partial Class FormReportTransDetail
         'GCTransDetail
         '
         Me.GCTransDetail.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCTransDetail.Location = New System.Drawing.Point(20, 150)
+        Me.GCTransDetail.Location = New System.Drawing.Point(0, 69)
         Me.GCTransDetail.LookAndFeel.SkinName = "Office 2010 Blue"
         Me.GCTransDetail.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCTransDetail.MainView = Me.GVTransDetail
         Me.GCTransDetail.Name = "GCTransDetail"
-        Me.GCTransDetail.Size = New System.Drawing.Size(830, 218)
+        Me.GCTransDetail.Size = New System.Drawing.Size(870, 344)
         Me.GCTransDetail.TabIndex = 9
         Me.GCTransDetail.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVTransDetail})
         '
@@ -413,6 +382,47 @@ Partial Class FormReportTransDetail
         Me.GridColumnAmount.VisibleIndex = 6
         Me.GridColumnAmount.Width = 317
         '
+        'PanelControlBack
+        '
+        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
+        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControlBack.Name = "PanelControlBack"
+        Me.PanelControlBack.Size = New System.Drawing.Size(40, 10)
+        Me.PanelControlBack.TabIndex = 9
+        '
+        'LabelControl13
+        '
+        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
+        Me.LabelControl13.Name = "LabelControl13"
+        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
+        Me.LabelControl13.Size = New System.Drawing.Size(205, 46)
+        Me.LabelControl13.TabIndex = 10
+        Me.LabelControl13.Text = "Transaction Detail"
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrint.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrint.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrint.Appearance.Options.UseBackColor = True
+        Me.BtnPrint.Appearance.Options.UseFont = True
+        Me.BtnPrint.Appearance.Options.UseForeColor = True
+        Me.BtnPrint.Location = New System.Drawing.Point(483, 22)
+        Me.BtnPrint.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrint.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrint.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrint.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrint.TabIndex = 11
+        Me.BtnPrint.Text = "Print"
+        '
         'FormReportTransDetail
         '
         Me.Appearance.Options.UseFont = True
@@ -422,26 +432,19 @@ Partial Class FormReportTransDetail
         Me.Controls.Add(Me.GCTransDetail)
         Me.Controls.Add(Me.PanelControlStock)
         Me.Controls.Add(Me.PanelControl1)
-        Me.Controls.Add(Me.PanelControlTitle)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormReportTransDetail"
-        Me.Padding = New System.Windows.Forms.Padding(20)
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Transaction Detail"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControlTitle.ResumeLayout(False)
-        Me.PanelControlTitle.PerformLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
+        Me.PanelControl1.PerformLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
@@ -457,13 +460,10 @@ Partial Class FormReportTransDetail
         CType(Me.DEFrom.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GCTransDetail, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVTransDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents PanelControlTitle As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControl1 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents LabelControl11 As DevExpress.XtraEditors.LabelControl
@@ -491,4 +491,7 @@ Partial Class FormReportTransDetail
     Friend WithEvents GridColumnQty As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnPrice As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnAmount As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
 End Class
