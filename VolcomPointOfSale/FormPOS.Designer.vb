@@ -1222,8 +1222,8 @@ Partial Class FormPOS
         Me.LabelFooter.Padding = New System.Windows.Forms.Padding(5, 1, 5, 0)
         Me.LabelFooter.Size = New System.Drawing.Size(613, 14)
         Me.LabelFooter.TabIndex = 3
-        Me.LabelFooter.Text = "POS MENU  |  Ins Trans    F1 Stock    F2 Payment    F3 Price    F5 Refund    F7 D" &
-    "rawer    F8 Closing Shift    F11 Voucher"
+        Me.LabelFooter.Text = "POS MENU  |  Ins Trans    F1 Stock    F2 Payment    F7 Drawer    F8 Closing Shift" &
+    "    F11 Voucher"
         '
         'LabelControl7
         '
