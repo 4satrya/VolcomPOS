@@ -298,6 +298,7 @@ Partial Class FormStock
         Me.GVSum.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "stocker", Me.GridColumn33, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "display", Me.GridColumn34, "{0:n0}")})
         Me.GVSum.Name = "GVSum"
         Me.GVSum.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVSum.OptionsFind.AlwaysVisible = True
         Me.GVSum.OptionsView.ShowFooter = True
         Me.GVSum.OptionsView.ShowGroupPanel = False
         Me.GVSum.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn29, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -456,6 +457,7 @@ Partial Class FormStock
         Me.GVStock.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_avl", Me.GridColumnAvail, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_res", Me.GridColumnRes, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_tot", Me.GridColumnTotal, "{0:n0}")})
         Me.GVStock.Name = "GVStock"
         Me.GVStock.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVStock.OptionsFind.AlwaysVisible = True
         Me.GVStock.OptionsView.ShowFooter = True
         Me.GVStock.OptionsView.ShowGroupPanel = False
         Me.GVStock.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn9, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -804,6 +806,7 @@ Partial Class FormStock
         Me.GVCard.Name = "GVCard"
         Me.GVCard.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVCard.OptionsBehavior.Editable = False
+        Me.GVCard.OptionsFind.AlwaysVisible = True
         Me.GVCard.OptionsView.ShowFooter = True
         Me.GVCard.OptionsView.ShowGroupPanel = False
         '

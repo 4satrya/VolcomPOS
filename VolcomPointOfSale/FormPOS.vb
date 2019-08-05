@@ -217,13 +217,13 @@
                     Dim id_refund As String = execute_query(query, 0, True, "", "", "", "")
 
                     'insert det
-                    Dim query_det As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, qty, price) 
-                    SELECT '" + id_refund + "', id_item, comm, qty*-1, price FROM tb_pos_det WHERE id_pos='" + id + "' "
+                    Dim query_det As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, id_comp_sup, qty, price) 
+                    SELECT '" + id_refund + "', id_item, comm,id_comp_sup , qty*-1, price FROM tb_pos_det WHERE id_pos='" + id + "' "
                     execute_non_query(query_det, True, "", "", "", "")
 
                     'stock
                     Dim query_stc As String = "INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status) 
-                    SELECT '" + id_display_default + "', IF(qty>=0,'1', '2'), id_item, '4', '" + id_refund + "', ABS(qty), NOW(), '1' 
+                    SELECT '" + id_display_default + "', IF(qty>=0,'2', '1'), id_item, '4', '" + id_refund + "', ABS(qty), NOW(), '1' 
                     FROM tb_pos_det WHERE id_pos=" + id_refund + " "
                     execute_non_query(query_stc, True, "", "", "", "")
 
