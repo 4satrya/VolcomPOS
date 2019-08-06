@@ -1,6 +1,8 @@
 ﻿Public Class FormPOS
     Public id As String = "-1"
     Public id_shift As String = "-1"
+    Public shift_type As String = "-1"
+    Public id_user_employee As String
     Dim id_user_shift As String = "-1"
     Public new_trans As Boolean = False
     Dim id_stock_last As String = "-1"
@@ -10,6 +12,7 @@
     Dim is_payment_ok As Boolean = False
     Dim id_voucher_db As String = "-1"
     Dim username_shift As String = "-1"
+    Dim id_outlet As String = get_setup_field("id_outlet").ToString
 
     Private Sub FormPOS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LabelInfoLeft.Focus()
@@ -46,6 +49,8 @@
             Exit Sub
         Else
             id_shift = dt_open.Rows(0)("id_shift").ToString
+            shift_type = dt_open.Rows(0)("shift_type").ToString
+            id_user_employee = dt_open.Rows(0)("id_employee").ToString
             TxtShift.Text = dt_open.Rows(0)("shift_type").ToString
             TxtPOS.Text = dt_open.Rows(0)("pos_dev").ToString
             username_shift = dt_open.Rows(0)("username").ToString
@@ -148,8 +153,8 @@
         TxtItemCode.Enabled = True
         TxtItemCode.Focus()
         If Not new_trans Then
-            Dim query As String = "INSERT INTO tb_pos(id_shift, pos_number, pos_date, id_pos_status, id_pos_cat) 
-            VALUES('" + id_shift + "', '', NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
+            Dim query As String = "INSERT INTO tb_pos(id_outlet,id_shift, shift_type, id_user_employee, pos_number, pos_date, id_pos_status, id_pos_cat) 
+            VALUES(" + id_outlet + ",'" + id_shift + "','" + shift_type + "', '" + id_user_employee + "', '', NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
             id = execute_query(query, 0, True, "", "", "", "")
             execute_non_query("CALL gen_number(" + id + ", 4)", True, "", "", "", "")
             new_trans = True

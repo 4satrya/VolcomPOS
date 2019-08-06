@@ -112,7 +112,7 @@
         End If
 
         Dim query As String = "SELECT s.id_shift, s.id_shift_type, st.shift_type, st.shift_name, st.shift_start, 
-        s.id_user, u.`username`, s.id_pos_dev, dev.pos_dev, dev.mac_address, s.open_shift, DATE_FORMAT(s.open_shift,'%d/%m/%Y') AS  `open_shift_display`, s.close_shift, s.cash, s.is_open 
+        s.id_user, u.`username`, u.id_employee, s.id_pos_dev, dev.pos_dev, dev.mac_address, s.open_shift, DATE_FORMAT(s.open_shift,'%d/%m/%Y') AS  `open_shift_display`, s.close_shift, s.cash, s.is_open 
         FROM tb_shift s 
         INNER JOIN tb_shift_type st ON st.id_shift_type = s.id_shift_type 
         INNER JOIN tb_pos_dev dev ON dev.id_pos_dev = s.id_pos_dev
