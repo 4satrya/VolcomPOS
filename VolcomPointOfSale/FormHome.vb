@@ -156,4 +156,10 @@
         FormAccount.ShowDialog()
         Cursor = Cursors.Default
     End Sub
+
+    Private Sub TIEndOfDay_ItemClick(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TIEndOfDay.ItemClick
+        Cursor = Cursors.WaitCursor
+        FormEndOfDay.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
 End Class

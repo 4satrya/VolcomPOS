@@ -688,4 +688,10 @@
         End Try
     End Sub
 
+    Public Sub endOfDay(ByVal date_now As String)
+        Dim query As String = "UPDATE tb_pos p SET p.is_closed=1, p.closed_date=now(), p.closed_by=" + id_employee_user + " 
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "' "
+        execute_non_query(query, True, "", "", "", "")
+    End Sub
+
 End Class
