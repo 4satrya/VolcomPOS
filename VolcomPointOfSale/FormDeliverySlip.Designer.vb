@@ -20,7 +20,6 @@ Partial Class FormDeliverySlip
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GVData = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.GCData = New DevExpress.XtraGrid.GridControl()
         Me.GridColumid_delivery_slip = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnid_pl_sales_order_del = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnnumber = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -31,29 +30,21 @@ Partial Class FormDeliverySlip
         Me.GridColumndesign_cat = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnprice = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnamount = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GCData = New DevExpress.XtraGrid.GridControl()
+        Me.GridColumnsize = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.GVData, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GCData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GVData
         '
-        Me.GVData.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumid_delivery_slip, Me.GridColumnid_pl_sales_order_del, Me.GridColumnnumber, Me.GridColumncreated_date, Me.GridColumnitem_code, Me.GridColumnitem_name, Me.GridColumnqty, Me.GridColumndesign_cat, Me.GridColumnprice, Me.GridColumnamount})
+        Me.GVData.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumid_delivery_slip, Me.GridColumnid_pl_sales_order_del, Me.GridColumnnumber, Me.GridColumncreated_date, Me.GridColumnitem_code, Me.GridColumnitem_name, Me.GridColumnqty, Me.GridColumndesign_cat, Me.GridColumnprice, Me.GridColumnamount, Me.GridColumnsize})
         Me.GVData.GridControl = Me.GCData
         Me.GVData.Name = "GVData"
         Me.GVData.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVData.OptionsBehavior.Editable = False
         Me.GVData.OptionsFind.AlwaysVisible = True
         Me.GVData.OptionsView.ShowGroupPanel = False
-        '
-        'GCData
-        '
-        Me.GCData.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCData.Location = New System.Drawing.Point(0, 0)
-        Me.GCData.MainView = Me.GVData
-        Me.GCData.Name = "GCData"
-        Me.GCData.Size = New System.Drawing.Size(669, 420)
-        Me.GCData.TabIndex = 1
-        Me.GCData.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVData})
         '
         'GridColumid_delivery_slip
         '
@@ -74,6 +65,7 @@ Partial Class FormDeliverySlip
         Me.GridColumnnumber.Name = "GridColumnnumber"
         Me.GridColumnnumber.Visible = True
         Me.GridColumnnumber.VisibleIndex = 0
+        Me.GridColumnnumber.Width = 179
         '
         'GridColumncreated_date
         '
@@ -84,6 +76,7 @@ Partial Class FormDeliverySlip
         Me.GridColumncreated_date.Name = "GridColumncreated_date"
         Me.GridColumncreated_date.Visible = True
         Me.GridColumncreated_date.VisibleIndex = 1
+        Me.GridColumncreated_date.Width = 179
         '
         'GridColumnitem_code
         '
@@ -92,6 +85,7 @@ Partial Class FormDeliverySlip
         Me.GridColumnitem_code.Name = "GridColumnitem_code"
         Me.GridColumnitem_code.Visible = True
         Me.GridColumnitem_code.VisibleIndex = 2
+        Me.GridColumnitem_code.Width = 179
         '
         'GridColumnitem_name
         '
@@ -100,6 +94,7 @@ Partial Class FormDeliverySlip
         Me.GridColumnitem_name.Name = "GridColumnitem_name"
         Me.GridColumnitem_name.Visible = True
         Me.GridColumnitem_name.VisibleIndex = 3
+        Me.GridColumnitem_name.Width = 179
         '
         'GridColumnqty
         '
@@ -110,7 +105,8 @@ Partial Class FormDeliverySlip
         Me.GridColumnqty.Name = "GridColumnqty"
         Me.GridColumnqty.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty", "{0:N0}")})
         Me.GridColumnqty.Visible = True
-        Me.GridColumnqty.VisibleIndex = 4
+        Me.GridColumnqty.VisibleIndex = 5
+        Me.GridColumnqty.Width = 207
         '
         'GridColumndesign_cat
         '
@@ -118,7 +114,8 @@ Partial Class FormDeliverySlip
         Me.GridColumndesign_cat.FieldName = "design_cat"
         Me.GridColumndesign_cat.Name = "GridColumndesign_cat"
         Me.GridColumndesign_cat.Visible = True
-        Me.GridColumndesign_cat.VisibleIndex = 5
+        Me.GridColumndesign_cat.VisibleIndex = 6
+        Me.GridColumndesign_cat.Width = 207
         '
         'GridColumnprice
         '
@@ -129,7 +126,8 @@ Partial Class FormDeliverySlip
         Me.GridColumnprice.Name = "GridColumnprice"
         Me.GridColumnprice.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "price", "{0:N2}")})
         Me.GridColumnprice.Visible = True
-        Me.GridColumnprice.VisibleIndex = 6
+        Me.GridColumnprice.VisibleIndex = 7
+        Me.GridColumnprice.Width = 207
         '
         'GridColumnamount
         '
@@ -142,7 +140,28 @@ Partial Class FormDeliverySlip
         Me.GridColumnamount.UnboundExpression = "[qty] * [price]"
         Me.GridColumnamount.UnboundType = DevExpress.Data.UnboundColumnType.[Decimal]
         Me.GridColumnamount.Visible = True
-        Me.GridColumnamount.VisibleIndex = 7
+        Me.GridColumnamount.VisibleIndex = 8
+        Me.GridColumnamount.Width = 211
+        '
+        'GCData
+        '
+        Me.GCData.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GCData.Location = New System.Drawing.Point(0, 0)
+        Me.GCData.MainView = Me.GVData
+        Me.GCData.Name = "GCData"
+        Me.GCData.Size = New System.Drawing.Size(669, 420)
+        Me.GCData.TabIndex = 1
+        Me.GCData.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVData})
+        '
+        'GridColumnsize
+        '
+        Me.GridColumnsize.Caption = "Size"
+        Me.GridColumnsize.FieldName = "size"
+        Me.GridColumnsize.Name = "GridColumnsize"
+        Me.GridColumnsize.OptionsColumn.AllowEdit = False
+        Me.GridColumnsize.Visible = True
+        Me.GridColumnsize.VisibleIndex = 4
+        Me.GridColumnsize.Width = 65
         '
         'FormDeliverySlip
         '
@@ -174,4 +193,5 @@ Partial Class FormDeliverySlip
     Friend WithEvents GridColumndesign_cat As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnprice As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnamount As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnsize As DevExpress.XtraGrid.Columns.GridColumn
 End Class
