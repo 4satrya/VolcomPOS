@@ -66,7 +66,7 @@ Public Class FormFront
     Sub syncProcess()
         'sync
         SplashScreenManager1.ShowWaitForm()
-        Dim sy As New ClassSync()
+        Dim sy As New ClassSync("0")
         Dim query As String = "SELECT * FROM tb_sync_data ORDER BY id_sync_data ASC"
         Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
         For i As Integer = 1 To dt.Rows.Count

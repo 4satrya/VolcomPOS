@@ -1,4 +1,6 @@
 ﻿Public Class FormRec
+    Public is_new_rec As String = "-1"
+
     Private Sub FormRec_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Dispose()
     End Sub
@@ -216,6 +218,21 @@
     Private Sub GVRecOwn_DoubleClick(sender As Object, e As EventArgs) Handles GVRecOwn.DoubleClick
         If GVRecOwn.RowCount > 0 And GVRecOwn.FocusedRowHandle >= 0 Then
             edit()
+        End If
+    End Sub
+
+    Sub syncPrice()
+        SplashScreenManager1.ShowWaitForm()
+        SplashScreenManager1.SetWaitFormDescription("Sync price")
+        Dim sy As New ClassSync("3")
+        sy.splash = "0"
+        sy.synchronize()
+        SplashScreenManager1.CloseWaitForm()
+    End Sub
+
+    Private Sub FormRec_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If is_new_rec = "1" Then
+            syncPrice()
         End If
     End Sub
 End Class

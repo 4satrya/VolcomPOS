@@ -18,7 +18,7 @@ Public Class ClassSync
     Dim id_comp_sup_normal As String = "-1"
     Dim id_comp_sup_sale As String = "-1"
 
-    Public Sub New()
+    Public Sub New(ByVal id_sync_data As String)
         Dim query As String = "SELECT * FROM tb_opt"
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         'koneksi office
@@ -39,7 +39,11 @@ Public Class ClassSync
         id_comp_sup_sale = data.Rows(0)("acc_sale_origin").ToString
 
         'get sync list
-        Dim qs As String = "SELECT * FROM tb_sync_data d ORDER BY d.`index` ASC "
+        Dim cond As String = ""
+        If id_sync_data <> "0" Then
+            cond = "AND d.id_sync_data='" + id_sync_data + "' "
+        End If
+        Dim qs As String = "SELECT * FROM tb_sync_data d WHERE d.id_sync_data>0 " + cond + " ORDER BY d.`index` ASC "
         dtl = execute_query(qs, -1, True, "", "", "", "")
     End Sub
 

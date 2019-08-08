@@ -434,6 +434,10 @@
                     query += "WHERE id_rec_own=" + id + " "
                     execute_non_query(query, True, "", "", "", "")
 
+                    'tandai ada master baru
+                    If id_report_status_saved = "6" Then
+                        FormRec.is_new_rec = "1"
+                    End If
 
                     'refresh
                     action = "upd"
