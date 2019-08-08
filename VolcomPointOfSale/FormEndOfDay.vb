@@ -48,6 +48,7 @@
                 Dim trans_date As String = DateTime.Parse(DETransDate.EditValue.ToString).ToString("yyyy-MM-dd")
                 Dim p As New ClassPOS()
                 p.endOfDay(trans_date)
+                Close()
             Catch ex As Exception
                 stopCustom(ex.ToString)
             End Try
