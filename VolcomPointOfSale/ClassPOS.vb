@@ -689,8 +689,21 @@
     End Sub
 
     Public Sub endOfDay(ByVal date_now As String)
-        Dim query As String = "UPDATE tb_pos p SET p.is_closed=1, p.closed_date=now(), p.closed_by=" + id_employee_user + " 
-        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "' "
+        'update
+        Dim query As String = "/*delete pos summary*/
+        DELETE ps.* FROM tb_pos_summary ps
+        INNER JOIN tb_pos p ON p.id_pos = ps.id_pos
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "';
+        /*insert pos summary*/
+        INSERT INTO tb_pos_summary(id_pos, id_item, item_code, id_product, id_comp_sup, comm, qty, price)
+        SELECT pd.id_pos, pd.id_item, pd.item_code, pd.id_product, pd.id_comp_sup, pd.comm, SUM(pd.qty) AS `qty`, pd.price 
+        FROM tb_pos p
+        INNER JOIN tb_pos_det pd ON pd.id_pos = p.id_pos
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "'
+        GROUP BY pd.id_pos,pd.item_code;
+        /*update*/
+        UPDATE tb_pos p SET p.is_closed=1, p.closed_date=now(), p.closed_by=" + id_employee_user + " 
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "'; "
         execute_non_query(query, True, "", "", "", "")
     End Sub
 
