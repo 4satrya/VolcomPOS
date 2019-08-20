@@ -2,10 +2,18 @@
     Private Sub FormEndOfDay_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Cursor = Cursors.WaitCursor
         'get max date
-        Dim qmd As String = "SELECT p.pos_date as `date_now` FROM tb_pos p WHERE p.id_pos_status=2 ORDER BY p.id_pos ASC LIMIT 1 "
+        Dim qmd As String = "SELECT p.pos_date as `date_now` FROM tb_pos p WHERE p.id_pos_status=2 AND p.is_closed=2 ORDER BY p.id_pos ASC LIMIT 1 "
         Dim dmd As DataTable = execute_query(qmd, -1, True, "", "", "", "")
-        DETransDate.EditValue = dmd.Rows(0)("date_now")
-        Dim trans_date As String = DateTime.Parse(DETransDate.EditValue.ToString).ToString("yyyy-MM-dd")
+        Dim trans_date As String = ""
+        If dmd.Rows.Count > 0 Then
+            DETransDate.EditValue = dmd.Rows(0)("date_now")
+            trans_date = DateTime.Parse(DETransDate.EditValue.ToString).ToString("yyyy-MM-dd")
+        Else
+            stopCustom("Transaction not found")
+            Close()
+            Exit Sub
+        End If
+
 
         'cek shift ad yg masi buka
         Dim qcs As String = "SELECT * FROM tb_pos p 
