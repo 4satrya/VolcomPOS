@@ -485,7 +485,7 @@ Public Class ClassSync
                 `is_unique_code`
             ) 
             SELECT 
-            `id_pl_sales_order_del`,
+            src.`id_pl_sales_order_del`,
             `number`,
             `id_wh`,
             `id_store`,
@@ -505,7 +505,11 @@ Public Class ClassSync
             `price`,
             `is_combine`,
             `is_unique_code`
-            FROM db_sync.tb_sync_delivery "
+            FROM db_sync.tb_sync_delivery src
+            LEFT JOIN (
+                SELECT ds.id_pl_sales_order_del FROM tb_delivery_slip ds GROUP BY ds.id_pl_sales_order_del
+            ) main ON main.id_pl_sales_order_del = src.id_pl_sales_order_del 
+            WHERE ISNULL(main.id_pl_sales_order_del) "
             execute_non_query(query, True, "", "", "", "")
         Catch ex As Exception
             err += ex.ToString + "; "
