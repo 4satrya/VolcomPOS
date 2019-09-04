@@ -480,6 +480,7 @@ Public Class ClassSync
 	            `item_name`,
 	            `qty`,
 	            `id_design_cat`,
+                `id_design_price`,
 	            `price`,
 	            `is_combine`,
                 `is_unique_code`
@@ -502,6 +503,7 @@ Public Class ClassSync
             `item_name`,
             `qty`,
             `id_design_cat`,
+            `id_design_price`,
             `price`,
             `is_combine`,
             `is_unique_code`
@@ -528,16 +530,13 @@ Public Class ClassSync
     Sub syncItemPrice()
         Dim err As String = ""
         Try
-            Dim qry As String = "INSERT INTO tb_item_price(id_item, price, price_date)
-            SELECT i.id_item, p.price, p.price_date
-            FROM tb_item i
-            INNER JOIN db_sync.tb_sync_design_price p ON p.id_design = i.id_design;
-            UPDATE tb_item main 
+            Dim qry As String = "UPDATE tb_item main 
             INNER JOIN(
-                SELECT a.id_design, a.id_design_cat, a.price, a.price_date  
-	            FROM db_sync.tb_sync_design_price a
+                SELECT a.id_design, a.id_design_cat, a.id_design_price, a.price, a.price_date  
+                FROM db_sync.tb_sync_design_price a
             ) src ON src.id_design = main.id_design
             SET main.id_design_cat = src.id_design_cat,
+            main.id_design_price = src.id_design_price,
             main.price = src.price,
             main.price_date = src.price_date,
             main.id_comp_sup = IF(src.id_design_cat=1," + id_comp_sup_normal + "," + id_comp_sup_sale + "); "
