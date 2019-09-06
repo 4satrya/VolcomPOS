@@ -12,6 +12,7 @@ Public Class FormRecOwnProduct
     Dim spv As String = ""
 
     Private Sub FormRecOwnProduct_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Timer1.Interval = 17
         viewReportStatus()
         actionLoad()
     End Sub
@@ -510,5 +511,15 @@ Public Class FormRecOwnProduct
         ElseIf e.KeyCode = Keys.F9 Then
             printData()
         End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        TxtItemCode.Text = ""
+        Timer1.Stop()
+    End Sub
+
+    Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
+        Timer1.Stop()
+        Timer1.Start()
     End Sub
 End Class

@@ -19,8 +19,10 @@ Partial Class FormRecOwnProduct
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormRecOwnProduct))
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
         Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
         Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnClose = New DevExpress.XtraEditors.SimpleButton()
@@ -80,9 +82,11 @@ Partial Class FormRecOwnProduct
         Me.GridColumndiff = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnno = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnis_unique_code = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl5.SuspendLayout()
         CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
@@ -110,8 +114,6 @@ Partial Class FormRecOwnProduct
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.GCSummary, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVSummary, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl5.SuspendLayout()
         Me.SuspendLayout()
         '
         'PanelControl1
@@ -125,6 +127,16 @@ Partial Class FormRecOwnProduct
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(854, 42)
         Me.PanelControl1.TabIndex = 0
+        '
+        'PanelControl5
+        '
+        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
+        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl5.Location = New System.Drawing.Point(429, 2)
+        Me.PanelControl5.Name = "PanelControl5"
+        Me.PanelControl5.Size = New System.Drawing.Size(124, 38)
+        Me.PanelControl5.TabIndex = 6
         '
         'CEPrintPreview
         '
@@ -689,15 +701,8 @@ Partial Class FormRecOwnProduct
         Me.GridColumnis_unique_code.FieldName = "is_unique_code"
         Me.GridColumnis_unique_code.Name = "GridColumnis_unique_code"
         '
-        'PanelControl5
+        'Timer1
         '
-        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
-        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl5.Location = New System.Drawing.Point(429, 2)
-        Me.PanelControl5.Name = "PanelControl5"
-        Me.PanelControl5.Size = New System.Drawing.Size(124, 38)
-        Me.PanelControl5.TabIndex = 6
         '
         'FormRecOwnProduct
         '
@@ -720,6 +725,8 @@ Partial Class FormRecOwnProduct
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl5.ResumeLayout(False)
         CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
@@ -751,8 +758,6 @@ Partial Class FormRecOwnProduct
         Me.SplitContainerControl1.ResumeLayout(False)
         CType(Me.GCSummary, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVSummary, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl5.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -818,4 +823,5 @@ Partial Class FormRecOwnProduct
     Friend WithEvents GridColumnis_unique_code As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents CEPrintPreview As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents PanelControl5 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents Timer1 As Timer
 End Class
