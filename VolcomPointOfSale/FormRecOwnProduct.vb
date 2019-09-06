@@ -1,4 +1,6 @@
-﻿Public Class FormRecOwnProduct
+﻿Imports DevExpress.XtraReports.UI
+
+Public Class FormRecOwnProduct
     Public id As String = "-1"
     Public id_pl_sales_order_del As String = "-1"
     Public id_comp_from As String = "-1"
@@ -159,6 +161,10 @@
     End Sub
 
     Private Sub BtnScan_Click(sender As Object, e As EventArgs) Handles BtnScan.Click
+        addItem()
+    End Sub
+
+    Sub addItem()
         TxtItemCode.Focus()
     End Sub
 
@@ -166,7 +172,7 @@
         If e.KeyCode = Keys.Enter Then
             'cek gundang
             If id_comp_to = "-1" Then
-                stopCustom("Please select destination account first")
+                stopCustomDialog("Please select destination account first")
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
                 Exit Sub
@@ -199,7 +205,7 @@
             End If
             makeSafeGV(GVSummary)
             If Not cond_ketemu Then
-                stopCustom("Code not found")
+                stopCustomDialog("Code not found")
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
                 Exit Sub
@@ -216,7 +222,7 @@
                 End If
                 makeSafeGV(GVData)
                 If cond_duplikat Then
-                    stopCustom("Duplicate code")
+                    stopCustomDialog("Duplicate code")
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
                     Exit Sub
@@ -231,7 +237,7 @@
                 Dim dst As DataTable = execute_query(qst, -1, True, "", "", "", "")
                 If dst.Rows.Count > 0 Then
                     If dst.Rows(0)("qty_tot") > 0 Then
-                        stopCustom("This product is already in " + TxtToCode.Text)
+                        stopCustomDialog("This product is already in " + TxtToCode.Text)
                         TxtItemCode.Text = ""
                         TxtItemCode.Focus()
                         Exit Sub
@@ -253,7 +259,7 @@
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
             Else
-                stopCustom("No qty available")
+                stopCustomDialog("No qty available")
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
                 Exit Sub
@@ -271,6 +277,10 @@
     End Sub
 
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
+        deleteItem()
+    End Sub
+
+    Sub deleteItem()
         Cursor = Cursors.WaitCursor
         FormDeleteScan.id_pop_up = "1"
         FormDeleteScan.ShowDialog()
@@ -278,50 +288,45 @@
     End Sub
 
     Private Sub BtnClose_Click(sender As Object, e As EventArgs) Handles BtnClose.Click
-        Close()
+        closeForm()
     End Sub
 
-    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+    Sub closeForm()
+        If action = "ins" Then
+            Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to discard this transaction?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            If confirm = DialogResult.Yes Then
+                Close()
+            End If
+        End If
+    End Sub
+
+    Sub printData()
         Cursor = Cursors.WaitCursor
-        FormBlack.Show()
         ReportRecOwn.id = id
-        ReportRecOwn.dt = GCSummary.DataSource
         Dim Report As New ReportRecOwn()
 
-        ' '... 
-        ' ' creating and saving the view's layout to a new memory stream 
-        Dim str As System.IO.Stream
-        str = New System.IO.MemoryStream()
-        GVSummary.SaveLayoutToStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
-        str.Seek(0, System.IO.SeekOrigin.Begin)
-        Report.GVSummary.RestoreLayoutFromStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
-        str.Seek(0, System.IO.SeekOrigin.Begin)
+        If CEPrintPreview.EditValue = True Then
+            ' Show the report's preview. 
+            Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
+            Tool.ShowPreviewDialog()
+        Else
+            Dim instance As New Printing.PrinterSettings
+            Dim DefaultPrinter As String = instance.PrinterName
 
-        'Grid Detail
-        ReportStyleGridview(Report.GVSummary)
-
-        'Parse val
-        Report.LabelFrom.Text = TxtFromCode.Text + " - " + TxtFromName.Text
-        Report.LabelTo.Text = TxtToCode.Text + " - " + TxtToName.Text
-        Report.LRecNumber.Text = TxtRecNumber.Text
-        Report.LRecDate.Text = DECreated.Text
-        Report.LabelNote.Text = MENote.Text
-        Report.LabelRef.Text = TxtDelSlip.Text
-        Report.LabelStatus.Text = LEReportStatus.Text
-        Report.LabelPreparedBy.Text = TxtPreparedBy.Text.ToUpper
-        Report.LabelRoleBy.Text = role_prepared
-        'Report.LabelAckFrom.Text = TxtNameCompFrom.Text
-        Report.LabelSpv.Text = spv.ToUpper
-
-
-        ' Show the report's preview. 
-        Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
-        Tool.ShowPreviewDialog()
-        FormBlack.Close()
+            ' THIS IS TO PRINT THE REPORT
+            Report.PrinterName = DefaultPrinter
+            Report.CreateDocument()
+            Report.PrintingSystem.ShowMarginsWarning = False
+            Report.Print()
+        End If
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printData()
+    End Sub
+
+    Sub saveData()
         makeSafeGV(GVData)
         makeSafeGV(GVSummary)
 
@@ -447,6 +452,24 @@
                 End If
                 Cursor = Cursors.Default
             End If
+        End If
+    End Sub
+
+    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
+        saveData()
+    End Sub
+
+    Private Sub FormRecOwnProduct_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyCode = Keys.F5 Then
+            saveData()
+        ElseIf e.KeyCode = Keys.F6 Then
+            closeForm()
+        ElseIf e.KeyCode = Keys.F7 Then
+            addItem()
+        ElseIf e.KeyCode = Keys.F8 Then
+            deleteItem()
+        ElseIf e.KeyCode = Keys.F9 Then
+            printData()
         End If
     End Sub
 End Class

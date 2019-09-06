@@ -21,6 +21,7 @@ Partial Class FormRecOwnProduct
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormRecOwnProduct))
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
         Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnClose = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnSave = New DevExpress.XtraEditors.SimpleButton()
@@ -79,8 +80,10 @@ Partial Class FormRecOwnProduct
         Me.GridColumndiff = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnno = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnis_unique_code = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,10 +110,13 @@ Partial Class FormRecOwnProduct
         Me.SplitContainerControl1.SuspendLayout()
         CType(Me.GCSummary, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVSummary, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl5.SuspendLayout()
         Me.SuspendLayout()
         '
         'PanelControl1
         '
+        Me.PanelControl1.Controls.Add(Me.PanelControl5)
         Me.PanelControl1.Controls.Add(Me.BtnPrint)
         Me.PanelControl1.Controls.Add(Me.BtnClose)
         Me.PanelControl1.Controls.Add(Me.BtnSave)
@@ -120,6 +126,15 @@ Partial Class FormRecOwnProduct
         Me.PanelControl1.Size = New System.Drawing.Size(854, 42)
         Me.PanelControl1.TabIndex = 0
         '
+        'CEPrintPreview
+        '
+        Me.CEPrintPreview.EditValue = True
+        Me.CEPrintPreview.Location = New System.Drawing.Point(5, 9)
+        Me.CEPrintPreview.Name = "CEPrintPreview"
+        Me.CEPrintPreview.Properties.Caption = "Show Print Preview"
+        Me.CEPrintPreview.Size = New System.Drawing.Size(115, 19)
+        Me.CEPrintPreview.TabIndex = 5
+        '
         'BtnPrint
         '
         Me.BtnPrint.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -127,11 +142,11 @@ Partial Class FormRecOwnProduct
         Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnPrint.Enabled = False
         Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
-        Me.BtnPrint.Location = New System.Drawing.Point(601, 2)
+        Me.BtnPrint.Location = New System.Drawing.Point(553, 2)
         Me.BtnPrint.Name = "BtnPrint"
-        Me.BtnPrint.Size = New System.Drawing.Size(85, 38)
+        Me.BtnPrint.Size = New System.Drawing.Size(105, 38)
         Me.BtnPrint.TabIndex = 4
-        Me.BtnPrint.Text = "Print"
+        Me.BtnPrint.Text = "Print (F9)"
         '
         'BtnClose
         '
@@ -139,11 +154,11 @@ Partial Class FormRecOwnProduct
         Me.BtnClose.Appearance.Options.UseFont = True
         Me.BtnClose.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnClose.Image = CType(resources.GetObject("BtnClose.Image"), System.Drawing.Image)
-        Me.BtnClose.Location = New System.Drawing.Point(686, 2)
+        Me.BtnClose.Location = New System.Drawing.Point(658, 2)
         Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(85, 38)
+        Me.BtnClose.Size = New System.Drawing.Size(99, 38)
         Me.BtnClose.TabIndex = 3
-        Me.BtnClose.Text = "Close"
+        Me.BtnClose.Text = "Close (F6)"
         '
         'BtnSave
         '
@@ -151,11 +166,11 @@ Partial Class FormRecOwnProduct
         Me.BtnSave.Appearance.Options.UseFont = True
         Me.BtnSave.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnSave.Image = CType(resources.GetObject("BtnSave.Image"), System.Drawing.Image)
-        Me.BtnSave.Location = New System.Drawing.Point(771, 2)
+        Me.BtnSave.Location = New System.Drawing.Point(757, 2)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(81, 38)
+        Me.BtnSave.Size = New System.Drawing.Size(95, 38)
         Me.BtnSave.TabIndex = 2
-        Me.BtnSave.Text = "Save"
+        Me.BtnSave.Text = "Save (F5)"
         '
         'PanelControl2
         '
@@ -510,21 +525,21 @@ Partial Class FormRecOwnProduct
         '
         Me.BtnDelete.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnDelete.Image = CType(resources.GetObject("BtnDelete.Image"), System.Drawing.Image)
-        Me.BtnDelete.Location = New System.Drawing.Point(684, 2)
+        Me.BtnDelete.Location = New System.Drawing.Point(616, 2)
         Me.BtnDelete.Name = "BtnDelete"
-        Me.BtnDelete.Size = New System.Drawing.Size(85, 33)
+        Me.BtnDelete.Size = New System.Drawing.Size(123, 33)
         Me.BtnDelete.TabIndex = 1
-        Me.BtnDelete.Text = "Delete"
+        Me.BtnDelete.Text = "Delete Item (F8)"
         '
         'BtnScan
         '
         Me.BtnScan.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnScan.Image = CType(resources.GetObject("BtnScan.Image"), System.Drawing.Image)
-        Me.BtnScan.Location = New System.Drawing.Point(769, 2)
+        Me.BtnScan.Location = New System.Drawing.Point(739, 2)
         Me.BtnScan.Name = "BtnScan"
-        Me.BtnScan.Size = New System.Drawing.Size(83, 33)
+        Me.BtnScan.Size = New System.Drawing.Size(113, 33)
         Me.BtnScan.TabIndex = 0
-        Me.BtnScan.Text = "Add"
+        Me.BtnScan.Text = "Add Item (F7)"
         '
         'SplitContainerControl1
         '
@@ -674,6 +689,16 @@ Partial Class FormRecOwnProduct
         Me.GridColumnis_unique_code.FieldName = "is_unique_code"
         Me.GridColumnis_unique_code.Name = "GridColumnis_unique_code"
         '
+        'PanelControl5
+        '
+        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
+        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl5.Location = New System.Drawing.Point(429, 2)
+        Me.PanelControl5.Name = "PanelControl5"
+        Me.PanelControl5.Size = New System.Drawing.Size(124, 38)
+        Me.PanelControl5.TabIndex = 6
+        '
         'FormRecOwnProduct
         '
         Me.Appearance.Options.UseFont = True
@@ -685,6 +710,7 @@ Partial Class FormRecOwnProduct
         Me.Controls.Add(Me.PanelControl2)
         Me.Controls.Add(Me.PanelControl1)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.KeyPreview = True
         Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
         Me.MinimizeBox = False
@@ -694,6 +720,7 @@ Partial Class FormRecOwnProduct
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
@@ -724,6 +751,8 @@ Partial Class FormRecOwnProduct
         Me.SplitContainerControl1.ResumeLayout(False)
         CType(Me.GCSummary, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVSummary, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl5.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -787,4 +816,6 @@ Partial Class FormRecOwnProduct
     Friend WithEvents GridColumnqtydet As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnamountdet As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnis_unique_code As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents CEPrintPreview As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents PanelControl5 As DevExpress.XtraEditors.PanelControl
 End Class

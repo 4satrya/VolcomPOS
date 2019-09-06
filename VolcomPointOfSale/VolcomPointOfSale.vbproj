@@ -222,6 +222,12 @@
     <Compile Include="FormEndOfDay.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormError.designer.vb">
+      <DependentUpon>FormError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormError.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormFront.Designer.vb">
       <DependentUpon>FormFront.vb</DependentUpon>
     </Compile>
@@ -620,6 +626,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormEndOfDay.resx">
       <DependentUpon>FormEndOfDay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormError.resx">
+      <DependentUpon>FormError.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormFront.resx">
       <DependentUpon>FormFront.vb</DependentUpon>
