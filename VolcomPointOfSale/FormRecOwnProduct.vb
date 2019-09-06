@@ -168,102 +168,141 @@ Public Class FormRecOwnProduct
         TxtItemCode.Focus()
     End Sub
 
+    Private cforKeyDown As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Private UseKeyboard As Boolean = False
+
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            'cek gundang
-            If id_comp_to = "-1" Then
-                stopCustomDialog("Please select destination account first")
+        'If e.KeyCode = Keys.Enter Then
+        cforKeyDown = ChrW(e.KeyCode)
+        'End If
+    End Sub
+
+    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
+        If Len(TxtItemCode.Text) > 1 Then
+            If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                Console.WriteLine("msk")
+                cforKeyDown = vbNullChar
+                TxtItemCode.Text = ""
+                Return
+            End If
+
+
+            Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+            '(DateTime.Now.Millisecond - _lastKeystroke)
+            Console.WriteLine(elapsed.TotalMilliseconds.ToString)
+            If elapsed.TotalMilliseconds > 17 Then TxtItemCode.Text = ""
+
+            'If e.KeyCode <> Keys.[Return] Then
+            '    TxtItemCode.Text += ChrW(e.KeyData)
+            'End If
+
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                If Not UseKeyboard Then
+                    MessageBox.Show(TxtItemCode.Text)
+                End If
+                TxtItemCode.Text = ""
+            End If
+
+        End If
+        _lastKeystroke = DateTime.Now
+    End Sub
+
+
+    Sub checkCode(ByVal code_check As String)
+        'cek gundang
+        If id_comp_to = "-1" Then
+            stopCustomDialog("Please select destination account first")
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
+            Exit Sub
+        End If
+
+        Dim code As String = addSlashes(code_check)
+        Dim id_delivery_slip As String = ""
+        Dim is_unique_code As String = "1"
+        Dim item_code As String = ""
+        Dim item_name As String = ""
+        Dim size As String = ""
+
+        'find in summary
+        Dim cond_valid_qty As Boolean = False
+        Dim cond_ketemu As Boolean = False
+        makeSafeGV(GVSummary)
+        GVSummary.ActiveFilterString = "[item_code]='" + code + "'"
+        If GVSummary.RowCount > 0 Then
+            id_delivery_slip = GVSummary.GetFocusedRowCellValue("id_delivery_slip").ToString
+            is_unique_code = GVSummary.GetFocusedRowCellValue("is_unique_code").ToString
+            item_code = GVSummary.GetFocusedRowCellValue("item_code").ToString
+            item_name = GVSummary.GetFocusedRowCellValue("item_name").ToString
+            size = GVSummary.GetFocusedRowCellValue("size").ToString
+            cond_ketemu = True
+
+            'cek dengan available qty
+            If GVSummary.GetFocusedRowCellValue("qty") < GVSummary.GetFocusedRowCellValue("qty_avl") Then
+                cond_valid_qty = True
+            End If
+        End If
+        makeSafeGV(GVSummary)
+        If Not cond_ketemu Then
+            stopCustomDialog("Code not found")
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
+            Exit Sub
+        End If
+
+        'jika code unik
+        If is_unique_code = "1" Then
+            'cek duplikat
+            Dim cond_duplikat As Boolean = False
+            makeSafeGV(GVData)
+            GVData.ActiveFilterString = "[item_code]='" + code + "'"
+            If GVData.RowCount > 0 Then
+                cond_duplikat = True
+            End If
+            makeSafeGV(GVData)
+            If cond_duplikat Then
+                stopCustomDialog("Duplicate code")
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
                 Exit Sub
             End If
 
-            Dim code As String = addSlashes(TxtItemCode.Text)
-            Dim id_delivery_slip As String = ""
-            Dim is_unique_code As String = "1"
-            Dim item_code As String = ""
-            Dim item_name As String = ""
-            Dim size As String = ""
-
-            'find in summary
-            Dim cond_valid_qty As Boolean = False
-            Dim cond_ketemu As Boolean = False
-            makeSafeGV(GVSummary)
-            GVSummary.ActiveFilterString = "[item_code]='" + code + "'"
-            If GVSummary.RowCount > 0 Then
-                id_delivery_slip = GVSummary.GetFocusedRowCellValue("id_delivery_slip").ToString
-                is_unique_code = GVSummary.GetFocusedRowCellValue("is_unique_code").ToString
-                item_code = GVSummary.GetFocusedRowCellValue("item_code").ToString
-                item_name = GVSummary.GetFocusedRowCellValue("item_name").ToString
-                size = GVSummary.GetFocusedRowCellValue("size").ToString
-                cond_ketemu = True
-
-                'cek dengan available qty
-                If GVSummary.GetFocusedRowCellValue("qty") < GVSummary.GetFocusedRowCellValue("qty_avl") Then
-                    cond_valid_qty = True
-                End If
-            End If
-            makeSafeGV(GVSummary)
-            If Not cond_ketemu Then
-                stopCustomDialog("Code not found")
-                TxtItemCode.Text = ""
-                TxtItemCode.Focus()
-                Exit Sub
-            End If
-
-            'jika code unik
-            If is_unique_code = "1" Then
-                'cek duplikat
-                Dim cond_duplikat As Boolean = False
-                makeSafeGV(GVData)
-                GVData.ActiveFilterString = "[item_code]='" + code + "'"
-                If GVData.RowCount > 0 Then
-                    cond_duplikat = True
-                End If
-                makeSafeGV(GVData)
-                If cond_duplikat Then
-                    stopCustomDialog("Duplicate code")
-                    TxtItemCode.Text = ""
-                    TxtItemCode.Focus()
-                    Exit Sub
-                End If
-
-                'jika unik cek posisi di gudang ada ato enggak
-                Dim qst As String = "SELECT s.id_item, IFNULL(SUM(IF(s.id_stock_status=1, (IF(s.id_storage_category=2, CONCAT('-', s.storage_item_qty), s.storage_item_qty)),0)),0) AS qty_tot
+            'jika unik cek posisi di gudang ada ato enggak
+            Dim qst As String = "SELECT s.id_item, IFNULL(SUM(IF(s.id_stock_status=1, (IF(s.id_storage_category=2, CONCAT('-', s.storage_item_qty), s.storage_item_qty)),0)),0) AS qty_tot
                 FROM tb_storage_item s
                 INNER JOIN tb_item i ON i.id_item = s.id_item
                 WHERE s.id_comp=" + id_comp_to + " AND i.item_code='" + code + "'
                 GROUP BY s.id_item "
-                Dim dst As DataTable = execute_query(qst, -1, True, "", "", "", "")
-                If dst.Rows.Count > 0 Then
-                    If dst.Rows(0)("qty_tot") > 0 Then
-                        stopCustomDialog("This product is already in " + TxtToCode.Text)
-                        TxtItemCode.Text = ""
-                        TxtItemCode.Focus()
-                        Exit Sub
-                    End If
+            Dim dst As DataTable = execute_query(qst, -1, True, "", "", "", "")
+            If dst.Rows.Count > 0 Then
+                If dst.Rows(0)("qty_tot") > 0 Then
+                    stopCustomDialog("This product is already in " + TxtToCode.Text)
+                    TxtItemCode.Text = ""
+                    TxtItemCode.Focus()
+                    Exit Sub
                 End If
             End If
+        End If
 
-            'cek valid qty
-            If cond_valid_qty Then
-                Dim newRow As DataRow = (TryCast(GCData.DataSource, DataTable)).NewRow()
-                newRow("id_delivery_slip") = id_delivery_slip
-                newRow("item_code") = item_code
-                newRow("item_name") = item_name
-                newRow("size") = size
-                TryCast(GCData.DataSource, DataTable).Rows.Add(newRow)
-                GCData.RefreshDataSource()
-                GVData.RefreshData()
-                countQty(id_delivery_slip)
-                TxtItemCode.Text = ""
-                TxtItemCode.Focus()
-            Else
-                stopCustomDialog("No qty available")
-                TxtItemCode.Text = ""
-                TxtItemCode.Focus()
-                Exit Sub
-            End If
+        'cek valid qty
+        If cond_valid_qty Then
+            Dim newRow As DataRow = (TryCast(GCData.DataSource, DataTable)).NewRow()
+            newRow("id_delivery_slip") = id_delivery_slip
+            newRow("item_code") = item_code
+            newRow("item_name") = item_name
+            newRow("size") = size
+            TryCast(GCData.DataSource, DataTable).Rows.Add(newRow)
+            GCData.RefreshDataSource()
+            GVData.RefreshData()
+            countQty(id_delivery_slip)
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
+        Else
+            stopCustomDialog("No qty available")
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
+            Exit Sub
         End If
     End Sub
 
