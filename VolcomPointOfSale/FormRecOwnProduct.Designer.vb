@@ -25,6 +25,7 @@ Partial Class FormRecOwnProduct
         Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
         Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
         Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnPrePrint = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnClose = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnSave = New DevExpress.XtraEditors.SimpleButton()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
@@ -120,6 +121,7 @@ Partial Class FormRecOwnProduct
         '
         Me.PanelControl1.Controls.Add(Me.PanelControl5)
         Me.PanelControl1.Controls.Add(Me.BtnPrint)
+        Me.PanelControl1.Controls.Add(Me.BtnPrePrint)
         Me.PanelControl1.Controls.Add(Me.BtnClose)
         Me.PanelControl1.Controls.Add(Me.BtnSave)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -133,7 +135,7 @@ Partial Class FormRecOwnProduct
         Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
         Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl5.Location = New System.Drawing.Point(429, 2)
+        Me.PanelControl5.Location = New System.Drawing.Point(244, 2)
         Me.PanelControl5.Name = "PanelControl5"
         Me.PanelControl5.Size = New System.Drawing.Size(124, 38)
         Me.PanelControl5.TabIndex = 6
@@ -154,11 +156,23 @@ Partial Class FormRecOwnProduct
         Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnPrint.Enabled = False
         Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
-        Me.BtnPrint.Location = New System.Drawing.Point(553, 2)
+        Me.BtnPrint.Location = New System.Drawing.Point(368, 2)
         Me.BtnPrint.Name = "BtnPrint"
-        Me.BtnPrint.Size = New System.Drawing.Size(105, 38)
+        Me.BtnPrint.Size = New System.Drawing.Size(160, 38)
         Me.BtnPrint.TabIndex = 4
-        Me.BtnPrint.Text = "Print (F9)"
+        Me.BtnPrint.Text = "Print Receiving Slip (F9)"
+        '
+        'BtnPrePrint
+        '
+        Me.BtnPrePrint.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrePrint.Appearance.Options.UseFont = True
+        Me.BtnPrePrint.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnPrePrint.Image = CType(resources.GetObject("BtnPrePrint.Image"), System.Drawing.Image)
+        Me.BtnPrePrint.Location = New System.Drawing.Point(528, 2)
+        Me.BtnPrePrint.Name = "BtnPrePrint"
+        Me.BtnPrePrint.Size = New System.Drawing.Size(130, 38)
+        Me.BtnPrePrint.TabIndex = 7
+        Me.BtnPrePrint.Text = "Pre Printing (F10)"
         '
         'BtnClose
         '
@@ -243,7 +257,7 @@ Partial Class FormRecOwnProduct
         Me.DECreated.Name = "DECreated"
         Me.DECreated.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DECreated.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DECreated.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DECreated.Properties.DisplayFormat.FormatString = "dd-MM-yyyy"
         Me.DECreated.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
         Me.DECreated.Size = New System.Drawing.Size(208, 20)
         Me.DECreated.TabIndex = 16
@@ -824,4 +838,5 @@ Partial Class FormRecOwnProduct
     Friend WithEvents CEPrintPreview As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents PanelControl5 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents BtnPrePrint As DevExpress.XtraEditors.SimpleButton
 End Class

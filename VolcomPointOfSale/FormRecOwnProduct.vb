@@ -363,6 +363,7 @@ Public Class FormRecOwnProduct
     Sub printData()
         Cursor = Cursors.WaitCursor
         ReportRecOwn.id = id
+        ReportRecOwn.is_pre_printing = "-1"
         Dim Report As New ReportRecOwn()
 
         If CEPrintPreview.EditValue = True Then
@@ -531,6 +532,8 @@ Public Class FormRecOwnProduct
             deleteItem()
         ElseIf e.KeyCode = Keys.F9 Then
             printData()
+        ElseIf e.KeyCode = Keys.F10 Then
+            prePrinting()
         End If
     End Sub
 
@@ -546,5 +549,31 @@ Public Class FormRecOwnProduct
             Timer1.Stop()
             Timer1.Start()
         End If
+    End Sub
+
+    Private Sub BtnPrePrint_Click(sender As Object, e As EventArgs) Handles BtnPrePrint.Click
+        prePrinting()
+    End Sub
+
+    Sub prePrinting()
+        Cursor = Cursors.WaitCursor
+        ReportRecOwn.id = id
+        ReportRecOwn.is_pre_printing = "1"
+        ReportRecOwn.dt = GCSummary.DataSource
+        Dim Report As New ReportRecOwn()
+        Report.LRecNumber.Text = "(PREVIEW ONLY NOT SAVED)"
+        Report.LabelFrom.Text = TxtFromCode.Text + " - " + TxtFromName.Text
+        Report.LabelTo.Text = TxtToCode.Text + " - " + TxtToName.Text
+        Report.LabelRef.Text = TxtDelSlip.Text
+        Report.LRecDate.Text = DECreated.Text
+        Report.LabelStatus.Text = "Prepared"
+        Report.LabelNote.Text = MENote.Text
+        Report.RowTotalQty.Text = Decimal.Parse(GVSummary.Columns("qty").SummaryItem.SummaryValue.ToString).ToString("N0")
+        Report.RowTotalAmount.Text = Double.Parse(GVSummary.Columns("amount").SummaryItem.SummaryValue.ToString).ToString("N0")
+
+        ' Show the report's preview. 
+        Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
+        Tool.ShowPreviewDialog()
+        Cursor = Cursors.Default
     End Sub
 End Class
