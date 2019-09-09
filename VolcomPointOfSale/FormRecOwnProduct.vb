@@ -25,8 +25,8 @@ Public Class FormRecOwnProduct
         UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
         speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
         speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
-
         Timer1.Interval = speed_barcode_read_timer
+
         viewReportStatus()
         actionLoad()
     End Sub
@@ -339,8 +339,8 @@ Public Class FormRecOwnProduct
     Sub deleteItem()
         Cursor = Cursors.WaitCursor
         FormDeleteScan.id_pop_up = "1"
-        FormDeleteScan.cforKeyDown = vbNullChar
-        FormDeleteScan._lastKeystroke = DateTime.Now
+        FormDeleteScan.cforKeyDown = cforKeyDown
+        FormDeleteScan._lastKeystroke = _lastKeystroke
         FormDeleteScan.UseKeyboard = UseKeyboard
         FormDeleteScan.speed_barcode_read = speed_barcode_read
         FormDeleteScan.speed_barcode_read_timer = speed_barcode_read_timer
@@ -358,6 +358,8 @@ Public Class FormRecOwnProduct
             If confirm = DialogResult.Yes Then
                 Close()
             End If
+        Else
+            Close()
         End If
     End Sub
 
