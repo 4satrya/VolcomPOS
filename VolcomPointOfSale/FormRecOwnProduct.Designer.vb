@@ -84,6 +84,7 @@ Partial Class FormRecOwnProduct
         Me.GridColumnno = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnis_unique_code = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.GridColumnNoData = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -382,11 +383,12 @@ Partial Class FormRecOwnProduct
         '
         'GVData
         '
-        Me.GVData.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_rec_own_det, Me.GridColumnid_delivery_slipdet, Me.GridColumnid_product, Me.GridColumnid_design, Me.GridColumnitem_codedet, Me.GridColumnitem_namedet, Me.GridColumnsizedet, Me.GridColumnpricedet, Me.GridColumndesign_catdet, Me.GridColumnqtydet, Me.GridColumnamountdet})
+        Me.GVData.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumnid_rec_own_det, Me.GridColumnid_delivery_slipdet, Me.GridColumnid_product, Me.GridColumnid_design, Me.GridColumnitem_codedet, Me.GridColumnitem_namedet, Me.GridColumnsizedet, Me.GridColumnpricedet, Me.GridColumndesign_catdet, Me.GridColumnqtydet, Me.GridColumnamountdet, Me.GridColumnNoData})
         Me.GVData.GridControl = Me.GCData
         Me.GVData.Name = "GVData"
         Me.GVData.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVData.OptionsBehavior.Editable = False
+        Me.GVData.OptionsCustomization.AllowSort = False
         Me.GVData.OptionsView.ShowGroupPanel = False
         '
         'GridColumnid_rec_own_det
@@ -419,7 +421,8 @@ Partial Class FormRecOwnProduct
         Me.GridColumnitem_codedet.FieldName = "item_code"
         Me.GridColumnitem_codedet.Name = "GridColumnitem_codedet"
         Me.GridColumnitem_codedet.Visible = True
-        Me.GridColumnitem_codedet.VisibleIndex = 0
+        Me.GridColumnitem_codedet.VisibleIndex = 1
+        Me.GridColumnitem_codedet.Width = 517
         '
         'GridColumnitem_namedet
         '
@@ -427,7 +430,8 @@ Partial Class FormRecOwnProduct
         Me.GridColumnitem_namedet.FieldName = "item_name"
         Me.GridColumnitem_namedet.Name = "GridColumnitem_namedet"
         Me.GridColumnitem_namedet.Visible = True
-        Me.GridColumnitem_namedet.VisibleIndex = 1
+        Me.GridColumnitem_namedet.VisibleIndex = 2
+        Me.GridColumnitem_namedet.Width = 517
         '
         'GridColumnsizedet
         '
@@ -435,7 +439,8 @@ Partial Class FormRecOwnProduct
         Me.GridColumnsizedet.FieldName = "size"
         Me.GridColumnsizedet.Name = "GridColumnsizedet"
         Me.GridColumnsizedet.Visible = True
-        Me.GridColumnsizedet.VisibleIndex = 2
+        Me.GridColumnsizedet.VisibleIndex = 3
+        Me.GridColumnsizedet.Width = 522
         '
         'GridColumnpricedet
         '
@@ -718,6 +723,15 @@ Partial Class FormRecOwnProduct
         'Timer1
         '
         '
+        'GridColumnNoData
+        '
+        Me.GridColumnNoData.Caption = "No"
+        Me.GridColumnNoData.FieldName = "no"
+        Me.GridColumnNoData.Name = "GridColumnNoData"
+        Me.GridColumnNoData.Visible = True
+        Me.GridColumnNoData.VisibleIndex = 0
+        Me.GridColumnNoData.Width = 73
+        '
         'FormRecOwnProduct
         '
         Me.Appearance.Options.UseFont = True
@@ -839,4 +853,5 @@ Partial Class FormRecOwnProduct
     Friend WithEvents PanelControl5 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents Timer1 As Timer
     Friend WithEvents BtnPrePrint As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents GridColumnNoData As DevExpress.XtraGrid.Columns.GridColumn
 End Class

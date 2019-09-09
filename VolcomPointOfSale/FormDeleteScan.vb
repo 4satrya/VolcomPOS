@@ -23,6 +23,7 @@
                 FormRecOwnProduct.GCData.RefreshDataSource()
                 FormRecOwnProduct.GVData.RefreshData()
                 FormRecOwnProduct.countQty(id_delivery_slip)
+                FormRecOwnProduct.GVData.FocusedRowHandle = FormRecOwnProduct.GVData.RowCount - 1
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
             Else

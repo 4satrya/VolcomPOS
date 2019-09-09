@@ -312,6 +312,7 @@ Public Class FormRecOwnProduct
             GCData.RefreshDataSource()
             GVData.RefreshData()
             countQty(id_delivery_slip)
+            GVData.FocusedRowHandle = GVData.RowCount - 1
             TxtItemCode.Text = ""
             TxtItemCode.Focus()
         Else
@@ -575,5 +576,11 @@ Public Class FormRecOwnProduct
         Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
         Tool.ShowPreviewDialog()
         Cursor = Cursors.Default
+    End Sub
+
+    Private Sub GVData_CustomColumnDisplayText(sender As Object, e As DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs) Handles GVData.CustomColumnDisplayText
+        If e.Column.FieldName = "no" Then
+            e.DisplayText = (e.ListSourceRowIndex + 1).ToString()
+        End If
     End Sub
 End Class
