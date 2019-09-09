@@ -19,9 +19,11 @@ Partial Class FormDeleteScan
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.LabelItemCode = New DevExpress.XtraEditors.LabelControl()
         Me.TxtItemCode = New DevExpress.XtraEditors.TextEdit()
         Me.BtnClose = New DevExpress.XtraEditors.SimpleButton()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.TxtItemCode.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -49,6 +51,9 @@ Partial Class FormDeleteScan
         Me.BtnClose.TabIndex = 2
         Me.BtnClose.Text = "Close"
         '
+        'Timer1
+        '
+        '
         'FormDeleteScan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -75,4 +80,5 @@ Partial Class FormDeleteScan
     Friend WithEvents LabelItemCode As DevExpress.XtraEditors.LabelControl
     Friend WithEvents TxtItemCode As DevExpress.XtraEditors.TextEdit
     Friend WithEvents BtnClose As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents Timer1 As Timer
 End Class

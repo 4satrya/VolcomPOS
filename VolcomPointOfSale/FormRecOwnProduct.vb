@@ -11,8 +11,22 @@ Public Class FormRecOwnProduct
     Dim role_prepared As String = ""
     Dim spv As String = ""
 
+    'scan variable
+    Private cforKeyDown As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Public UseKeyboard As String = "-1"
+    Public speed_barcode_read As Integer = 0
+    Public speed_barcode_read_timer As Integer = 0
+
     Private Sub FormRecOwnProduct_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Timer1.Interval = 17
+        'scan opt
+        Dim query_opt As String = "SELECT is_use_keyboard, speed_barcode_read, speed_barcode_read_timer  FROM tb_opt; "
+        Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+        UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
+        speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
+        speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
+
+        Timer1.Interval = speed_barcode_read_timer
         viewReportStatus()
         actionLoad()
     End Sub
@@ -169,10 +183,6 @@ Public Class FormRecOwnProduct
         TxtItemCode.Focus()
     End Sub
 
-    Private cforKeyDown As Char = vbNullChar
-    Private _lastKeystroke As DateTime = DateTime.Now
-    Private UseKeyboard As Boolean = False
-
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
         'If e.KeyCode = Keys.Enter Then
         cforKeyDown = ChrW(e.KeyCode)
@@ -180,33 +190,38 @@ Public Class FormRecOwnProduct
     End Sub
 
     Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
-        If Len(TxtItemCode.Text) > 1 Then
-            If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
-                Console.WriteLine("msk")
-                cforKeyDown = vbNullChar
-                TxtItemCode.Text = ""
-                Return
-            End If
-
-
-            Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
-            '(DateTime.Now.Millisecond - _lastKeystroke)
-            Console.WriteLine(elapsed.TotalMilliseconds.ToString)
-            If elapsed.TotalMilliseconds > 17 Then TxtItemCode.Text = ""
-
-            'If e.KeyCode <> Keys.[Return] Then
-            '    TxtItemCode.Text += ChrW(e.KeyData)
-            'End If
-
-            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
-                If Not UseKeyboard Then
-                    MessageBox.Show(TxtItemCode.Text)
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtItemCode.Text) > 1 Then
+                If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                    cforKeyDown = vbNullChar
+                    TxtItemCode.Text = ""
+                    Return
                 End If
+
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+
+                'If e.KeyCode <> Keys.[Return] Then
+                '    TxtItemCode.Text += ChrW(e.KeyData)
+                'End If
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                    checkCode(TxtItemCode.Text)
+                    TxtItemCode.Text = ""
+                End If
+
+            End If
+            _lastKeystroke = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                checkCode(TxtItemCode.Text)
                 TxtItemCode.Text = ""
             End If
-
         End If
-        _lastKeystroke = DateTime.Now
     End Sub
 
 
@@ -323,6 +338,11 @@ Public Class FormRecOwnProduct
     Sub deleteItem()
         Cursor = Cursors.WaitCursor
         FormDeleteScan.id_pop_up = "1"
+        FormDeleteScan.cforKeyDown = vbNullChar
+        FormDeleteScan._lastKeystroke = DateTime.Now
+        FormDeleteScan.UseKeyboard = UseKeyboard
+        FormDeleteScan.speed_barcode_read = speed_barcode_read
+        FormDeleteScan.speed_barcode_read_timer = speed_barcode_read_timer
         FormDeleteScan.ShowDialog()
         Cursor = Cursors.Default
     End Sub
@@ -388,7 +408,7 @@ Public Class FormRecOwnProduct
 
             'cari diff > 0
             makeSafeGV(GVSummary)
-            GVSummary.ActiveFilterString = "[diff]>0"
+            GVSummary.ActiveFilterString = "[diff]<>0"
             If GVSummary.RowCount > 0 Then
                 cond_limit = False
             End If
@@ -401,7 +421,8 @@ Public Class FormRecOwnProduct
         ElseIf id_comp_to = "-1" Then
             stopCustom("Please select destination account first")
         ElseIf Not cond_limit Then
-            stopCustom("Some items exceed available qty, please correct them first")
+            'Some items exceed available qty, please correct them first
+            stopCustom("Qty not equal with delivery slip. Please see in column 'diff' ")
         Else
             Dim rec_note As String = addSlashes(MENote.Text)
             Dim id_report_status_saved As String = LEReportStatus.EditValue.ToString
@@ -514,12 +535,16 @@ Public Class FormRecOwnProduct
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        TxtItemCode.Text = ""
-        Timer1.Stop()
+        If UseKeyboard = "2" Then
+            TxtItemCode.Text = ""
+            Timer1.Stop()
+        End If
     End Sub
 
     Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
-        Timer1.Stop()
-        Timer1.Start()
+        If UseKeyboard = "2" Then
+            Timer1.Stop()
+            Timer1.Start()
+        End If
     End Sub
 End Class
