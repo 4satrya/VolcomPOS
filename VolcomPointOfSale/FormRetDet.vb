@@ -8,7 +8,22 @@
     Dim role_prepared As String = ""
     Dim spv As String = ""
 
+    'scan variable
+    Private cforKeyDown As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Public UseKeyboard As String = "-1"
+    Public speed_barcode_read As Integer = 0
+    Public speed_barcode_read_timer As Integer = 0
+
     Private Sub FormRetDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'scan opt
+        Dim query_opt As String = "SELECT is_use_keyboard, speed_barcode_read, speed_barcode_read_timer  FROM tb_opt; "
+        Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+        UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
+        speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
+        speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
+        Timer1.Interval = speed_barcode_read_timer
+
         viewReportStatus()
         actionLoad()
     End Sub
@@ -50,7 +65,7 @@
             DERefDate.EditValue = getTimeDB()
             LEReportStatus.Enabled = False
             BtnPrint.Enabled = False
-            XTPSummary.PageVisible = False
+            XTPSummary.PageVisible = True
         End If
     End Sub
 
@@ -171,16 +186,80 @@
     Private Sub FormRetDet_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.F5 Then 'save
             save()
-        ElseIf e.KeyCode = Keys.Escape Then 'close
+        ElseIf e.KeyCode = Keys.F6 Then 'close
             closeForm()
-        ElseIf e.KeyCode = Keys.F7 Then 'select
-            selectList()
-        ElseIf e.KeyCode = Keys.F8 Then 'add scan
+        ElseIf e.KeyCode = Keys.F7 Then 'add scan
             addScan()
-        ElseIf e.KeyCode = Keys.F9 Then 'remove scan
+        ElseIf e.KeyCode = Keys.F8 Then 'remove scan
             removeScan()
-        ElseIf e.KeyCode = Keys.F10 Then 'print
+        ElseIf e.KeyCode = Keys.F9 Then 'print
             print()
+        ElseIf e.KeyCode = Keys.F10 Then 'print
+            prePrinting()
+        End If
+    End Sub
+
+    Sub viewSummary()
+        If GVScan.RowCount > 0 Then
+            Cursor = Cursors.WaitCursor
+            Dim data_temp As DataTable = GCScan.DataSource
+            Dim connection_string As String = String.Format("Data Source={0};User Id={1};Password={2};Database={3};Convert Zero Datetime=True", app_host, app_username, app_password, app_database)
+            Dim connection As New MySql.Data.MySqlClient.MySqlConnection(connection_string)
+            connection.Open()
+            Dim command As MySql.Data.MySqlClient.MySqlCommand = connection.CreateCommand()
+            Dim qry As String = "DROP TABLE IF EXISTS tb_ret_temp; CREATE TEMPORARY TABLE IF NOT EXISTS tb_ret_temp AS ( SELECT * FROM ("
+            For d As Integer = 0 To data_temp.Rows.Count - 1
+                Dim id_item As String = data_temp.Rows(d)("id_item").ToString
+                Dim item_code As String = data_temp.Rows(d)("item_code").ToString
+                Dim item_name As String = data_temp.Rows(d)("item_name").ToString
+                Dim size As String = data_temp.Rows(d)("size").ToString
+                Dim price As String = decimalSQL(data_temp.Rows(d)("price").ToString)
+                If d > 0 Then
+                    qry += "UNION ALL "
+                End If
+                qry += "SELECT '" + id_item + "' AS `id_item`, '" + item_code + "' AS `item_code`, '" + item_name + "' AS `item_name`, '" + size + "' AS `size` , " + price + " AS `price` "
+            Next
+            qry += ") a ); ALTER TABLE tb_ret_temp CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci; "
+            command.CommandText = qry
+            command.ExecuteNonQuery()
+            command.Dispose()
+            ' Console.WriteLine(qry)
+
+            Dim data_view As New DataTable
+            Dim qry_view As String = "SELECT a.id_item, a.item_code, a.item_name, a.size, COUNT(a.id_item) AS `ret_qty`, a.price 
+                                FROM tb_ret_temp a 
+                                GROUP BY a.id_item"
+            Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(qry_view, connection)
+            adapter.SelectCommand.CommandTimeout = 300
+            adapter.Fill(data_view)
+            adapter.Dispose()
+            connection.Close()
+            connection.Dispose()
+
+            'get data stock
+            Dim query_stock As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.id_comp_sup=" + id_comp_to + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+            Dim data_stock As DataTable = execute_query(query_stock, -1, True, "", "", "", "")
+            Dim tb1 = data_view.AsEnumerable()
+            Dim tb2 = data_stock.AsEnumerable()
+            Dim query_cek = From table1 In tb1
+                            Group Join table_tmp In tb2 On table1("id_item").ToString Equals table_tmp("id_item").ToString
+                            Into Group
+                            From y1 In Group.DefaultIfEmpty()
+                            Select New With
+                            {
+                                .id_item = table1.Field(Of String)("id_item").ToString,
+                                .item_code = table1.Field(Of String)("item_code").ToString,
+                                .item_name = table1.Field(Of String)("item_name").ToString,
+                                .size = table1.Field(Of String)("size").ToString,
+                                .ret_qty = table1("ret_qty"),
+                                .qty_avl = If(y1 Is Nothing, 0, y1("qty_avl")),
+                                .price = table1("price"),
+                                .amount = table1("ret_qty") * table1("price"),
+                                .status = If(table1("ret_qty") <= If(y1 Is Nothing, 0, y1("qty_avl")), "OK", "Can't exceed " + If(y1 Is Nothing, 0, y1("qty_avl").ToString))
+                            }
+            GCScanSum.DataSource = Nothing
+            GCScanSum.DataSource = query_cek.ToList()
+            Cursor = Cursors.Default
         End If
     End Sub
 
@@ -201,63 +280,7 @@
             'cek stock
             Dim cond_stk As Boolean = True
             If action = "ins" Then
-                Dim data_temp As DataTable = GCScan.DataSource
-                Dim connection_string As String = String.Format("Data Source={0};User Id={1};Password={2};Database={3};Convert Zero Datetime=True", app_host, app_username, app_password, app_database)
-                Dim connection As New MySql.Data.MySqlClient.MySqlConnection(connection_string)
-                connection.Open()
-                Dim command As MySql.Data.MySqlClient.MySqlCommand = connection.CreateCommand()
-                Dim qry As String = "DROP TABLE IF EXISTS tb_ret_temp; CREATE TEMPORARY TABLE IF NOT EXISTS tb_ret_temp AS ( SELECT * FROM ("
-                For d As Integer = 0 To data_temp.Rows.Count - 1
-                    Dim id_item As String = data_temp.Rows(d)("id_item").ToString
-                    Dim item_code As String = data_temp.Rows(d)("item_code").ToString
-                    Dim item_name As String = data_temp.Rows(d)("item_name").ToString
-                    Dim size As String = data_temp.Rows(d)("size").ToString
-                    Dim price As String = decimalSQL(data_temp.Rows(d)("price").ToString)
-                    If d > 0 Then
-                        qry += "UNION ALL "
-                    End If
-                    qry += "SELECT '" + id_item + "' AS `id_item`, '" + item_code + "' AS `item_code`, '" + item_name + "' AS `item_name`, '" + size + "' AS `size` , " + price + " AS `price` "
-                Next
-                qry += ") a ); ALTER TABLE tb_ret_temp CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci; "
-                command.CommandText = qry
-                command.ExecuteNonQuery()
-                command.Dispose()
-                ' Console.WriteLine(qry)
-
-                Dim data_view As New DataTable
-                Dim qry_view As String = "SELECT a.id_item, a.item_code, a.item_name, a.size, COUNT(a.id_item) AS `ret_qty`, a.price 
-                                FROM tb_ret_temp a 
-                                GROUP BY a.id_item"
-                Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(qry_view, connection)
-                adapter.SelectCommand.CommandTimeout = 300
-                adapter.Fill(data_view)
-                adapter.Dispose()
-                connection.Close()
-                connection.Dispose()
-
-                'get data stock
-                Dim query_stock As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.id_comp_sup=" + id_comp_to + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
-                Dim data_stock As DataTable = execute_query(query_stock, -1, True, "", "", "", "")
-                Dim tb1 = data_view.AsEnumerable()
-                Dim tb2 = data_stock.AsEnumerable()
-                Dim query_cek = From table1 In tb1
-                                Group Join table_tmp In tb2 On table1("id_item").ToString Equals table_tmp("id_item").ToString
-                                Into Group
-                                From y1 In Group.DefaultIfEmpty()
-                                Select New With
-                                {
-                                    .id_item = table1.Field(Of String)("id_item").ToString,
-                                    .item_code = table1.Field(Of String)("item_code").ToString,
-                                    .item_name = table1.Field(Of String)("item_name").ToString,
-                                    .size = table1.Field(Of String)("size").ToString,
-                                    .ret_qty = table1("ret_qty"),
-                                    .qty_avl = If(y1 Is Nothing, 0, y1("qty_avl")),
-                                    .price = table1("price"),
-                                    .amount = table1("ret_qty") * table1("price"),
-                                    .status = If(table1("ret_qty") <= If(y1 Is Nothing, 0, y1("qty_avl")), "OK", "Can't exceed " + If(y1 Is Nothing, 0, y1("qty_avl").ToString))
-                                }
-                GCScanSum.DataSource = Nothing
-                GCScanSum.DataSource = query_cek.ToList()
+                viewSummary()
 
                 'filter OK
                 GVScanSum.ActiveFilterString = "[status]<>'OK' "
@@ -393,9 +416,18 @@
 
             Cursor = Cursors.WaitCursor
             FormDeleteScan.id_pop_up = "3"
+            FormDeleteScan.cforKeyDown = cforKeyDown
+            FormDeleteScan._lastKeystroke = _lastKeystroke
+            FormDeleteScan.UseKeyboard = UseKeyboard
+            FormDeleteScan.speed_barcode_read = speed_barcode_read
+            FormDeleteScan.speed_barcode_read_timer = speed_barcode_read_timer
             FormDeleteScan.ShowDialog()
             Cursor = Cursors.Default
         End If
+    End Sub
+
+    Sub prePrinting()
+
     End Sub
 
     Sub print()
@@ -469,43 +501,79 @@
         print()
     End Sub
 
-    Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim code As String = addSlashes(TxtItemCode.Text)
-            Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND f.item_code=''" + code + "'' AND j.id_comp=" + id_comp_from + " AND f.id_comp_sup=" + id_comp_to + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
-            'Dim query As String = item.queryMain("AND i.is_active=1 AND i.item_code='" + code + "' AND i.id_comp_sup='" + id_comp_to + "' ", "1", False)
-            Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
-            If dt.Rows.Count > 0 Then
-                'cek available 
-                makeSafeGV(GVScan)
-                GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
-                If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
-                    stopCustom("No available qty")
-                    makeSafeGV(GVScan)
-                    GVScan.FocusedRowHandle = GVScan.RowCount - 1
+    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtItemCode.Text) > 1 Then
+                If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                    cforKeyDown = vbNullChar
                     TxtItemCode.Text = ""
-                    TxtItemCode.Focus()
-                    Exit Sub
+                    Return
                 End If
-                makeSafeGV(GVScan)
 
-                Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
-                newRow("id_ret_det") = "0"
-                newRow("id_item") = dt(0)("id_item").ToString
-                newRow("item_code") = dt(0)("item_code").ToString
-                newRow("item_name") = dt(0)("item_name").ToString
-                newRow("size") = dt(0)("size").ToString
-                newRow("ret_qty") = 1
-                newRow("price") = dt(0)("price")
-                TryCast(GCScan.DataSource, DataTable).Rows.Add(newRow)
-                GCScan.RefreshDataSource()
-                GVScan.RefreshData()
-            Else
-                stopCustom("Code not found")
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+
+                'If e.KeyCode <> Keys.[Return] Then
+                '    TxtItemCode.Text += ChrW(e.KeyData)
+                'End If
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                    checkCode(TxtItemCode.Text)
+                End If
+
             End If
-            TxtItemCode.Text = ""
-            TxtItemCode.Focus()
+            _lastKeystroke = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                checkCode(TxtItemCode.Text)
+            End If
         End If
+    End Sub
+
+    Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
+        cforKeyDown = ChrW(e.KeyCode)
+    End Sub
+
+    Sub checkCode(ByVal code_check As String)
+        Dim code As String = addSlashes(code_check)
+        Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND f.item_code=''" + code + "'' AND j.id_comp=" + id_comp_from + " AND f.id_comp_sup=" + id_comp_to + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+        'Dim query As String = item.queryMain("AND i.is_active=1 AND i.item_code='" + code + "' AND i.id_comp_sup='" + id_comp_to + "' ", "1", False)
+        Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If dt.Rows.Count > 0 Then
+            'cek available 
+            makeSafeGV(GVScan)
+            GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
+            If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
+                stopCustom("No available qty")
+                makeSafeGV(GVScan)
+                GVScan.FocusedRowHandle = GVScan.RowCount - 1
+                TxtItemCode.Text = ""
+                TxtItemCode.Focus()
+                Exit Sub
+            End If
+            makeSafeGV(GVScan)
+
+            Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
+            newRow("id_ret_det") = "0"
+            newRow("id_item") = dt(0)("id_item").ToString
+            newRow("item_code") = dt(0)("item_code").ToString
+            newRow("item_name") = dt(0)("item_name").ToString
+            newRow("size") = dt(0)("size").ToString
+            newRow("ret_qty") = 1
+            newRow("price") = dt(0)("price")
+            TryCast(GCScan.DataSource, DataTable).Rows.Add(newRow)
+            GCScan.RefreshDataSource()
+            GVScan.RefreshData()
+            GVScan.FocusedRowHandle = GVScan.RowCount - 1
+        Else
+            stopCustom("Code not found")
+        End If
+        TxtItemCode.Text = ""
+        TxtItemCode.Focus()
     End Sub
 
     Private Sub GVScanSum_CustomColumnDisplayText(sender As Object, e As DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs) Handles GVScanSum.CustomColumnDisplayText
@@ -529,6 +597,24 @@
     Private Sub DERefDate_KeyDown(sender As Object, e As KeyEventArgs) Handles DERefDate.KeyDown
         If e.KeyCode = Keys.Enter Then
             TxtItemCode.Focus()
+        End If
+    End Sub
+
+    Private Sub XTCItem_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCItem.SelectedPageChanged
+        viewSummary()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If UseKeyboard = "2" Then
+            TxtItemCode.Text = ""
+            Timer1.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
+        If UseKeyboard = "2" Then
+            Timer1.Stop()
+            Timer1.Start()
         End If
     End Sub
 End Class

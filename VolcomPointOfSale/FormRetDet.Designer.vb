@@ -19,6 +19,7 @@ Partial Class FormRetDet
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormRetDet))
         Me.PanelControlTop = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControlTopFill = New DevExpress.XtraEditors.PanelControl()
@@ -83,6 +84,10 @@ Partial Class FormRetDet
         Me.GridColumnCodeSum = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnAvail = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnStatus = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
+        Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
+        Me.BtnPrePrint = New DevExpress.XtraEditors.SimpleButton()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlTop.SuspendLayout()
         CType(Me.PanelControlTopFill, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,6 +126,9 @@ Partial Class FormRetDet
         Me.XTPSummary.SuspendLayout()
         CType(Me.GCScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl5.SuspendLayout()
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelControlTop
@@ -308,7 +316,7 @@ Partial Class FormRetDet
         Me.LabelControl11.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelControl11.Location = New System.Drawing.Point(12, 67)
         Me.LabelControl11.Name = "LabelControl11"
-        Me.LabelControl11.Size = New System.Drawing.Size(61, 13)
+        Me.LabelControl11.Size = New System.Drawing.Size(60, 13)
         Me.LabelControl11.TabIndex = 5
         Me.LabelControl11.Text = "Prepared By"
         '
@@ -370,7 +378,9 @@ Partial Class FormRetDet
         '
         'PanelControlBottom
         '
+        Me.PanelControlBottom.Controls.Add(Me.PanelControl5)
         Me.PanelControlBottom.Controls.Add(Me.BtnPrint)
+        Me.PanelControlBottom.Controls.Add(Me.BtnPrePrint)
         Me.PanelControlBottom.Controls.Add(Me.BtnClose)
         Me.PanelControlBottom.Controls.Add(Me.BtnSave)
         Me.PanelControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -390,11 +400,11 @@ Partial Class FormRetDet
         Me.BtnPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnPrint.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnPrint.Image = CType(resources.GetObject("BtnPrint.Image"), System.Drawing.Image)
-        Me.BtnPrint.Location = New System.Drawing.Point(518, 2)
+        Me.BtnPrint.Location = New System.Drawing.Point(328, 2)
         Me.BtnPrint.Name = "BtnPrint"
-        Me.BtnPrint.Size = New System.Drawing.Size(102, 39)
+        Me.BtnPrint.Size = New System.Drawing.Size(154, 39)
         Me.BtnPrint.TabIndex = 12
-        Me.BtnPrint.Text = "F10 : Print"
+        Me.BtnPrint.Text = "F9 : Print Return Slip"
         '
         'BtnClose
         '
@@ -407,11 +417,11 @@ Partial Class FormRetDet
         Me.BtnClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnClose.Dock = System.Windows.Forms.DockStyle.Right
         Me.BtnClose.Image = CType(resources.GetObject("BtnClose.Image"), System.Drawing.Image)
-        Me.BtnClose.Location = New System.Drawing.Point(620, 2)
+        Me.BtnClose.Location = New System.Drawing.Point(612, 2)
         Me.BtnClose.Name = "BtnClose"
-        Me.BtnClose.Size = New System.Drawing.Size(90, 39)
+        Me.BtnClose.Size = New System.Drawing.Size(98, 39)
         Me.BtnClose.TabIndex = 11
-        Me.BtnClose.Text = "Close"
+        Me.BtnClose.Text = "F6 : Close"
         '
         'BtnSave
         '
@@ -668,11 +678,11 @@ Partial Class FormRetDet
         Me.BtnRemoveScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnRemoveScan.Dock = System.Windows.Forms.DockStyle.Left
         Me.BtnRemoveScan.Image = CType(resources.GetObject("BtnRemoveScan.Image"), System.Drawing.Image)
-        Me.BtnRemoveScan.Location = New System.Drawing.Point(202, 2)
+        Me.BtnRemoveScan.Location = New System.Drawing.Point(128, 2)
         Me.BtnRemoveScan.Name = "BtnRemoveScan"
-        Me.BtnRemoveScan.Size = New System.Drawing.Size(103, 33)
+        Me.BtnRemoveScan.Size = New System.Drawing.Size(126, 33)
         Me.BtnRemoveScan.TabIndex = 6
-        Me.BtnRemoveScan.Text = "F9 : Delete"
+        Me.BtnRemoveScan.Text = "F8 : Delete Item"
         '
         'BtnAddScan
         '
@@ -685,11 +695,11 @@ Partial Class FormRetDet
         Me.BtnAddScan.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtnAddScan.Dock = System.Windows.Forms.DockStyle.Left
         Me.BtnAddScan.Image = CType(resources.GetObject("BtnAddScan.Image"), System.Drawing.Image)
-        Me.BtnAddScan.Location = New System.Drawing.Point(106, 2)
+        Me.BtnAddScan.Location = New System.Drawing.Point(12, 2)
         Me.BtnAddScan.Name = "BtnAddScan"
-        Me.BtnAddScan.Size = New System.Drawing.Size(96, 33)
+        Me.BtnAddScan.Size = New System.Drawing.Size(116, 33)
         Me.BtnAddScan.TabIndex = 5
-        Me.BtnAddScan.Text = "F8 : Add"
+        Me.BtnAddScan.Text = "F7 : Add Item"
         '
         'BtnSelect
         '
@@ -704,9 +714,10 @@ Partial Class FormRetDet
         Me.BtnSelect.Image = CType(resources.GetObject("BtnSelect.Image"), System.Drawing.Image)
         Me.BtnSelect.Location = New System.Drawing.Point(2, 2)
         Me.BtnSelect.Name = "BtnSelect"
-        Me.BtnSelect.Size = New System.Drawing.Size(104, 33)
+        Me.BtnSelect.Size = New System.Drawing.Size(10, 33)
         Me.BtnSelect.TabIndex = 4
         Me.BtnSelect.Text = "F7 : Select"
+        Me.BtnSelect.Visible = False
         '
         'XTPSummary
         '
@@ -836,6 +847,37 @@ Partial Class FormRetDet
         Me.GridColumnStatus.Visible = True
         Me.GridColumnStatus.VisibleIndex = 8
         '
+        'PanelControl5
+        '
+        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
+        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl5.Location = New System.Drawing.Point(204, 2)
+        Me.PanelControl5.Name = "PanelControl5"
+        Me.PanelControl5.Size = New System.Drawing.Size(124, 39)
+        Me.PanelControl5.TabIndex = 13
+        '
+        'CEPrintPreview
+        '
+        Me.CEPrintPreview.EditValue = True
+        Me.CEPrintPreview.Location = New System.Drawing.Point(5, 10)
+        Me.CEPrintPreview.Name = "CEPrintPreview"
+        Me.CEPrintPreview.Properties.Caption = "Show Print Preview"
+        Me.CEPrintPreview.Size = New System.Drawing.Size(115, 19)
+        Me.CEPrintPreview.TabIndex = 5
+        '
+        'BtnPrePrint
+        '
+        Me.BtnPrePrint.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrePrint.Appearance.Options.UseFont = True
+        Me.BtnPrePrint.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnPrePrint.Image = CType(resources.GetObject("BtnPrePrint.Image"), System.Drawing.Image)
+        Me.BtnPrePrint.Location = New System.Drawing.Point(482, 2)
+        Me.BtnPrePrint.Name = "BtnPrePrint"
+        Me.BtnPrePrint.Size = New System.Drawing.Size(130, 39)
+        Me.BtnPrePrint.TabIndex = 14
+        Me.BtnPrePrint.Text = "F10 : Pre Printing"
+        '
         'FormRetDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -895,6 +937,9 @@ Partial Class FormRetDet
         Me.XTPSummary.ResumeLayout(False)
         CType(Me.GCScanSum, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl5.ResumeLayout(False)
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -961,4 +1006,8 @@ Partial Class FormRetDet
     Friend WithEvents GridColumnCodeSum As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnAvail As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumnStatus As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PanelControl5 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents CEPrintPreview As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents BtnPrePrint As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents Timer1 As Timer
 End Class
