@@ -559,7 +559,7 @@ Public Class FormRetDet
             makeSafeGV(GVScan)
             GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
             If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
-                stopCustom("No available qty")
+                stopCustomDialog("No available qty")
                 makeSafeGV(GVScan)
                 GVScan.FocusedRowHandle = GVScan.RowCount - 1
                 TxtItemCode.Text = ""
@@ -581,7 +581,7 @@ Public Class FormRetDet
             GVScan.RefreshData()
             GVScan.FocusedRowHandle = GVScan.RowCount - 1
         Else
-            stopCustom("Code not found")
+            stopCustomDialog("Code not found")
         End If
         TxtItemCode.Text = ""
         TxtItemCode.Focus()
