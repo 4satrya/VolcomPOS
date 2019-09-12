@@ -600,6 +600,8 @@
     End Sub
 
     Private Sub XTCItem_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCItem.SelectedPageChanged
-        viewSummary()
+        If XTCItem.SelectedTabPageIndex = 1 Then
+            viewSummary()
+        End If
     End Sub
 End Class

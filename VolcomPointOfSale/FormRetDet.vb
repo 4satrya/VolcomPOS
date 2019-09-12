@@ -1,4 +1,7 @@
-﻿Public Class FormRetDet
+﻿Imports DevExpress.XtraReports.UI
+Imports FastMember
+
+Public Class FormRetDet
     Public id As String = "-1"
     Public action As String = "-1"
     Public id_comp_from As String = "-1"
@@ -199,9 +202,11 @@
         End If
     End Sub
 
+    Dim dts As DataTable
     Sub viewSummary()
         If GVScan.RowCount > 0 Then
             Cursor = Cursors.WaitCursor
+            dts = New DataTable()
             Dim data_temp As DataTable = GCScan.DataSource
             Dim connection_string As String = String.Format("Data Source={0};User Id={1};Password={2};Database={3};Convert Zero Datetime=True", app_host, app_username, app_password, app_database)
             Dim connection As New MySql.Data.MySqlClient.MySqlConnection(connection_string)
@@ -259,6 +264,11 @@
                             }
             GCScanSum.DataSource = Nothing
             GCScanSum.DataSource = query_cek.ToList()
+
+
+            Using reader = ObjectReader.Create(GCScanSum.DataSource, "item_code", "item_name", "size", "ret_qty", "price")
+                dts.Load(reader)
+            End Using
             Cursor = Cursors.Default
         End If
     End Sub
@@ -427,47 +437,48 @@
     End Sub
 
     Sub prePrinting()
-
-    End Sub
-
-    Sub print()
         Cursor = Cursors.WaitCursor
-        FormBlack.Show()
+        XTCItem.SelectedTabPageIndex = 1
         ReportRet.id = id
-        ReportRet.dt = GCScanSum.DataSource
+        ReportRet.is_pre_printing = "1"
+        ReportRet.dt = dts
         Dim Report As New ReportRet()
-
-        ' '... 
-        ' ' creating and saving the view's layout to a new memory stream 
-        Dim str As System.IO.Stream
-        str = New System.IO.MemoryStream()
-        GVScanSum.SaveLayoutToStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
-        str.Seek(0, System.IO.SeekOrigin.Begin)
-        Report.GVScanSum.RestoreLayoutFromStream(str, DevExpress.Utils.OptionsLayoutBase.FullLayout)
-        str.Seek(0, System.IO.SeekOrigin.Begin)
-
-        'Grid Detail
-        ReportStyleGridview(Report.GVScanSum)
-
-        'Parse val
+        Report.LRecNumber.Text = "(PREVIEW ONLY NOT SAVED)"
         Report.LabelFrom.Text = TxtCodeCompFrom.Text + " - " + TxtNameCompFrom.Text
         Report.LabelTo.Text = TxtCodeCompTo.Text + " - " + TxtNameCompTo.Text
-        Report.LRecNumber.Text = TxtNumber.Text
-        Report.LRecDate.Text = DECreated.Text
-        Report.LabelNote.Text = MENote.Text
         Report.LabelRef.Text = TxtRef.Text
         Report.LabelRefDate.Text = DERefDate.Text
-        Report.LabelStatus.Text = LEReportStatus.Text
-        Report.LabelPreparedBy.Text = TxtPreparedBy.Text.ToUpper
-        Report.LabelRoleBy.Text = role_prepared
-        Report.LabelAckFrom.Text = TxtNameCompTo.Text
-        Report.LabelSpv.Text = spv.ToUpper
-
+        Report.LabelStatus.Text = "Prepared"
+        Report.LabelNote.Text = MENote.Text
+        Report.RowTotalQty.Text = Decimal.Parse(GVScanSum.Columns("ret_qty").SummaryItem.SummaryValue.ToString).ToString("N0")
+        Report.RowTotalAmount.Text = Double.Parse(GVScanSum.Columns("amount").SummaryItem.SummaryValue.ToString).ToString("N0")
 
         ' Show the report's preview. 
         Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
         Tool.ShowPreviewDialog()
-        FormBlack.Close()
+        Cursor = Cursors.Default
+    End Sub
+
+    Sub print()
+        Cursor = Cursors.WaitCursor
+        ReportRet.id = id
+        ReportRet.is_pre_printing = "-1"
+        Dim Report As New ReportRet()
+
+        If CEPrintPreview.EditValue = True Then
+            ' Show the report's preview. 
+            Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
+            Tool.ShowPreviewDialog()
+        Else
+            Dim instance As New Printing.PrinterSettings
+            Dim DefaultPrinter As String = instance.PrinterName
+
+            ' THIS IS TO PRINT THE REPORT
+            Report.PrinterName = DefaultPrinter
+            Report.CreateDocument()
+            Report.PrintingSystem.ShowMarginsWarning = False
+            Report.Print()
+        End If
         Cursor = Cursors.Default
     End Sub
 
@@ -601,7 +612,9 @@
     End Sub
 
     Private Sub XTCItem_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCItem.SelectedPageChanged
-        viewSummary()
+        If XTCItem.SelectedTabPageIndex = 1 Then
+            viewSummary()
+        End If
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -616,5 +629,9 @@
             Timer1.Stop()
             Timer1.Start()
         End If
+    End Sub
+
+    Private Sub BtnPrePrint_Click(sender As Object, e As EventArgs) Handles BtnPrePrint.Click
+        prePrinting()
     End Sub
 End Class

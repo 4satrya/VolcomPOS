@@ -43,7 +43,10 @@ Partial Class FormRetDet
         Me.TxtNumber = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlBottom = New DevExpress.XtraEditors.PanelControl()
+        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
+        Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
         Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnPrePrint = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnClose = New DevExpress.XtraEditors.SimpleButton()
         Me.BtnSave = New DevExpress.XtraEditors.SimpleButton()
         Me.PanelControlNote = New DevExpress.XtraEditors.PanelControl()
@@ -84,9 +87,6 @@ Partial Class FormRetDet
         Me.GridColumnCodeSum = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnAvail = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnStatus = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.PanelControl5 = New DevExpress.XtraEditors.PanelControl()
-        Me.CEPrintPreview = New DevExpress.XtraEditors.CheckEdit()
-        Me.BtnPrePrint = New DevExpress.XtraEditors.SimpleButton()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlTop.SuspendLayout()
@@ -107,6 +107,9 @@ Partial Class FormRetDet
         CType(Me.TxtNumber.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlBottom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlBottom.SuspendLayout()
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl5.SuspendLayout()
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlNote, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlNote.SuspendLayout()
         CType(Me.PanelControlStt, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -126,9 +129,6 @@ Partial Class FormRetDet
         Me.XTPSummary.SuspendLayout()
         CType(Me.GCScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl5.SuspendLayout()
-        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelControlTop
@@ -208,7 +208,7 @@ Partial Class FormRetDet
         Me.DERefDate.Properties.Appearance.Options.UseFont = True
         Me.DERefDate.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DERefDate.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DERefDate.Properties.DisplayFormat.FormatString = "dd MMMM yyyy"
+        Me.DERefDate.Properties.DisplayFormat.FormatString = "dd-MM-yyyy"
         Me.DERefDate.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
         Me.DERefDate.Properties.Mask.EditMask = "dd-MM-yyyy"
         Me.DERefDate.Size = New System.Drawing.Size(180, 20)
@@ -341,7 +341,7 @@ Partial Class FormRetDet
         Me.DECreated.Properties.Appearance.Options.UseFont = True
         Me.DECreated.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.DECreated.Properties.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
-        Me.DECreated.Properties.DisplayFormat.FormatString = "dd MMMM yyyy hh:mm tt"
+        Me.DECreated.Properties.DisplayFormat.FormatString = "dd-MM-yyyy"
         Me.DECreated.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
         Me.DECreated.Size = New System.Drawing.Size(223, 20)
         Me.DECreated.TabIndex = 3
@@ -389,6 +389,25 @@ Partial Class FormRetDet
         Me.PanelControlBottom.Size = New System.Drawing.Size(808, 43)
         Me.PanelControlBottom.TabIndex = 3
         '
+        'PanelControl5
+        '
+        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
+        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl5.Location = New System.Drawing.Point(204, 2)
+        Me.PanelControl5.Name = "PanelControl5"
+        Me.PanelControl5.Size = New System.Drawing.Size(124, 39)
+        Me.PanelControl5.TabIndex = 13
+        '
+        'CEPrintPreview
+        '
+        Me.CEPrintPreview.EditValue = True
+        Me.CEPrintPreview.Location = New System.Drawing.Point(5, 10)
+        Me.CEPrintPreview.Name = "CEPrintPreview"
+        Me.CEPrintPreview.Properties.Caption = "Show Print Preview"
+        Me.CEPrintPreview.Size = New System.Drawing.Size(115, 19)
+        Me.CEPrintPreview.TabIndex = 5
+        '
         'BtnPrint
         '
         Me.BtnPrint.Appearance.BackColor = System.Drawing.Color.DimGray
@@ -405,6 +424,18 @@ Partial Class FormRetDet
         Me.BtnPrint.Size = New System.Drawing.Size(154, 39)
         Me.BtnPrint.TabIndex = 12
         Me.BtnPrint.Text = "F9 : Print Return Slip"
+        '
+        'BtnPrePrint
+        '
+        Me.BtnPrePrint.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrePrint.Appearance.Options.UseFont = True
+        Me.BtnPrePrint.Dock = System.Windows.Forms.DockStyle.Right
+        Me.BtnPrePrint.Image = CType(resources.GetObject("BtnPrePrint.Image"), System.Drawing.Image)
+        Me.BtnPrePrint.Location = New System.Drawing.Point(482, 2)
+        Me.BtnPrePrint.Name = "BtnPrePrint"
+        Me.BtnPrePrint.Size = New System.Drawing.Size(130, 39)
+        Me.BtnPrePrint.TabIndex = 14
+        Me.BtnPrePrint.Text = "F10 : Pre Printing"
         '
         'BtnClose
         '
@@ -847,36 +878,8 @@ Partial Class FormRetDet
         Me.GridColumnStatus.Visible = True
         Me.GridColumnStatus.VisibleIndex = 8
         '
-        'PanelControl5
+        'Timer1
         '
-        Me.PanelControl5.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl5.Controls.Add(Me.CEPrintPreview)
-        Me.PanelControl5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl5.Location = New System.Drawing.Point(204, 2)
-        Me.PanelControl5.Name = "PanelControl5"
-        Me.PanelControl5.Size = New System.Drawing.Size(124, 39)
-        Me.PanelControl5.TabIndex = 13
-        '
-        'CEPrintPreview
-        '
-        Me.CEPrintPreview.EditValue = True
-        Me.CEPrintPreview.Location = New System.Drawing.Point(5, 10)
-        Me.CEPrintPreview.Name = "CEPrintPreview"
-        Me.CEPrintPreview.Properties.Caption = "Show Print Preview"
-        Me.CEPrintPreview.Size = New System.Drawing.Size(115, 19)
-        Me.CEPrintPreview.TabIndex = 5
-        '
-        'BtnPrePrint
-        '
-        Me.BtnPrePrint.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnPrePrint.Appearance.Options.UseFont = True
-        Me.BtnPrePrint.Dock = System.Windows.Forms.DockStyle.Right
-        Me.BtnPrePrint.Image = CType(resources.GetObject("BtnPrePrint.Image"), System.Drawing.Image)
-        Me.BtnPrePrint.Location = New System.Drawing.Point(482, 2)
-        Me.BtnPrePrint.Name = "BtnPrePrint"
-        Me.BtnPrePrint.Size = New System.Drawing.Size(130, 39)
-        Me.BtnPrePrint.TabIndex = 14
-        Me.BtnPrePrint.Text = "F10 : Pre Printing"
         '
         'FormRetDet
         '
@@ -915,6 +918,9 @@ Partial Class FormRetDet
         CType(Me.TxtNumber.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlBottom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlBottom.ResumeLayout(False)
+        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl5.ResumeLayout(False)
+        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlNote, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlNote.ResumeLayout(False)
         Me.PanelControlNote.PerformLayout()
@@ -937,9 +943,6 @@ Partial Class FormRetDet
         Me.XTPSummary.ResumeLayout(False)
         CType(Me.GCScanSum, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVScanSum, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PanelControl5, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl5.ResumeLayout(False)
-        CType(Me.CEPrintPreview.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
