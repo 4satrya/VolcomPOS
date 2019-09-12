@@ -431,6 +431,12 @@
     <Compile Include="FormTemp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormTransList.Designer.vb">
+      <DependentUpon>FormTransList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormTransList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormTrf.Designer.vb">
       <DependentUpon>FormTrf.vb</DependentUpon>
     </Compile>
@@ -739,6 +745,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormTemp.resx">
       <DependentUpon>FormTemp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTransList.resx">
+      <DependentUpon>FormTransList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTrf.resx">
       <DependentUpon>FormTrf.vb</DependentUpon>
