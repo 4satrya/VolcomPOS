@@ -30,6 +30,7 @@ Partial Class FormHome
         Dim TileItemElement7 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement8 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement9 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
+        Dim TileItemElement10 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement11 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement12 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement13 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
@@ -44,7 +45,6 @@ Partial Class FormHome
         Dim TileItemElement22 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement23 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Dim TileItemElement24 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
-        Dim TileItemElement10 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Me.NavButton3 = New DevExpress.XtraBars.Navigation.NavButton()
         Me.TileControl1 = New DevExpress.XtraEditors.TileControl()
         Me.TGGeneral = New DevExpress.XtraEditors.TileGroup()
@@ -58,6 +58,7 @@ Partial Class FormHome
         Me.TIAdj = New DevExpress.XtraEditors.TileItem()
         Me.TGReport = New DevExpress.XtraEditors.TileGroup()
         Me.TIStock = New DevExpress.XtraEditors.TileItem()
+        Me.TITransList = New DevExpress.XtraEditors.TileItem()
         Me.TIDaily = New DevExpress.XtraEditors.TileItem()
         Me.TITransSum = New DevExpress.XtraEditors.TileItem()
         Me.TITransDetail = New DevExpress.XtraEditors.TileItem()
@@ -93,7 +94,6 @@ Partial Class FormHome
         Me.SplashScreenManager1 = New DevExpress.XtraSplashScreen.SplashScreenManager(Me, GetType(Global.VolcomPointOfSale.WaitSyncItem), True, True)
         Me.TileGroup1 = New DevExpress.XtraEditors.TileGroup()
         Me.TileGroup3 = New DevExpress.XtraEditors.TileGroup()
-        Me.TITransList = New DevExpress.XtraEditors.TileItem()
         CType(Me.PanelControlTop, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlTop.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -294,6 +294,21 @@ Partial Class FormHome
         Me.TIStock.Id = 23
         Me.TIStock.ItemSize = DevExpress.XtraEditors.TileItemSize.Medium
         Me.TIStock.Name = "TIStock"
+        '
+        'TITransList
+        '
+        Me.TITransList.AppearanceItem.Normal.BackColor = System.Drawing.Color.SteelBlue
+        Me.TITransList.AppearanceItem.Normal.BorderColor = System.Drawing.Color.SteelBlue
+        Me.TITransList.AppearanceItem.Normal.Options.UseBackColor = True
+        Me.TITransList.AppearanceItem.Normal.Options.UseBorderColor = True
+        Me.TITransList.BackgroundImage = CType(resources.GetObject("TITransList.BackgroundImage"), System.Drawing.Image)
+        Me.TITransList.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter
+        TileItemElement10.Text = "Transaction List"
+        TileItemElement10.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
+        Me.TITransList.Elements.Add(TileItemElement10)
+        Me.TITransList.Id = 44
+        Me.TITransList.ItemSize = DevExpress.XtraEditors.TileItemSize.Medium
+        Me.TITransList.Name = "TITransList"
         '
         'TIDaily
         '
@@ -729,21 +744,6 @@ Partial Class FormHome
         'TileGroup3
         '
         Me.TileGroup3.Name = "TileGroup3"
-        '
-        'TITransList
-        '
-        Me.TITransList.AppearanceItem.Normal.BackColor = System.Drawing.Color.SteelBlue
-        Me.TITransList.AppearanceItem.Normal.BorderColor = System.Drawing.Color.SteelBlue
-        Me.TITransList.AppearanceItem.Normal.Options.UseBackColor = True
-        Me.TITransList.AppearanceItem.Normal.Options.UseBorderColor = True
-        Me.TITransList.BackgroundImage = CType(resources.GetObject("TITransList.BackgroundImage"), System.Drawing.Image)
-        Me.TITransList.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter
-        TileItemElement10.Text = "Transaction List"
-        TileItemElement10.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
-        Me.TITransList.Elements.Add(TileItemElement10)
-        Me.TITransList.Id = 44
-        Me.TITransList.ItemSize = DevExpress.XtraEditors.TileItemSize.Medium
-        Me.TITransList.Name = "TITransList"
         '
         'FormHome
         '

@@ -162,4 +162,10 @@
         FormEndOfDay.ShowDialog()
         Cursor = Cursors.Default
     End Sub
+
+    Private Sub TITransList_ItemClick(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TITransList.ItemClick
+        Cursor = Cursors.WaitCursor
+        FormTransList.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
 End Class
