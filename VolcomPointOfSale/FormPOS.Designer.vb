@@ -19,6 +19,7 @@ Partial Class FormPOS
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.PanelControlMain = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControlMiddle = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControlMiddleData = New DevExpress.XtraEditors.PanelControl()
@@ -102,6 +103,7 @@ Partial Class FormPOS
         Me.PanelControlInfo = New DevExpress.XtraEditors.PanelControl()
         Me.LabelFooter = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelControlMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlMain.SuspendLayout()
         CType(Me.PanelControlMiddle, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1234,6 +1236,9 @@ Partial Class FormPOS
         Me.LabelControl7.Size = New System.Drawing.Size(0, 13)
         Me.LabelControl7.TabIndex = 2
         '
+        'Timer1
+        '
+        '
         'FormPOS
         '
         Me.Appearance.Options.UseFont = True
@@ -1404,4 +1409,5 @@ Partial Class FormPOS
     Friend WithEvents PanelControlInfo As DevExpress.XtraEditors.PanelControl
     Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelFooter As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents Timer1 As Timer
 End Class

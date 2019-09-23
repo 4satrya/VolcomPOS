@@ -14,7 +14,22 @@
     Dim username_shift As String = "-1"
     Dim id_outlet As String = get_setup_field("id_outlet").ToString
 
+    'scan variable
+    Private cforKeyDown As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Public UseKeyboard As String = "-1"
+    Public speed_barcode_read As Integer = 0
+    Public speed_barcode_read_timer As Integer = 0
+
     Private Sub FormPOS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'scan opt
+        Dim query_opt As String = "SELECT is_use_keyboard, speed_barcode_read, speed_barcode_read_timer  FROM tb_opt; "
+        Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+        UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
+        speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
+        speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
+        Timer1.Interval = speed_barcode_read_timer
+
         LabelInfoLeft.Focus()
         viewCountry()
         viewCardType()
@@ -492,68 +507,106 @@
     End Sub
 
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim val As String = TxtItemCode.Text.Trim()
-            If val = "" Then
-                FormBlack.Show()
-                Cursor = Cursors.WaitCursor
-                FormPOSItem.ShowDialog()
-                Cursor = Cursors.Default
-                FormBlack.Close()
-                BringToFront()
-            Else
-                Dim code As String = TxtItemCode.Text
-                Dim i As New ClassItem()
-                Dim query As String = i.queryMainUpd("AND i.is_active=1 AND i.item_code='" + code + "' ")
-                Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
-                If dt.Rows.Count > 0 Then
-                    'Dim qty_avail As Decimal = dt.Rows(0)("qty_avl")
-                    'If qty_avail <= 0 Then
-                    '    stopCustom("No stock available")
-                    'Else
-                    'End If
-                    'insert stock
-                    'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
+        cforKeyDown = ChrW(e.KeyCode)
+        'If e.KeyCode = Keys.Enter Then
+        'Dim code As String = TxtItemCode.Text.Trim()
 
-                    'insert detail
-                    insertDetail(dt(0)("id_item").ToString, dt(0)("id_product").ToString, dt(0)("item_code").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString)
+        'ElseIf e.KeyCode = Keys.Add Then
 
-                    'insert gv
-                    Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
-                    newRow("id_pos_det") = id_detail_last
-                    newRow("id_item") = dt(0)("id_item").ToString
-                    newRow("item_code") = dt(0)("item_code").ToString
-                    newRow("item_name") = dt(0)("item_name").ToString
-                    newRow("qty") = 1
-                    newRow("price") = dt(0)("price")
-                    newRow("comm") = dt(0)("comm")
-                    newRow("is_edit") = "2"
-                    TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
-                    GCPOS.RefreshDataSource()
-                    GVPOS.RefreshData()
+        'End If
+    End Sub
 
-                    'info
-                    getSubTotal()
-                    Dim rh As Integer = GVPOS.RowCount - 1
-                    showDisplay(dt(0)("item_name").ToString, "1", GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
-                Else
-                    stopCustom("Code not found")
+    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtItemCode.Text) > 1 Then
+                If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                    cforKeyDown = vbNullChar
+                    TxtItemCode.Text = ""
+                    Return
                 End If
-                TxtQty.EditValue = 1
+
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+
+                'If e.KeyCode <> Keys.[Return] Then
+                '    TxtItemCode.Text += ChrW(e.KeyData)
+                'End If
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                    checkCode(TxtItemCode.Text.Trim)
+                    TxtItemCode.Text = ""
+                ElseIf e.KeyCode = Keys.Add AndAlso TxtItemCode.Text.Count > 0 Then
+                    reviseQty()
+                End If
+            End If
+            _lastKeystroke = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                checkCode(TxtItemCode.Text)
                 TxtItemCode.Text = ""
-                TxtItemCode.Focus()
+            ElseIf e.KeyCode = Keys.Add AndAlso TxtItemCode.Text.Count > 0 Then
+                reviseQty()
             End If
-        ElseIf e.KeyCode = Keys.add Then
-            If GVPOS.RowCount > 0 Then
-                Dim last_index As Integer = GVPOS.RowCount - 1
-                TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
-                TxtItemCode.Enabled = False
-                GVPOS.SetRowCellValue(last_index, "is_edit", "1")
-                TxtQty.Enabled = True
-                TxtQty.Focus()
-            End If
-        ElseIf e.KeyCode = Keys.f3 Then
-            price()
+        End If
+    End Sub
+
+    Sub checkCode(ByVal code As String)
+        Dim i As New ClassItem()
+        Dim query As String = i.queryMainUpd("AND i.is_active=1 AND i.item_code='" + code + "' ")
+        Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If dt.Rows.Count > 0 Then
+            'Dim qty_avail As Decimal = dt.Rows(0)("qty_avl")
+            'If qty_avail <= 0 Then
+            '    stopCustom("No stock available")
+            'Else
+            'End If
+            'insert stock
+            'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
+
+            'insert detail
+            insertDetail(dt(0)("id_item").ToString, dt(0)("id_product").ToString, dt(0)("item_code").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString)
+
+            'insert gv
+            Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
+            newRow("id_pos_det") = id_detail_last
+            newRow("id_item") = dt(0)("id_item").ToString
+            newRow("item_code") = dt(0)("item_code").ToString
+            newRow("item_name") = dt(0)("item_name").ToString
+            newRow("qty") = 1
+            newRow("price") = dt(0)("price")
+            newRow("comm") = dt(0)("comm")
+            newRow("is_edit") = "2"
+            TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
+            GCPOS.RefreshDataSource()
+            GVPOS.RefreshData()
+
+            'info
+            getSubTotal()
+            Dim rh As Integer = GVPOS.RowCount - 1
+            showDisplay(dt(0)("item_name").ToString, "1", GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
+        Else
+            stopCustom("Code not found")
+        End If
+        TxtQty.EditValue = 1
+        TxtItemCode.Text = ""
+        TxtItemCode.Focus()
+    End Sub
+
+    Sub reviseQty()
+        If GVPOS.RowCount > 0 Then
+            Dim last_index As Integer = GVPOS.RowCount - 1
+            TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
+            TxtItemCode.Enabled = False
+            GVPOS.SetRowCellValue(last_index, "is_edit", "1")
+            TxtQty.Enabled = True
+            TxtQty.Focus()
+        Else
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
         End If
     End Sub
 
@@ -685,15 +738,6 @@
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
                 End If
-            End If
-        End If
-    End Sub
-
-    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
-        If GVPOS.RowCount <= 0 Then
-            If e.KeyCode = Keys.Add Then
-                TxtItemCode.Text = ""
-                TxtItemCode.Focus()
             End If
         End If
     End Sub
@@ -1175,4 +1219,17 @@
         End If
     End Sub
 
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If UseKeyboard = "2" Then
+            TxtItemCode.Text = ""
+            Timer1.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
+        If UseKeyboard = "2" Then
+            Timer1.Stop()
+            Timer1.Start()
+        End If
+    End Sub
 End Class
