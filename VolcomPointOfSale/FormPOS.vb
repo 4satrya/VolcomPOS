@@ -20,6 +20,7 @@
     Public UseKeyboard As String = "-1"
     Public speed_barcode_read As Integer = 0
     Public speed_barcode_read_timer As Integer = 0
+    Public open_scan As Boolean = False
 
     Private Sub FormPOS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scan opt
@@ -106,10 +107,12 @@
             bonus()
         ElseIf e.KeyCode = Keys.F11 Then
             voucher()
-        ElseIf e.KeyCode = Keys.Insert And is_payment_ok = False 'new trans
+        ElseIf e.KeyCode = Keys.Insert And is_payment_ok = False Then 'new trans
             newTrans()
         ElseIf e.KeyCode = Keys.Escape Then
             exitForm()
+        ElseIf e.KeyCode = Keys.Add And new_trans = True And is_payment_ok = False Then 'revise qty
+            reviseQty()
         End If
     End Sub
 
@@ -163,6 +166,7 @@
     End Sub
 
     Sub newTrans()
+        open_scan = True
         resetPayment()
 
         TxtItemCode.Enabled = True
@@ -518,28 +522,28 @@
 
     Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
         If UseKeyboard = "2" Then
-            'barcode scanner
-            If Len(TxtItemCode.Text) > 1 Then
-                If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
-                    cforKeyDown = vbNullChar
-                    TxtItemCode.Text = ""
-                    Return
-                End If
+            If open_scan Then
+                'barcode scanner
+                If Len(TxtItemCode.Text) > 1 Then
+                    If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                        cforKeyDown = vbNullChar
+                        TxtItemCode.Text = ""
+                        Return
+                    End If
 
 
-                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
-                '(DateTime.Now.Millisecond - _lastKeystroke)
-                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+                    Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                    '(DateTime.Now.Millisecond - _lastKeystroke)
+                    If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
 
-                'If e.KeyCode <> Keys.[Return] Then
-                '    TxtItemCode.Text += ChrW(e.KeyData)
-                'End If
+                    'If e.KeyCode <> Keys.[Return] Then
+                    '    TxtItemCode.Text += ChrW(e.KeyData)
+                    'End If
 
-                If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
-                    checkCode(TxtItemCode.Text.Trim)
-                    TxtItemCode.Text = ""
-                ElseIf e.KeyCode = Keys.Add AndAlso TxtItemCode.Text.Count > 0 Then
-                    reviseQty()
+                    If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                        checkCode(TxtItemCode.Text.Trim)
+                        TxtItemCode.Text = ""
+                    End If
                 End If
             End If
             _lastKeystroke = DateTime.Now
@@ -598,6 +602,8 @@
 
     Sub reviseQty()
         If GVPOS.RowCount > 0 Then
+            open_scan = False
+
             Dim last_index As Integer = GVPOS.RowCount - 1
             TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
             TxtItemCode.Enabled = False
@@ -676,20 +682,27 @@
 
 
             If qty > 0 Then 'plus
-                'insert detail
-                insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0")
-
-                GVPOS.SetRowCellValue(rh, "qty", qty)
-                GVPOS.SetRowCellValue(rh, "is_edit", "2")
-                GCPOS.RefreshDataSource()
-                GVPOS.RefreshData()
-                getSubTotal()
-                showDisplay(GVPOS.GetRowCellDisplayText(rh, "item_name").ToString, qty, GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
                 TxtQty.EditValue = 1
                 TxtQty.Enabled = False
                 TxtItemCode.Enabled = True
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
+                open_scan = True
+
+                'insert detail
+                'insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0")
+
+                'GVPOS.SetRowCellValue(rh, "qty", qty)
+                'GVPOS.SetRowCellValue(rh, "is_edit", "2")
+                'GCPOS.RefreshDataSource()
+                'GVPOS.RefreshData()
+                'getSubTotal()
+                'showDisplay(GVPOS.GetRowCellDisplayText(rh, "item_name").ToString, qty, GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
+                'TxtQty.EditValue = 1
+                'TxtQty.Enabled = False
+                'TxtItemCode.Enabled = True
+                'TxtItemCode.Text = ""
+                'TxtItemCode.Focus()
             ElseIf qty = 0 Then 'zero
                 GVPOS.SetRowCellValue(rh, "is_edit", "2")
                 GCPOS.RefreshDataSource()
@@ -699,6 +712,7 @@
                 TxtItemCode.Enabled = True
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
+                open_scan = True
             Else 'minus
                 Dim id_item As String = GVPOS.GetRowCellValue(rh, "id_item").ToString
                 GVPOS.ActiveFilterString = "[id_item]='" + id_item + "' AND [is_edit]='2' "
@@ -728,6 +742,7 @@
                     TxtItemCode.Enabled = True
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
+                    open_scan = True
                 Else
                     GVPOS.SetRowCellValue(rh, "is_edit", "2")
                     GCPOS.RefreshDataSource()
@@ -737,6 +752,7 @@
                     TxtItemCode.Enabled = True
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
+                    open_scan = True
                 End If
             End If
         End If
@@ -1227,7 +1243,7 @@
     End Sub
 
     Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
-        If UseKeyboard = "2" Then
+        If UseKeyboard = "2" And open_scan Then
             Timer1.Stop()
             Timer1.Start()
         End If
