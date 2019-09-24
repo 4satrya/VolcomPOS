@@ -18,6 +18,8 @@ Public Class FormLogin
             LabelReason.Visible = True
             MEReason.Visible = True
             BtnLogin.Text = "Confirm"
+            MEReason.TabIndex = 2
+            BtnLogin.TabIndex = 3
         End If
     End Sub
     'Form Close
@@ -56,6 +58,7 @@ Public Class FormLogin
                     is_change_pass_user = data.Rows(0)("is_change").ToString
                     'reason
                     If menu_acc = "20" And Not is_open_form Then
+                        FormPOS.id_user_employee_cancel = data.Rows(0)("id_employee").ToString
                         FormPOS.note = MEReason.Text
                     End If
                     Opacity = 0

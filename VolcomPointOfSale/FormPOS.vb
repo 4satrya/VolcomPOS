@@ -3,6 +3,7 @@
     Public id_shift As String = "-1"
     Public shift_type As String = "-1"
     Public id_user_employee As String
+    Public id_user_employee_cancel As String = "-1"
     Dim id_user_shift As String = "-1"
     Public new_trans As Boolean = False
     Dim id_stock_last As String = "-1"
@@ -481,10 +482,26 @@
             FormLogin.is_open_form = False
             FormLogin.ShowDialog()
             If is_auth Then
-                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3, note='" + addSlashes(note) + "', pos_closed_date=NOW() WHERE id_pos=" + id + ""
+                'update status
+                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3, note='" + addSlashes(note) + "', pos_closed_date=NOW(), id_user_employee_cancel='" + id_user_employee_cancel + "' WHERE id_pos=" + id + ""
                 execute_non_query(query_upd_stt, True, "", "", "", "")
+
+                'send email
+                Try
+                    Dim m As New ClassSendEmail()
+                    m.report_mark_type = "14"
+                    m.id_report = id
+                    m.opt = "1"
+                    m.send_email()
+                Catch ex As Exception
+                    Dim err_note As String = addSlashes("Cancelled Transaction Email;id=" + id + ";" + ex.ToString + "")
+                    execute_non_query("INSERT INTO tb_log_mail(report_mark_type, opt, note, log_date) VALUES(14,1, '" + err_note + "', NOW()); ", True, "", "", "", "")
+                End Try
+
+                'print struk
                 Dim prn As New ClassPOS()
                 prn.printPos(id, False)
+
                 is_auth = False
                 Close()
             End If
