@@ -12,6 +12,13 @@ Public Class FormLogin
         For Each ex As Control In Me.Controls
             AddHandler ex.KeyDown, AddressOf FormLogin_KeyUp
         Next
+
+        If menu_acc = "20" And Not is_open_form Then
+            Text = "Cancelled Transaction"
+            LabelReason.Visible = True
+            MEReason.Visible = True
+            BtnLogin.Text = "Confirm"
+        End If
     End Sub
     'Form Close
     Private Sub FormLogin_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
@@ -27,6 +34,8 @@ Public Class FormLogin
         ValidateChildren()
         If Not formIsValid(EPLogin) Then
             errorInput()
+        ElseIf menu_acc = "20" And Not is_open_form And MEReason.Text = "" Then
+            stopCustom("Please fill reason to cancel this transaction ")
         Else
             Dim query As String
             Dim username As String = addSlashes(TxtUsername.Text)
@@ -45,6 +54,10 @@ Public Class FormLogin
                     username_user = data.Rows(0)("username").ToString
                     id_employee_user = data.Rows(0)("id_employee").ToString
                     is_change_pass_user = data.Rows(0)("is_change").ToString
+                    'reason
+                    If menu_acc = "20" And Not is_open_form Then
+                        FormPOS.note = MEReason.Text
+                    End If
                     Opacity = 0
                     Dispose()
                     u.checkAccess(menu_acc, is_open_form)
@@ -85,5 +98,4 @@ Public Class FormLogin
 
         'End If
     End Sub
-
 End Class

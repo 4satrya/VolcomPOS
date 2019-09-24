@@ -138,6 +138,7 @@
     <Compile Include="ClassRawPrint.vb" />
     <Compile Include="ClassRec.vb" />
     <Compile Include="ClassRet.vb" />
+    <Compile Include="ClassSendEmail.vb" />
     <Compile Include="ClassSO.vb" />
     <Compile Include="ClassSync.vb" />
     <Compile Include="ClassTrf.vb" />

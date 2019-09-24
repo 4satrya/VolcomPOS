@@ -13,6 +13,7 @@
     Dim id_voucher_db As String = "-1"
     Dim username_shift As String = "-1"
     Dim id_outlet As String = get_setup_field("id_outlet").ToString
+    Public note As String = ""
 
     'scan variable
     Private cforKeyDown As Char = vbNullChar
@@ -473,13 +474,14 @@
         'End If
     End Sub
 
+
     Sub exitForm()
         If id <> "-1" Then
             FormLogin.menu_acc = "20"
             FormLogin.is_open_form = False
             FormLogin.ShowDialog()
             If is_auth Then
-                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3 WHERE id_pos=" + id + ""
+                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3, note='" + addSlashes(note) + "', pos_closed_date=NOW() WHERE id_pos=" + id + ""
                 execute_non_query(query_upd_stt, True, "", "", "", "")
                 Dim prn As New ClassPOS()
                 prn.printPos(id, False)
