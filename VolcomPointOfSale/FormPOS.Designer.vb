@@ -223,6 +223,7 @@ Partial Class FormPOS
         Me.GVPOS.OptionsCustomization.AllowQuickHideColumns = False
         Me.GVPOS.OptionsCustomization.AllowSort = False
         Me.GVPOS.OptionsFind.AllowFindPanel = False
+        Me.GVPOS.OptionsView.ShowFooter = True
         Me.GVPOS.OptionsView.ShowGroupPanel = False
         '
         'GridColumn1
