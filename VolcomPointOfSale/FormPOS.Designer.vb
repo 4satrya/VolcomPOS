@@ -36,6 +36,7 @@ Partial Class FormPOS
         Me.GridColumnComm = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnId = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnIdStorage = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnIdDesignCat = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControlCode = New DevExpress.XtraEditors.PanelControl()
         Me.TxtPrc = New DevExpress.XtraEditors.TextEdit()
         Me.LabelPrice = New DevExpress.XtraEditors.LabelControl()
@@ -75,6 +76,10 @@ Partial Class FormPOS
         Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl9 = New DevExpress.XtraEditors.LabelControl()
         Me.GroupControlInfo = New DevExpress.XtraEditors.GroupControl()
+        Me.LabelControl27 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl24 = New DevExpress.XtraEditors.LabelControl()
+        Me.TxtTotalSale = New DevExpress.XtraEditors.TextEdit()
+        Me.TxtTotalNormal = New DevExpress.XtraEditors.TextEdit()
         Me.TxtSubTotal = New DevExpress.XtraEditors.TextEdit()
         Me.TxtDiscount = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl5 = New DevExpress.XtraEditors.LabelControl()
@@ -142,6 +147,8 @@ Partial Class FormPOS
         CType(Me.TxtCash.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControlInfo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControlInfo.SuspendLayout()
+        CType(Me.TxtTotalSale.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TxtTotalNormal.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtSubTotal.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtDiscount.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtTax.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -213,7 +220,7 @@ Partial Class FormPOS
         '
         'GVPOS
         '
-        Me.GVPOS.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn1, Me.GridColumn2, Me.GridColumn3, Me.GridColumn4, Me.GridColumn5, Me.GridColumn6, Me.GridColumnidItem, Me.GridColumnEdit, Me.GridColumnComm, Me.GridColumnId, Me.GridColumnIdStorage})
+        Me.GVPOS.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn1, Me.GridColumn2, Me.GridColumn3, Me.GridColumn4, Me.GridColumn5, Me.GridColumn6, Me.GridColumnidItem, Me.GridColumnEdit, Me.GridColumnComm, Me.GridColumnId, Me.GridColumnIdStorage, Me.GridColumnIdDesignCat})
         Me.GVPOS.GridControl = Me.GCPOS
         Me.GVPOS.Name = "GVPOS"
         Me.GVPOS.OptionsBehavior.Editable = False
@@ -323,6 +330,12 @@ Partial Class FormPOS
         Me.GridColumnIdStorage.FieldName = "id_storage_item"
         Me.GridColumnIdStorage.Name = "GridColumnIdStorage"
         Me.GridColumnIdStorage.OptionsColumn.ShowInCustomizationForm = False
+        '
+        'GridColumnIdDesignCat
+        '
+        Me.GridColumnIdDesignCat.Caption = "IdDesignCat"
+        Me.GridColumnIdDesignCat.FieldName = "id_design_cat"
+        Me.GridColumnIdDesignCat.Name = "GridColumnIdDesignCat"
         '
         'PanelControlCode
         '
@@ -441,9 +454,9 @@ Partial Class FormPOS
         Me.GroupControl1.Controls.Add(Me.LabelControl25)
         Me.GroupControl1.Controls.Add(Me.LENation)
         Me.GroupControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupControl1.Location = New System.Drawing.Point(0, 435)
+        Me.GroupControl1.Location = New System.Drawing.Point(0, 415)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(252, 150)
+        Me.GroupControl1.Size = New System.Drawing.Size(252, 170)
         Me.GroupControl1.TabIndex = 34
         Me.GroupControl1.Text = "Additional"
         '
@@ -505,7 +518,7 @@ Partial Class FormPOS
         Me.GroupControlCustomer.Controls.Add(Me.LabelControl15)
         Me.GroupControlCustomer.Controls.Add(Me.LabelControl18)
         Me.GroupControlCustomer.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControlCustomer.Location = New System.Drawing.Point(0, 425)
+        Me.GroupControlCustomer.Location = New System.Drawing.Point(0, 405)
         Me.GroupControlCustomer.Name = "GroupControlCustomer"
         Me.GroupControlCustomer.Size = New System.Drawing.Size(252, 10)
         Me.GroupControlCustomer.TabIndex = 26
@@ -573,7 +586,7 @@ Partial Class FormPOS
         Me.GroupControlCard.Controls.Add(Me.LabelControl14)
         Me.GroupControlCard.Controls.Add(Me.LabelControl16)
         Me.GroupControlCard.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControlCard.Location = New System.Drawing.Point(0, 318)
+        Me.GroupControlCard.Location = New System.Drawing.Point(0, 298)
         Me.GroupControlCard.Name = "GroupControlCard"
         Me.GroupControlCard.Size = New System.Drawing.Size(252, 107)
         Me.GroupControlCard.TabIndex = 25
@@ -671,7 +684,7 @@ Partial Class FormPOS
         Me.GroupControlPay.Controls.Add(Me.LabelControl8)
         Me.GroupControlPay.Controls.Add(Me.LabelControl9)
         Me.GroupControlPay.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControlPay.Location = New System.Drawing.Point(0, 133)
+        Me.GroupControlPay.Location = New System.Drawing.Point(0, 113)
         Me.GroupControlPay.Name = "GroupControlPay"
         Me.GroupControlPay.Size = New System.Drawing.Size(252, 185)
         Me.GroupControlPay.TabIndex = 24
@@ -849,6 +862,10 @@ Partial Class FormPOS
         '
         Me.GroupControlInfo.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupControlInfo.Appearance.Options.UseFont = True
+        Me.GroupControlInfo.Controls.Add(Me.LabelControl27)
+        Me.GroupControlInfo.Controls.Add(Me.LabelControl24)
+        Me.GroupControlInfo.Controls.Add(Me.TxtTotalSale)
+        Me.GroupControlInfo.Controls.Add(Me.TxtTotalNormal)
         Me.GroupControlInfo.Controls.Add(Me.TxtSubTotal)
         Me.GroupControlInfo.Controls.Add(Me.TxtDiscount)
         Me.GroupControlInfo.Controls.Add(Me.LabelControl5)
@@ -861,14 +878,72 @@ Partial Class FormPOS
         Me.GroupControlInfo.Location = New System.Drawing.Point(0, 0)
         Me.GroupControlInfo.LookAndFeel.SkinName = "Office 2010 Blue"
         Me.GroupControlInfo.Name = "GroupControlInfo"
-        Me.GroupControlInfo.Size = New System.Drawing.Size(252, 133)
+        Me.GroupControlInfo.Size = New System.Drawing.Size(252, 113)
         Me.GroupControlInfo.TabIndex = 33
         Me.GroupControlInfo.Text = "Sales Info"
+        '
+        'LabelControl27
+        '
+        Me.LabelControl27.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl27.Location = New System.Drawing.Point(9, 57)
+        Me.LabelControl27.Name = "LabelControl27"
+        Me.LabelControl27.Size = New System.Drawing.Size(21, 13)
+        Me.LabelControl27.TabIndex = 24
+        Me.LabelControl27.Text = "Sale"
+        '
+        'LabelControl24
+        '
+        Me.LabelControl24.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl24.Location = New System.Drawing.Point(9, 31)
+        Me.LabelControl24.Name = "LabelControl24"
+        Me.LabelControl24.Size = New System.Drawing.Size(40, 13)
+        Me.LabelControl24.TabIndex = 23
+        Me.LabelControl24.Text = "Regular"
+        '
+        'TxtTotalSale
+        '
+        Me.TxtTotalSale.Enabled = False
+        Me.TxtTotalSale.Location = New System.Drawing.Point(95, 54)
+        Me.TxtTotalSale.Name = "TxtTotalSale"
+        Me.TxtTotalSale.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TxtTotalSale.Properties.Appearance.Options.UseFont = True
+        Me.TxtTotalSale.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.TxtTotalSale.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.White
+        Me.TxtTotalSale.Properties.AppearanceDisabled.Options.UseBackColor = True
+        Me.TxtTotalSale.Properties.AppearanceDisabled.Options.UseBorderColor = True
+        Me.TxtTotalSale.Properties.DisplayFormat.FormatString = "N0"
+        Me.TxtTotalSale.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.TxtTotalSale.Properties.Mask.EditMask = "n0"
+        Me.TxtTotalSale.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
+        Me.TxtTotalSale.Properties.Mask.SaveLiteral = False
+        Me.TxtTotalSale.Properties.Mask.ShowPlaceHolders = False
+        Me.TxtTotalSale.Size = New System.Drawing.Size(145, 20)
+        Me.TxtTotalSale.TabIndex = 22
+        '
+        'TxtTotalNormal
+        '
+        Me.TxtTotalNormal.Enabled = False
+        Me.TxtTotalNormal.Location = New System.Drawing.Point(95, 28)
+        Me.TxtTotalNormal.Name = "TxtTotalNormal"
+        Me.TxtTotalNormal.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TxtTotalNormal.Properties.Appearance.Options.UseFont = True
+        Me.TxtTotalNormal.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.White
+        Me.TxtTotalNormal.Properties.AppearanceDisabled.BorderColor = System.Drawing.Color.White
+        Me.TxtTotalNormal.Properties.AppearanceDisabled.Options.UseBackColor = True
+        Me.TxtTotalNormal.Properties.AppearanceDisabled.Options.UseBorderColor = True
+        Me.TxtTotalNormal.Properties.DisplayFormat.FormatString = "N0"
+        Me.TxtTotalNormal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.TxtTotalNormal.Properties.Mask.EditMask = "n0"
+        Me.TxtTotalNormal.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric
+        Me.TxtTotalNormal.Properties.Mask.SaveLiteral = False
+        Me.TxtTotalNormal.Properties.Mask.ShowPlaceHolders = False
+        Me.TxtTotalNormal.Size = New System.Drawing.Size(145, 20)
+        Me.TxtTotalNormal.TabIndex = 21
         '
         'TxtSubTotal
         '
         Me.TxtSubTotal.Enabled = False
-        Me.TxtSubTotal.Location = New System.Drawing.Point(95, 28)
+        Me.TxtSubTotal.Location = New System.Drawing.Point(95, 132)
         Me.TxtSubTotal.Name = "TxtSubTotal"
         Me.TxtSubTotal.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtSubTotal.Properties.Appearance.Options.UseFont = True
@@ -888,7 +963,7 @@ Partial Class FormPOS
         'TxtDiscount
         '
         Me.TxtDiscount.Enabled = False
-        Me.TxtDiscount.Location = New System.Drawing.Point(95, 54)
+        Me.TxtDiscount.Location = New System.Drawing.Point(95, 158)
         Me.TxtDiscount.Name = "TxtDiscount"
         Me.TxtDiscount.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtDiscount.Properties.Appearance.Options.UseFont = True
@@ -908,7 +983,7 @@ Partial Class FormPOS
         'LabelControl5
         '
         Me.LabelControl5.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl5.Location = New System.Drawing.Point(8, 109)
+        Me.LabelControl5.Location = New System.Drawing.Point(9, 83)
         Me.LabelControl5.Name = "LabelControl5"
         Me.LabelControl5.Size = New System.Drawing.Size(26, 13)
         Me.LabelControl5.TabIndex = 20
@@ -917,7 +992,7 @@ Partial Class FormPOS
         'TxtTax
         '
         Me.TxtTax.Enabled = False
-        Me.TxtTax.Location = New System.Drawing.Point(95, 80)
+        Me.TxtTax.Location = New System.Drawing.Point(95, 184)
         Me.TxtTax.Name = "TxtTax"
         Me.TxtTax.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtTax.Properties.Appearance.Options.UseFont = True
@@ -937,7 +1012,7 @@ Partial Class FormPOS
         'TxtTotal
         '
         Me.TxtTotal.Enabled = False
-        Me.TxtTotal.Location = New System.Drawing.Point(95, 106)
+        Me.TxtTotal.Location = New System.Drawing.Point(95, 80)
         Me.TxtTotal.Name = "TxtTotal"
         Me.TxtTotal.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtTotal.Properties.Appearance.Options.UseFont = True
@@ -957,7 +1032,7 @@ Partial Class FormPOS
         'LabelControl4
         '
         Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl4.Location = New System.Drawing.Point(8, 83)
+        Me.LabelControl4.Location = New System.Drawing.Point(8, 187)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(17, 13)
         Me.LabelControl4.TabIndex = 18
@@ -966,7 +1041,7 @@ Partial Class FormPOS
         'LabelControl2
         '
         Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl2.Location = New System.Drawing.Point(8, 31)
+        Me.LabelControl2.Location = New System.Drawing.Point(8, 135)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(44, 13)
         Me.LabelControl2.TabIndex = 13
@@ -975,7 +1050,7 @@ Partial Class FormPOS
         'LabelControl3
         '
         Me.LabelControl3.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl3.Location = New System.Drawing.Point(8, 57)
+        Me.LabelControl3.Location = New System.Drawing.Point(8, 161)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(46, 13)
         Me.LabelControl3.TabIndex = 15
@@ -1300,6 +1375,8 @@ Partial Class FormPOS
         CType(Me.GroupControlInfo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControlInfo.ResumeLayout(False)
         Me.GroupControlInfo.PerformLayout()
+        CType(Me.TxtTotalSale.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxtTotalNormal.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtSubTotal.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtDiscount.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtTax.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1411,4 +1488,9 @@ Partial Class FormPOS
     Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelFooter As DevExpress.XtraEditors.LabelControl
     Friend WithEvents Timer1 As Timer
+    Friend WithEvents LabelControl27 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LabelControl24 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents TxtTotalSale As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents TxtTotalNormal As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents GridColumnIdDesignCat As DevExpress.XtraGrid.Columns.GridColumn
 End Class

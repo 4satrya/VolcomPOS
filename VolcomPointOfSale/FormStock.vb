@@ -187,6 +187,7 @@
         Dim query As String = "CALL view_stock_item_sum() "
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         GCSum.DataSource = data
+        GVSum.BestFitColumns()
         Cursor = Cursors.Default
     End Sub
 

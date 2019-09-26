@@ -113,6 +113,8 @@ Partial Class FormStock
         Me.PanelControlTitle = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
+        Me.GridColumndesign_cat = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -292,16 +294,14 @@ Partial Class FormStock
         '
         'GVSum
         '
-        Me.GVSum.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn27, Me.GridColumn28, Me.GridColumn29, Me.GridColumn30, Me.GridColumn31, Me.GridColumn33, Me.GridColumn34})
+        Me.GVSum.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn27, Me.GridColumn28, Me.GridColumn29, Me.GridColumn30, Me.GridColumn31, Me.GridColumn33, Me.GridColumn34, Me.GridColumndesign_cat, Me.GridColumnPrice})
         Me.GVSum.GridControl = Me.GCSum
-        Me.GVSum.GroupCount = 1
         Me.GVSum.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "stocker", Me.GridColumn33, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "display", Me.GridColumn34, "{0:n0}")})
         Me.GVSum.Name = "GVSum"
         Me.GVSum.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVSum.OptionsFind.AlwaysVisible = True
         Me.GVSum.OptionsView.ShowFooter = True
         Me.GVSum.OptionsView.ShowGroupPanel = False
-        Me.GVSum.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn29, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
         'GridColumn27
         '
@@ -332,7 +332,7 @@ Partial Class FormStock
         Me.GridColumn30.FieldName = "size"
         Me.GridColumn30.Name = "GridColumn30"
         Me.GridColumn30.Visible = True
-        Me.GridColumn30.VisibleIndex = 2
+        Me.GridColumn30.VisibleIndex = 3
         Me.GridColumn30.Width = 56
         '
         'GridColumn31
@@ -341,7 +341,7 @@ Partial Class FormStock
         Me.GridColumn31.FieldName = "class"
         Me.GridColumn31.Name = "GridColumn31"
         Me.GridColumn31.Visible = True
-        Me.GridColumn31.VisibleIndex = 1
+        Me.GridColumn31.VisibleIndex = 2
         '
         'GridColumn33
         '
@@ -352,7 +352,7 @@ Partial Class FormStock
         Me.GridColumn33.Name = "GridColumn33"
         Me.GridColumn33.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "stocker", "{0:n0}")})
         Me.GridColumn33.Visible = True
-        Me.GridColumn33.VisibleIndex = 3
+        Me.GridColumn33.VisibleIndex = 6
         Me.GridColumn33.Width = 148
         '
         'GridColumn34
@@ -364,7 +364,7 @@ Partial Class FormStock
         Me.GridColumn34.Name = "GridColumn34"
         Me.GridColumn34.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "display", "{0:n0}")})
         Me.GridColumn34.Visible = True
-        Me.GridColumn34.VisibleIndex = 4
+        Me.GridColumn34.VisibleIndex = 7
         Me.GridColumn34.Width = 152
         '
         'PanelControl3
@@ -1109,6 +1109,24 @@ Partial Class FormStock
         Me.PanelControlBack.TabIndex = 4
         Me.PanelControlBack.Visible = False
         '
+        'GridColumndesign_cat
+        '
+        Me.GridColumndesign_cat.Caption = "Status"
+        Me.GridColumndesign_cat.FieldName = "design_cat"
+        Me.GridColumndesign_cat.Name = "GridColumndesign_cat"
+        Me.GridColumndesign_cat.Visible = True
+        Me.GridColumndesign_cat.VisibleIndex = 5
+        '
+        'GridColumnPrice
+        '
+        Me.GridColumnPrice.Caption = "Price"
+        Me.GridColumnPrice.DisplayFormat.FormatString = "N0"
+        Me.GridColumnPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnPrice.FieldName = "price"
+        Me.GridColumnPrice.Name = "GridColumnPrice"
+        Me.GridColumnPrice.Visible = True
+        Me.GridColumnPrice.VisibleIndex = 4
+        '
         'FormStock
         '
         Me.Appearance.Options.UseFont = True
@@ -1269,4 +1287,6 @@ Partial Class FormStock
     Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents BtnPrintSOH As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents BtnPrintStockCard As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents GridColumndesign_cat As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnPrice As DevExpress.XtraGrid.Columns.GridColumn
 End Class

@@ -603,6 +603,7 @@
             newRow("price") = dt(0)("price")
             newRow("comm") = dt(0)("comm")
             newRow("is_edit") = "2"
+            newRow("id_design_cat") = dt(0)("id_design_cat").ToString
             TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
             GCPOS.RefreshDataSource()
             GVPOS.RefreshData()
@@ -805,6 +806,27 @@
         End Try
 
         TxtTotal.EditValue = subtotal - discount + tax
+
+        'get total normal price
+        TxtTotalNormal.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=1"
+        Try
+            TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+        Catch ex As Exception
+        End Try
+        GVPOS.ActiveFilterString = ""
+
+        'get total sale price
+        TxtTotalSale.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=2"
+        Try
+            TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+        Catch ex As Exception
+        End Try
+        GVPOS.ActiveFilterString = ""
+        makeSafeGV(GVPOS)
     End Sub
 
     Sub insertStock(ByVal id_item_par As String, id_comp_par As String, qty_par As String, ByVal id_storage_category_par As String, id_stock_par As String)
