@@ -189,8 +189,18 @@
             resetPayment()
             showDisplay("Total  :", "-", TxtTotal.Text)
             TxtItemCode.Enabled = False
-            TxtDiscount.Enabled = True
-            TxtDiscount.Focus()
+
+            'discount gak kepake
+            'TxtDiscount.Enabled = True
+            'TxtDiscount.Focus()
+
+            'langsung focus ke cash
+            TxtDiscount.EditValue = 0
+            getSubTotal()
+            TxtDiscount.Enabled = False
+            TxtCash.Enabled = True
+            TxtCash.EditValue = TxtTotal.EditValue
+            TxtCash.Focus()
             Cursor = Cursors.Default
         End If
     End Sub

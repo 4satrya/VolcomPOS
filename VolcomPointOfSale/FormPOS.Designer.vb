@@ -454,9 +454,9 @@ Partial Class FormPOS
         Me.GroupControl1.Controls.Add(Me.LabelControl25)
         Me.GroupControl1.Controls.Add(Me.LENation)
         Me.GroupControl1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupControl1.Location = New System.Drawing.Point(0, 415)
+        Me.GroupControl1.Location = New System.Drawing.Point(0, 399)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(252, 170)
+        Me.GroupControl1.Size = New System.Drawing.Size(252, 186)
         Me.GroupControl1.TabIndex = 34
         Me.GroupControl1.Text = "Additional"
         '
@@ -518,7 +518,7 @@ Partial Class FormPOS
         Me.GroupControlCustomer.Controls.Add(Me.LabelControl15)
         Me.GroupControlCustomer.Controls.Add(Me.LabelControl18)
         Me.GroupControlCustomer.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControlCustomer.Location = New System.Drawing.Point(0, 405)
+        Me.GroupControlCustomer.Location = New System.Drawing.Point(0, 389)
         Me.GroupControlCustomer.Name = "GroupControlCustomer"
         Me.GroupControlCustomer.Size = New System.Drawing.Size(252, 10)
         Me.GroupControlCustomer.TabIndex = 26
@@ -586,7 +586,7 @@ Partial Class FormPOS
         Me.GroupControlCard.Controls.Add(Me.LabelControl14)
         Me.GroupControlCard.Controls.Add(Me.LabelControl16)
         Me.GroupControlCard.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControlCard.Location = New System.Drawing.Point(0, 298)
+        Me.GroupControlCard.Location = New System.Drawing.Point(0, 282)
         Me.GroupControlCard.Name = "GroupControlCard"
         Me.GroupControlCard.Size = New System.Drawing.Size(252, 107)
         Me.GroupControlCard.TabIndex = 25
@@ -686,7 +686,7 @@ Partial Class FormPOS
         Me.GroupControlPay.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupControlPay.Location = New System.Drawing.Point(0, 113)
         Me.GroupControlPay.Name = "GroupControlPay"
-        Me.GroupControlPay.Size = New System.Drawing.Size(252, 185)
+        Me.GroupControlPay.Size = New System.Drawing.Size(252, 169)
         Me.GroupControlPay.TabIndex = 24
         Me.GroupControlPay.Text = "Payment"
         '
@@ -736,7 +736,7 @@ Partial Class FormPOS
         'TxtChange
         '
         Me.TxtChange.Enabled = False
-        Me.TxtChange.Location = New System.Drawing.Point(95, 155)
+        Me.TxtChange.Location = New System.Drawing.Point(95, 136)
         Me.TxtChange.Name = "TxtChange"
         Me.TxtChange.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtChange.Properties.Appearance.Options.UseFont = True
@@ -765,7 +765,7 @@ Partial Class FormPOS
         'LabelControl12
         '
         Me.LabelControl12.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl12.Location = New System.Drawing.Point(8, 132)
+        Me.LabelControl12.Location = New System.Drawing.Point(9, 113)
         Me.LabelControl12.Name = "LabelControl12"
         Me.LabelControl12.Size = New System.Drawing.Size(24, 13)
         Me.LabelControl12.TabIndex = 30
@@ -774,7 +774,7 @@ Partial Class FormPOS
         'TxtPoint
         '
         Me.TxtPoint.Enabled = False
-        Me.TxtPoint.Location = New System.Drawing.Point(95, 77)
+        Me.TxtPoint.Location = New System.Drawing.Point(95, 208)
         Me.TxtPoint.Name = "TxtPoint"
         Me.TxtPoint.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtPoint.Properties.Appearance.Options.UseFont = True
@@ -794,7 +794,7 @@ Partial Class FormPOS
         'TxtCard
         '
         Me.TxtCard.Enabled = False
-        Me.TxtCard.Location = New System.Drawing.Point(95, 129)
+        Me.TxtCard.Location = New System.Drawing.Point(95, 110)
         Me.TxtCard.Name = "TxtCard"
         Me.TxtCard.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCard.Properties.Appearance.Options.UseFont = True
@@ -814,7 +814,7 @@ Partial Class FormPOS
         'TxtCash
         '
         Me.TxtCash.Enabled = False
-        Me.TxtCash.Location = New System.Drawing.Point(95, 103)
+        Me.TxtCash.Location = New System.Drawing.Point(95, 84)
         Me.TxtCash.Name = "TxtCash"
         Me.TxtCash.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCash.Properties.Appearance.Options.UseFont = True
@@ -834,7 +834,7 @@ Partial Class FormPOS
         'LabelControl10
         '
         Me.LabelControl10.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl10.Location = New System.Drawing.Point(9, 80)
+        Me.LabelControl10.Location = New System.Drawing.Point(9, 211)
         Me.LabelControl10.Name = "LabelControl10"
         Me.LabelControl10.Size = New System.Drawing.Size(27, 13)
         Me.LabelControl10.TabIndex = 25
@@ -843,7 +843,7 @@ Partial Class FormPOS
         'LabelControl8
         '
         Me.LabelControl8.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl8.Location = New System.Drawing.Point(9, 106)
+        Me.LabelControl8.Location = New System.Drawing.Point(9, 87)
         Me.LabelControl8.Name = "LabelControl8"
         Me.LabelControl8.Size = New System.Drawing.Size(25, 13)
         Me.LabelControl8.TabIndex = 28
@@ -852,7 +852,7 @@ Partial Class FormPOS
         'LabelControl9
         '
         Me.LabelControl9.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl9.Location = New System.Drawing.Point(9, 158)
+        Me.LabelControl9.Location = New System.Drawing.Point(9, 139)
         Me.LabelControl9.Name = "LabelControl9"
         Me.LabelControl9.Size = New System.Drawing.Size(40, 13)
         Me.LabelControl9.TabIndex = 31

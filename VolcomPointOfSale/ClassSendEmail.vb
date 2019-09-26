@@ -181,7 +181,7 @@ Public Class ClassSendEmail
                         <td>" + dtc.Rows(i)("barcode").ToString + "</td>
                         <td>" + dtc.Rows(i)("name").ToString + "</td>
                         <td>" + dtc.Rows(i)("size").ToString + "</td>
-                        <td>" + dtc.Rows(i)("amount").ToString + "</td>
+                        <td>" + Decimal.Parse(dtc.Rows(i)("amount").ToString).ToString("N0") + "</td>
                     </tr>"
                     Next
                 End If
