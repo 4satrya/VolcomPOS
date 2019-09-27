@@ -1033,8 +1033,8 @@
             If id_voucher_db <> "-1" Then
                 Dim query_opt As String = "SELECT * FROM tb_opt"
                 Dim dt_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
-                Dim query_v As String = "UPDATE tb_m_voucher SET id_outlet='" + dt_opt.Rows(0)("id_outlet").ToString + "',
-                used_date=NOW(), id_report='" + id + "' WHERE id_voucher='" + id_voucher_db + "'"
+                Dim query_v As String = "UPDATE tb_pos_voucher SET id_outlet='" + dt_opt.Rows(0)("id_outlet").ToString + "',
+                used_date=NOW(), id_report='" + id + "' WHERE id_pos_voucher='" + id_voucher_db + "'"
                 execute_non_query(query_v, False, dt_opt.Rows(0)("host_main").ToString, dt_opt.Rows(0)("username_main").ToString, dt_opt.Rows(0)("pass_main").ToString, dt_opt.Rows(0)("db_main").ToString)
             End If
 
@@ -1053,9 +1053,9 @@
         Dim query_opt As String = "SELECT * FROM tb_opt "
         Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
 
-        Dim query_vch As String = "SELECT * FROM tb_m_voucher v 
+        Dim query_vch As String = "SELECT * FROM tb_pos_voucher v 
         WHERE v.voucher_number='" + voucher_number + "' 
-        AND ISNULL(v.id_outlet) AND v.expire_date>= DATE(NOW()) LIMIT 1 "
+        AND ISNULL(v.id_outlet) AND v.is_active=1 AND (DATE(NOW())>=v.period_start AND DATE(NOW())<=v.period_end) LIMIT 1 "
 
         If type = "1" Then 'return datatable
             Return execute_query(query_vch, -1, False, data_opt.Rows(0)("host_main").ToString, data_opt.Rows(0)("username_main").ToString, data_opt.Rows(0)("pass_main").ToString, data_opt.Rows(0)("db_main").ToString)
@@ -1247,6 +1247,7 @@
     Private Sub TxtVoucherNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtVoucherNo.KeyDown
         If e.KeyCode = Keys.Enter Then
             Cursor = Cursors.WaitCursor
+            id_voucher_db = "-1"
             Dim voucher_number As String = TxtVoucherNo.Text
 
             If voucher_number = "" Then
@@ -1260,8 +1261,8 @@
                 If dt_vch.Rows.Count > 0 Then
                     TxtCash.EditValue = Nothing
                     TxtCard.EditValue = Nothing
-                    id_voucher_db = dt_vch.Rows(0)("id_voucher").ToString
-                    Dim voucher As Decimal = dt_vch.Rows(0)("voucher")
+                    id_voucher_db = dt_vch.Rows(0)("id_pos_voucher").ToString
+                    Dim voucher As Decimal = dt_vch.Rows(0)("voucher_value")
                     If voucher >= TxtTotal.EditValue Then
                         TxtVoucher.EditValue = TxtTotal.EditValue
                         TxtVoucherNo.Enabled = False
