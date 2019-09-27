@@ -109,6 +109,7 @@ Partial Class FormPOS
         Me.LabelFooter = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelControlMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlMain.SuspendLayout()
         CType(Me.PanelControlMiddle, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1315,6 +1316,9 @@ Partial Class FormPOS
         'Timer1
         '
         '
+        'Timer2
+        '
+        '
         'FormPOS
         '
         Me.Appearance.Options.UseFont = True
@@ -1493,4 +1497,5 @@ Partial Class FormPOS
     Friend WithEvents TxtTotalSale As DevExpress.XtraEditors.TextEdit
     Friend WithEvents TxtTotalNormal As DevExpress.XtraEditors.TextEdit
     Friend WithEvents GridColumnIdDesignCat As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents Timer2 As Timer
 End Class

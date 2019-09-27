@@ -16,13 +16,16 @@
     Dim id_outlet As String = get_setup_field("id_outlet").ToString
     Public note As String = ""
 
-    'scan variable
+    'scan variable item code
     Private cforKeyDown As Char = vbNullChar
+    Private cforKeyDownVcr As Char = vbNullChar
     Private _lastKeystroke As DateTime = DateTime.Now
+    Private _lastKeystrokeVcr As DateTime = DateTime.Now
+    Public open_scan As Boolean = False
     Public UseKeyboard As String = "-1"
     Public speed_barcode_read As Integer = 0
     Public speed_barcode_read_timer As Integer = 0
-    Public open_scan As Boolean = False
+
 
     Private Sub FormPOS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'scan opt
@@ -32,6 +35,7 @@
         speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
         speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
         Timer1.Interval = speed_barcode_read_timer
+        Timer2.Interval = speed_barcode_read_timer
 
         LabelInfoLeft.Focus()
         viewCountry()
@@ -1245,46 +1249,79 @@
     End Sub
 
     Private Sub TxtVoucherNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtVoucherNo.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Cursor = Cursors.WaitCursor
-            id_voucher_db = "-1"
-            Dim voucher_number As String = TxtVoucherNo.Text
+        cforKeyDownVcr = ChrW(e.KeyCode)
+        'If e.KeyCode = Keys.Enter Then
+        '    checkVoucher(addSlashes(TxtVoucherNo.Text))
+        'End If
+    End Sub
 
-            If voucher_number = "" Then
-                TxtVoucherNo.Text = ""
-                TxtVoucherNo.Enabled = False
-                TxtCash.EditValue = TxtTotal.EditValue
-                TxtCash.Enabled = True
-                TxtCash.Focus()
-            Else
-                Dim dt_vch As DataTable = checkVoucher(voucher_number, "1")
-                If dt_vch.Rows.Count > 0 Then
-                    TxtCash.EditValue = Nothing
-                    TxtCard.EditValue = Nothing
-                    id_voucher_db = dt_vch.Rows(0)("id_pos_voucher").ToString
-                    Dim voucher As Decimal = dt_vch.Rows(0)("voucher_value")
-                    If voucher >= TxtTotal.EditValue Then
-                        TxtVoucher.EditValue = TxtTotal.EditValue
-                        TxtVoucherNo.Enabled = False
-                        TxtCash.EditValue = 0
-                        TxtCash.Enabled = True
-                        TxtCash.Focus()
-                    Else
-                        TxtVoucher.EditValue = voucher
-                        TxtVoucherNo.Enabled = False
-                        TxtCash.EditValue = TxtTotal.EditValue - TxtVoucher.EditValue
-                        TxtCash.Enabled = True
-                        TxtCash.Focus()
-                    End If
-                    showDisplay("Voucher  :", "-", TxtVoucher.Text)
-                Else
-                    stopCustom("Voucher is not found")
+    Private Sub TxtVoucherNo_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtVoucherNo.KeyUp
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtVoucherNo.Text) > 1 Then
+                If cforKeyDownVcr <> ChrW(e.KeyCode) OrElse cforKeyDownVcr = vbNullChar Then
+                    cforKeyDownVcr = vbNullChar
                     TxtVoucherNo.Text = ""
-                    TxtVoucherNo.Focus()
+                    Return
+                End If
+
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystrokeVcr
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtVoucherNo.Text = ""
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtVoucherNo.Text.Count > 0 Then
+                    checkVoucherCode(addSlashes(TxtVoucherNo.Text))
                 End If
             End If
-            Cursor = Cursors.Default
+            _lastKeystrokeVcr = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtVoucherNo.Text.Count > 0 Then
+                checkVoucherCode(addSlashes(TxtVoucherNo.Text))
+            End If
         End If
+    End Sub
+
+    Sub checkVoucherCode(ByVal vcr As String)
+        Cursor = Cursors.WaitCursor
+        id_voucher_db = "-1"
+        Dim voucher_number As String = vcr
+
+        If voucher_number = "" Then
+            TxtVoucherNo.Text = ""
+            TxtVoucherNo.Enabled = False
+            TxtCash.EditValue = TxtTotal.EditValue
+            TxtCash.Enabled = True
+            TxtCash.Focus()
+        Else
+            Dim dt_vch As DataTable = checkVoucher(voucher_number, "1")
+            If dt_vch.Rows.Count > 0 Then
+                TxtCash.EditValue = Nothing
+                TxtCard.EditValue = Nothing
+                id_voucher_db = dt_vch.Rows(0)("id_pos_voucher").ToString
+                Dim voucher As Decimal = dt_vch.Rows(0)("voucher_value")
+                If voucher >= TxtTotal.EditValue Then
+                    TxtVoucher.EditValue = TxtTotal.EditValue
+                    TxtVoucherNo.Enabled = False
+                    TxtCash.EditValue = 0
+                    TxtCash.Enabled = True
+                    TxtCash.Focus()
+                Else
+                    TxtVoucher.EditValue = voucher
+                    TxtVoucherNo.Enabled = False
+                    TxtCash.EditValue = TxtTotal.EditValue - TxtVoucher.EditValue
+                    TxtCash.Enabled = True
+                    TxtCash.Focus()
+                End If
+                showDisplay("Voucher  :", "-", TxtVoucher.Text)
+            Else
+                stopCustom("Voucher is not found")
+                TxtVoucherNo.Text = ""
+                TxtVoucherNo.Focus()
+            End If
+        End If
+        Cursor = Cursors.Default
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -1298,6 +1335,20 @@
         If UseKeyboard = "2" And open_scan Then
             Timer1.Stop()
             Timer1.Start()
+        End If
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        If UseKeyboard = "2" Then
+            TxtVoucherNo.Text = ""
+            Timer2.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtVoucherNo_TextChanged(sender As Object, e As EventArgs) Handles TxtVoucherNo.TextChanged
+        If UseKeyboard = "2" Then
+            Timer2.Stop()
+            Timer2.Start()
         End If
     End Sub
 End Class
