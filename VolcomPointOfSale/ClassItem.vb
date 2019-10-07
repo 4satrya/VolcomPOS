@@ -54,7 +54,7 @@
         FROM tb_item i 
         INNER JOIN tb_size s ON s.id_size = i.id_size
         INNER JOIN tb_color col ON col.id_color = i.id_color
-        INNER JOIN tb_class cls ON cls.id_class = i.id_class
+        LEFT JOIN tb_class cls ON cls.id_class = i.id_class
         INNER JOIN tb_lookup_design_cat cat ON cat.id_design_cat = i.id_design_cat 
         INNER JOIN tb_m_comp sup ON sup.id_comp = i.id_comp_sup
         WHERE i.id_item>0 "
