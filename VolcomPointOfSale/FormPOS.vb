@@ -15,6 +15,8 @@
     Dim username_shift As String = "-1"
     Dim id_outlet As String = get_setup_field("id_outlet").ToString
     Public note As String = ""
+    Public is_get_promo As String = "2"
+    Dim dtp As DataTable = Nothing
 
     'scan variable item code
     Private cforKeyDown As Char = vbNullChar
@@ -184,6 +186,16 @@
             execute_non_query("CALL gen_number(" + id + ", 4)", True, "", "", "", "")
             new_trans = True
             actionLoad()
+
+            'get promo rules
+            Dim qp As String = "SELECT p.id_rules, p.id_design_cat, p.limit_value, p.id_product, i.main_code, i.`name`
+            FROM tb_promo_rules p 
+            INNER JOIN (
+	            SELECT i.id_product,i.item_code_group AS `main_code`, i.item_name AS `name` 
+	            FROM tb_item i
+	            GROUP BY i.id_product
+            ) i ON i.id_product = p.id_product ORDER BY id_rules ASC "
+            dtp = execute_query(qp, -1, True, "", "", "", "")
         End If
     End Sub
 
@@ -822,6 +834,7 @@
         TxtTotal.EditValue = subtotal - discount + tax
 
         'get total normal price
+        Dim total_normal As Decimal = 0.00
         TxtTotalNormal.EditValue = 0
         makeSafeGV(GVPOS)
         GVPOS.ActiveFilterString = "[id_design_cat]=1"
@@ -830,6 +843,13 @@
         Catch ex As Exception
         End Try
         GVPOS.ActiveFilterString = ""
+        Dim data_filter_normal As DataRow() = dtp.Select("[id_design_cat]=1 AND " + decimalSQL(TxtTotalNormal.EditValue.ToString) + ">=[limit_value]")
+        If data_filter_normal.Count > 0 Then
+            infoCustom("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString)
+            is_get_promo = "1"
+        Else
+            is_get_promo = "2"
+        End If
 
         'get total sale price
         TxtTotalSale.EditValue = 0
@@ -840,6 +860,14 @@
         Catch ex As Exception
         End Try
         GVPOS.ActiveFilterString = ""
+        Dim data_filter_sale As DataRow() = dtp.Select("[id_design_cat]=2 AND " + decimalSQL(TxtTotalSale.EditValue.ToString) + ">=[limit_value]")
+        If data_filter_sale.Count > 0 Then
+            infoCustom("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString)
+            is_get_promo = "1"
+        Else
+            is_get_promo = "2"
+        End If
+
         makeSafeGV(GVPOS)
     End Sub
 
@@ -1028,7 +1056,8 @@
             subtotal='" + subtotal + "', discount='" + discount + "', tax='" + tax + "',
             total='" + total + "', id_voucher=" + id_voucher + ", voucher_number='" + voucher_number + "',
             voucher='" + voucher + "', point='" + point + "', cash='" + cash + "', card='" + card + "',
-            id_card_type=" + id_card_type + ", card_number='" + card_number + "', card_name='" + card_name + "', `change`='" + change + "', total_qty='" + total_qty + "'
+            id_card_type=" + id_card_type + ", card_number='" + card_number + "', card_name='" + card_name + "', `change`='" + change + "', total_qty='" + total_qty + "',
+            is_get_promo = " + is_get_promo + "
             WHERE id_pos=" + id + " "
             execute_non_query(query, True, "", "", "", "")
             is_payment_ok = True
