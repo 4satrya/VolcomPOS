@@ -43,6 +43,8 @@ Partial Class FormStock
         Me.GridColumn31 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn33 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn34 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumndesign_cat = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
         Me.SimpleButton2 = New DevExpress.XtraEditors.SimpleButton()
@@ -113,8 +115,6 @@ Partial Class FormStock
         Me.PanelControlTitle = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
-        Me.GridColumndesign_cat = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumnPrice = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -367,6 +367,24 @@ Partial Class FormStock
         Me.GridColumn34.VisibleIndex = 7
         Me.GridColumn34.Width = 152
         '
+        'GridColumndesign_cat
+        '
+        Me.GridColumndesign_cat.Caption = "Status"
+        Me.GridColumndesign_cat.FieldName = "design_cat"
+        Me.GridColumndesign_cat.Name = "GridColumndesign_cat"
+        Me.GridColumndesign_cat.Visible = True
+        Me.GridColumndesign_cat.VisibleIndex = 5
+        '
+        'GridColumnPrice
+        '
+        Me.GridColumnPrice.Caption = "Price"
+        Me.GridColumnPrice.DisplayFormat.FormatString = "N0"
+        Me.GridColumnPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnPrice.FieldName = "price"
+        Me.GridColumnPrice.Name = "GridColumnPrice"
+        Me.GridColumnPrice.Visible = True
+        Me.GridColumnPrice.VisibleIndex = 4
+        '
         'PanelControl3
         '
         Me.PanelControl3.Controls.Add(Me.PanelControl4)
@@ -453,14 +471,12 @@ Partial Class FormStock
         '
         Me.GVStock.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn7, Me.GridColumn8, Me.GridColumn9, Me.GridColumn10, Me.GridColumn11, Me.GridColumn12, Me.GridColumnAvail, Me.GridColumnRes, Me.GridColumnTotal})
         Me.GVStock.GridControl = Me.GCStock
-        Me.GVStock.GroupCount = 1
         Me.GVStock.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_avl", Me.GridColumnAvail, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_res", Me.GridColumnRes, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_tot", Me.GridColumnTotal, "{0:n0}")})
         Me.GVStock.Name = "GVStock"
         Me.GVStock.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVStock.OptionsFind.AlwaysVisible = True
         Me.GVStock.OptionsView.ShowFooter = True
         Me.GVStock.OptionsView.ShowGroupPanel = False
-        Me.GVStock.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn9, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
         'GridColumn7
         '
@@ -490,7 +506,7 @@ Partial Class FormStock
         Me.GridColumn10.FieldName = "size"
         Me.GridColumn10.Name = "GridColumn10"
         Me.GridColumn10.Visible = True
-        Me.GridColumn10.VisibleIndex = 1
+        Me.GridColumn10.VisibleIndex = 2
         '
         'GridColumn11
         '
@@ -498,7 +514,7 @@ Partial Class FormStock
         Me.GridColumn11.FieldName = "class"
         Me.GridColumn11.Name = "GridColumn11"
         Me.GridColumn11.Visible = True
-        Me.GridColumn11.VisibleIndex = 4
+        Me.GridColumn11.VisibleIndex = 5
         '
         'GridColumn12
         '
@@ -506,7 +522,7 @@ Partial Class FormStock
         Me.GridColumn12.FieldName = "comp_name"
         Me.GridColumn12.Name = "GridColumn12"
         Me.GridColumn12.Visible = True
-        Me.GridColumn12.VisibleIndex = 2
+        Me.GridColumn12.VisibleIndex = 3
         '
         'GridColumnAvail
         '
@@ -517,7 +533,7 @@ Partial Class FormStock
         Me.GridColumnAvail.Name = "GridColumnAvail"
         Me.GridColumnAvail.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_avl", "{0:n0}")})
         Me.GridColumnAvail.Visible = True
-        Me.GridColumnAvail.VisibleIndex = 3
+        Me.GridColumnAvail.VisibleIndex = 4
         '
         'GridColumnRes
         '
@@ -528,7 +544,7 @@ Partial Class FormStock
         Me.GridColumnRes.Name = "GridColumnRes"
         Me.GridColumnRes.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_res", "{0:n0}")})
         Me.GridColumnRes.Visible = True
-        Me.GridColumnRes.VisibleIndex = 5
+        Me.GridColumnRes.VisibleIndex = 6
         '
         'GridColumnTotal
         '
@@ -539,7 +555,7 @@ Partial Class FormStock
         Me.GridColumnTotal.Name = "GridColumnTotal"
         Me.GridColumnTotal.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_tot", "{0:n0}")})
         Me.GridColumnTotal.Visible = True
-        Me.GridColumnTotal.VisibleIndex = 6
+        Me.GridColumnTotal.VisibleIndex = 7
         '
         'PanelControlStock
         '
@@ -1108,24 +1124,6 @@ Partial Class FormStock
         Me.PanelControlBack.Size = New System.Drawing.Size(40, 43)
         Me.PanelControlBack.TabIndex = 4
         Me.PanelControlBack.Visible = False
-        '
-        'GridColumndesign_cat
-        '
-        Me.GridColumndesign_cat.Caption = "Status"
-        Me.GridColumndesign_cat.FieldName = "design_cat"
-        Me.GridColumndesign_cat.Name = "GridColumndesign_cat"
-        Me.GridColumndesign_cat.Visible = True
-        Me.GridColumndesign_cat.VisibleIndex = 5
-        '
-        'GridColumnPrice
-        '
-        Me.GridColumnPrice.Caption = "Price"
-        Me.GridColumnPrice.DisplayFormat.FormatString = "N0"
-        Me.GridColumnPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.GridColumnPrice.FieldName = "price"
-        Me.GridColumnPrice.Name = "GridColumnPrice"
-        Me.GridColumnPrice.Visible = True
-        Me.GridColumnPrice.VisibleIndex = 4
         '
         'FormStock
         '

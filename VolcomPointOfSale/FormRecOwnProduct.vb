@@ -480,11 +480,11 @@ Public Class FormRecOwnProduct
                         FROM tb_rec_own_det rd 
                         INNER JOIN tb_delivery_slip ds ON ds.id_delivery_slip = rd.id_delivery_slip
                         INNER JOIN tb_size sz ON sz.id_code_detail = ds.id_size
-                        INNER JOIN tb_class cls ON cls.id_code_detail = ds.id_class
+                        LEFT JOIN tb_class cls ON cls.id_code_detail = ds.id_class
                         INNER JOIN tb_color col ON col.id_code_detail = ds.id_color
                         INNER JOIN tb_m_comp str ON str.id_comp = ds.id_store
                         LEFT JOIN tb_item i ON i.item_code = ds.item_code
-                        WHERE rd.id_rec_own=" + id + " AND ISNULL(i.id_item);
+                        WHERE rd.id_rec_own=" + id + " AND ISNULL(i.id_item) GROUP BY ds.id_product, ds.item_code;
                         /*storage*/
                         INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status)
                         SELECT r.id_comp_to, 1, i.id_item, 8, r.id_rec_own, rd.qty, NOW(), 1
