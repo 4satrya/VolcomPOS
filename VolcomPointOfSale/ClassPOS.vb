@@ -81,12 +81,41 @@
         i.item_name, 
         IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
         pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
-        '' AS `is_edit`, i.id_design_cat
+        '' AS `is_edit`, i.id_design_cat, sz.size
         FROM tb_pos_det pd 
         INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
         WHERE pd.id_pos>0 "
         query += condition + " "
         query += "ORDER BY pd.id_pos_det " + order_type
+        Return query
+    End Function
+
+    Public Function queryDetNew(ByVal id As String)
+        Dim query As String = "SELECT pd.id_pos_det, pd.id_pos,
+        pd.id_item, i.item_code, 
+        i.item_name, 
+        IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
+        pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
+        '' AS `is_edit`, pd.id_design_cat, sz.size, cls.class_display AS `class`
+        FROM tb_pos_det pd 
+        INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
+        INNER JOIN tb_class cls ON cls.id_class = i.id_class
+        WHERE pd.id_pos>0 AND pd.id_pos=" + id + " AND cls.class_display!='VSB' 
+        UNION 
+        SELECT pd.id_pos_det, pd.id_pos,
+        pd.id_item, i.item_code, 
+        i.item_name, 
+        IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
+        pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
+        '' AS `is_edit`, 3 AS `id_design_cat`, sz.size, cls.class_display AS `class`
+        FROM tb_pos_det pd 
+        INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
+        INNER JOIN tb_class cls ON cls.id_class = i.id_class
+        WHERE pd.id_pos>0 AND pd.id_pos=" + id + " AND cls.class_display='VSB' 
+        ORDER BY id_design_cat ASC, id_pos_det ASC "
         Return query
     End Function
 
@@ -168,7 +197,7 @@
         Print(eNmlText + Chr(27) + Chr(77) + "1" + data.Rows(0)("header_2").ToString)
         Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_3").ToString)
         Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_4").ToString)
-        Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_5").ToString + eLeft)
+        'Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_5").ToString + eLeft)
         PrintDashes()
     End Sub
 
@@ -189,60 +218,70 @@
     End Sub
 
     Private Sub PrintBody(ByVal id_pos As String, ByVal copy As Boolean)
-        Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
-        Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
-        Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
-        Print(eLeft + dt_main.Rows(0)("pos_dev").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
+        'Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
+        'Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
+        'Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
+        'Print(eLeft + dt_main.Rows(0)("cashier").ToString.ToUpper + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
 
-        If copy Then
-            Dim dt As String = DateTime.Parse(getTimeDB.ToString).ToString("dd\/MM\/yyyy HH:mm:ss")
-            PrintDashes()
-            Print(eNmlText + eCentre + "Printed : " + dt)
-            Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "- C  O  P  Y -" + eNmlText + Chr(27) + Chr(77) + "1")
-        End If
+        'If copy Then
+        '    Dim dt As String = DateTime.Parse(getTimeDB.ToString).ToString("dd\/MM\/yyyy HH:mm:ss")
+        '    PrintDashes()
+        '    Print(eNmlText + eCentre + "Printed : " + dt)
+        '    Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "- C  O  P  Y -" + eNmlText + Chr(27) + Chr(77) + "1")
+        'End If
 
 
         Print(eLeft + "No.--------Code--------Qty--------Amount")
-        Dim query_det As String = queryDet("AND pd.id_pos=" + id_pos + "", "1")
+        Dim query_det As String = queryDetNew(id_pos)
         Dim dt_det As DataTable = execute_query(query_det, -1, True, "", "", "", "")
         Dim no As Integer = 1
+        Dim subtot As Decimal = 0.00
+        Dim cek_type As String = "-1"
         For i As Integer = 0 To (dt_det.Rows.Count - 1)
-            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+            If i <> 0 And cek_type <> dt_det.Rows(i)("id_design_cat").ToString Then
+                If subtot > 0 Then
+                    Print(eLeft + "                         " + "---------------"
+                End If
+                subtot = 0.00
+            End If
+            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
             no += 1
+            subtot += dt_det.Rows(i)("amo")
+            cek_type = dt_det.Rows(i)("id_design_cat").ToString
         Next
 
         PrintDashes()
-        Dim total_qty As String = Decimal.Parse(dt_main.Rows(0)("total_qty")).ToString("N0")
-        If total_qty.Length = "1" Then
-            total_qty = " " + total_qty
-        Else
-            total_qty = total_qty
-        End If
-        Print(eLeft + "Total                  " + total_qty + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("total")).ToString("N0"))
-        Print(eLeft + "Dasar Kena PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
-        Print(eLeft + "PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
-        Print(eLeft + "Cash" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("cash")).ToString("N0"))
-        If dt_main.Rows(0)("card") > 0 Then
-            Print(eLeft + "Card" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("card")).ToString("N0"))
-        End If
-        If dt_main.Rows(0)("voucher") > 0 Then
-            Print(eLeft + "Voucher" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("voucher")).ToString("N0"))
-        End If
-        Print(eLeft + "Change" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("change")).ToString("N0"))
+        'Dim total_qty As String = Decimal.Parse(dt_main.Rows(0)("total_qty")).ToString("N0")
+        'If total_qty.Length = "1" Then
+        '    total_qty = " " + total_qty
+        'Else
+        '    total_qty = total_qty
+        'End If
+        'Print(eLeft + "Total                  " + total_qty + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("total")).ToString("N0"))
+        'Print(eLeft + "Dasar Kena PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
+        'Print(eLeft + "PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
+        'Print(eLeft + "Cash" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("cash")).ToString("N0"))
+        'If dt_main.Rows(0)("card") > 0 Then
+        '    Print(eLeft + "Card" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("card")).ToString("N0"))
+        'End If
+        'If dt_main.Rows(0)("voucher") > 0 Then
+        '    Print(eLeft + "Voucher" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("voucher")).ToString("N0"))
+        'End If
+        'Print(eLeft + "Change" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("change")).ToString("N0"))
 
-        'jika ada card/voucher
-        Print(vbLf)
-        If dt_main.Rows(0)("card") > 0 Then
-            Print(eLeft + "       Card Type" + "    : " + dt_main.Rows(0)("card_type").ToString)
-            Print(eLeft + "       Number" + "       : " + dt_main.Rows(0)("card_number").ToString)
-            Print(eLeft + "       Holder" + "       : " + dt_main.Rows(0)("card_name").ToString)
-        End If
-        If dt_main.Rows(0)("voucher") > 0 Then
-            Print(eLeft + "       Voucher No." + "  : " + dt_main.Rows(0)("voucher_number"))
-        End If
+        ''jika ada card/voucher
+        'Print(vbLf)
+        'If dt_main.Rows(0)("card") > 0 Then
+        '    Print(eLeft + "       Card Type" + "    : " + dt_main.Rows(0)("card_type").ToString)
+        '    Print(eLeft + "       Number" + "       : " + dt_main.Rows(0)("card_number").ToString)
+        '    Print(eLeft + "       Holder" + "       : " + dt_main.Rows(0)("card_name").ToString)
+        'End If
+        'If dt_main.Rows(0)("voucher") > 0 Then
+        '    Print(eLeft + "       Voucher No." + "  : " + dt_main.Rows(0)("voucher_number"))
+        'End If
 
-        stt_pos = dt_main.Rows(0)("id_pos_status").ToString
-        is_payment_ok = dt_main.Rows(0)("is_payment_ok").ToString
+        'stt_pos = dt_main.Rows(0)("id_pos_status").ToString
+        'is_payment_ok = dt_main.Rows(0)("is_payment_ok").ToString
         Print(vbLf)
     End Sub
 
@@ -250,14 +289,14 @@
         Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
         Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
         Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
-        Print(eLeft + dt_main.Rows(0)("pos_dev").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
+        Print(eLeft + dt_main.Rows(0)("cashier").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
 
         Print(eLeft + "No.--------Code--------Qty--------Amount")
         Dim query_det As String = queryDet("AND pd.id_pos=" + id_pos + "", "1")
         Dim dt_det As DataTable = execute_query(query_det, -1, True, "", "", "", "")
         Dim no As Integer = 1
         For i As Integer = 0 To (dt_det.Rows.Count - 1)
-            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
             no += 1
         Next
 
@@ -551,7 +590,7 @@
     End Sub
 
 
-    Private Sub printItem(ByVal no As String, code As String, desc As String, qty As String, amount As String)
+    Private Sub printItem(ByVal no As String, code As String, desc As String, size As String, qty As String, amount As String)
         'no=5; code=18; qty=2; amount=15
         If no.Length = "1" Then
             no = " " + no + ".  "
@@ -582,8 +621,17 @@
         Else
             amount = amount
         End If
+
+        Dim desc_max As Integer = 32
+        If desc.Length < desc_max Then
+            For d = 1 To (desc_max - desc.Length)
+                desc += " "
+            Next
+        Else
+            desc = desc
+        End If
         Print(eLeft + no + code + qty + amount)
-        Print(eLeft + "     " + desc)
+        Print(eLeft + "     " + desc + size)
     End Sub
 
     Private Sub PrintFooter()
@@ -632,9 +680,9 @@
         StartPrint()
 
         If prn.PrinterIsOpen = True Then
-            PrintHeader()
+            'PrintHeader()
             PrintBody(id_pos, copy)
-            PrintFooter()
+            'PrintFooter()
             EndPrint()
         End If
     End Sub

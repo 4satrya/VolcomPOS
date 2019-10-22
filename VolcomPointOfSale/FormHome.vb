@@ -168,4 +168,16 @@
         FormTransList.ShowDialog()
         Cursor = Cursors.Default
     End Sub
+
+    Private Sub TINotif_ItemClick_1(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TINotif.ItemClick
+        Dim objSettings As New Printing.PrinterSettings
+        Dim strPrinter As String
+        Try
+            For Each strPrinter In Printing.PrinterSettings.InstalledPrinters
+                Console.WriteLine(strPrinter)
+            Next
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
 End Class
