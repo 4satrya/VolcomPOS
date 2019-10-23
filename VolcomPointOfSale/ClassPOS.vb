@@ -220,37 +220,37 @@
     Private Sub PrintBody(ByVal id_pos As String, ByVal copy As Boolean)
         Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
         Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
-        Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
-        Print(eLeft + dt_main.Rows(0)("cashier").ToString.ToUpper + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
+        'Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
+        'Print(eLeft + dt_main.Rows(0)("cashier").ToString.ToUpper + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
 
-        If copy Then
-            Dim dt As String = DateTime.Parse(getTimeDB.ToString).ToString("dd\/MM\/yyyy HH:mm:ss")
-            PrintDashes()
-            Print(eNmlText + eCentre + "Printed : " + dt)
-            Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "- C  O  P  Y -" + eNmlText + Chr(27) + Chr(77) + "1")
-        End If
+        'If copy Then
+        '    Dim dt As String = DateTime.Parse(getTimeDB.ToString).ToString("dd\/MM\/yyyy HH:mm:ss")
+        '    PrintDashes()
+        '    Print(eNmlText + eCentre + "Printed : " + dt)
+        '    Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "- C  O  P  Y -" + eNmlText + Chr(27) + Chr(77) + "1")
+        'End If
 
-        'get promo
-        If dt_main.Rows(0)("is_get_promo").ToString = "1" Then
-            Dim qpr As String = "SELECT i.item_name FROM tb_pos_det d  INNER JOIN tb_item i ON i.id_item = d.id_item WHERE d.id_pos=" + id_pos + " AND d.is_free_promo=1 "
-            Dim dtr As DataTable = execute_query(qpr, -1, True, "", "", "", "")
-            Dim pr_name As String = ""
-            If dtr.Rows.Count > 0 Then
-                pr_name = dtr.Rows(0)("item_name").ToString
-            Else
-                pr_name = "-"
-            End If
+        ''get promo
+        'If dt_main.Rows(0)("is_get_promo").ToString = "1" Then
+        '    Dim qpr As String = "SELECT i.item_name FROM tb_pos_det d  INNER JOIN tb_item i ON i.id_item = d.id_item WHERE d.id_pos=" + id_pos + " AND d.is_free_promo=1 "
+        '    Dim dtr As DataTable = execute_query(qpr, -1, True, "", "", "", "")
+        '    Dim pr_name As String = ""
+        '    If dtr.Rows.Count > 0 Then
+        '        pr_name = dtr.Rows(0)("item_name").ToString
+        '    Else
+        '        pr_name = "-"
+        '    End If
 
-            PrintDashes()
-            Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "CONGRATULATION" + eNmlText + Chr(27) + Chr(77) + "1")
-            Print(eCentre + "YOU ARE ENTITLED TO A FREE")
-            Print(eCentre + pr_name)
-            Print(eCentre + "(STOCK AVAILABLE)")
-            Print(eCentre + "")
-        End If
+        '    PrintDashes()
+        '    Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "CONGRATULATION" + eNmlText + Chr(27) + Chr(77) + "1")
+        '    Print(eCentre + "YOU ARE ENTITLED TO A FREE")
+        '    Print(eCentre + pr_name)
+        '    Print(eCentre + "(STOCK AVAILABLE)")
+        '    Print(eCentre + "")
+        'End If
 
 
-        Print(eLeft + "No.--------Code--------Qty--------Amount")
+        'Print(eLeft + "No.--------Code--------Qty--------Amount")
         'Dim query_det As String = queryDetNew(id_pos)
         'Dim dt_det As DataTable = execute_query(query_det, -1, True, "", "", "", "")
         'Dim no As Integer = 1
@@ -284,39 +284,40 @@
         '    cek_type = dt_det.Rows(i)("id_design_cat").ToString
         'Next
 
-        'PrintDashes()
-        'Dim total_qty As String = Decimal.Parse(dt_main.Rows(0)("total_qty")).ToString("N0")
-        'If total_qty.Length = "1" Then
-        '    total_qty = " " + total_qty
-        'Else
-        '    total_qty = total_qty
-        'End If
-        'Print(eLeft + "Total                  " + total_qty + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("total")).ToString("N0"))
-        'Print(eLeft + "Tax Base" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
-        'Print(eLeft + "Tax" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
-        'Print(eLeft + "Cash" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("cash")).ToString("N0"))
-        'If dt_main.Rows(0)("card") > 0 Then
-        '    Print(eLeft + "Card" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("card")).ToString("N0"))
-        'End If
-        'If dt_main.Rows(0)("voucher") > 0 Then
-        '    Print(eLeft + "Voucher" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("voucher")).ToString("N0"))
-        'End If
-        'Print(eLeft + "Change" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("change")).ToString("N0"))
+        PrintDashes()
+        Dim total_qty As String = Decimal.Parse(dt_main.Rows(0)("total_qty")).ToString("N0")
+        If total_qty.Length = "1" Then
+            total_qty = " " + total_qty
+        Else
+            total_qty = total_qty
+        End If
+        Print(eLeft + "Total                  " + total_qty + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("total")).ToString("N0"))
+        Print(eLeft + "Tax Base" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
+        Print(eLeft + "Tax" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
+        Print(eLeft + "Cash" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("cash")).ToString("N0"))
+        If dt_main.Rows(0)("card") > 0 Then
+            Print(eLeft + "Card" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("card")).ToString("N0"))
+        End If
+        If dt_main.Rows(0)("voucher") > 0 Then
+            Print(eLeft + "Voucher" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("voucher")).ToString("N0"))
+        End If
+        Print(eLeft + "Change" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("change")).ToString("N0"))
 
-        ''jika ada card/voucher
-        'Print(vbLf)
-        'If dt_main.Rows(0)("card") > 0 Then
-        '    Print(eLeft + "       Card Type" + "    : " + dt_main.Rows(0)("card_type").ToString)
-        '    Print(eLeft + "       Number" + "       : " + dt_main.Rows(0)("card_number").ToString)
-        '    Print(eLeft + "       Holder" + "       : " + dt_main.Rows(0)("card_name").ToString)
-        'End If
-        'If dt_main.Rows(0)("voucher") > 0 Then
-        '    Print(eLeft + "       Voucher No." + "  : " + dt_main.Rows(0)("voucher_number"))
-        'End If
+        'jika ada card/voucher
+        If dt_main.Rows(0)("card") > 0 Then
+            Print(eLeft + "")
+            Print(eLeft + "       Card Type" + "    : " + dt_main.Rows(0)("card_type").ToString)
+            Print(eLeft + "       Number" + "       : " + dt_main.Rows(0)("card_number").ToString)
+            Print(eLeft + "       Holder" + "       : " + dt_main.Rows(0)("card_name").ToString)
+        End If
+        If dt_main.Rows(0)("voucher") > 0 Then
+            Print(eLeft + "")
+            Print(eLeft + "       Voucher No." + "  : " + dt_main.Rows(0)("voucher_number"))
+        End If
 
-        'stt_pos = dt_main.Rows(0)("id_pos_status").ToString
-        'is_payment_ok = dt_main.Rows(0)("is_payment_ok").ToString
-        Print(vbLf)
+        stt_pos = dt_main.Rows(0)("id_pos_status").ToString
+        is_payment_ok = dt_main.Rows(0)("is_payment_ok").ToString
+        Print(eLeft + "")
     End Sub
 
     Private Sub PrintBodyRefund(ByVal id_pos As String)
@@ -672,10 +673,9 @@
         If stt_pos = "2" Or (stt_pos = "1" And is_payment_ok = "1") Then 'closed
             Dim query As String = "SELECT * FROM tb_opt"
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
-            Print(eCentre + data.Rows(0)("footer_1").ToString)
-            Print(eCentre + data.Rows(0)("footer_2").ToString)
-            Print(eCentre + data.Rows(0)("footer_3").ToString)
-            Print(eCentre + data.Rows(0)("footer_4").ToString)
+            Print(eCentre + data.Rows(0)("footer").ToString)
+            Print(eLeft + "")
+            Print(eLeft + data.Rows(0)("policy").ToString)
         ElseIf stt_pos = "3" Then 'cancelled
             Print(eCentre + "*** CANCELLED TRANSACTION ***")
         Else
@@ -714,9 +714,9 @@
         StartPrint()
 
         If prn.PrinterIsOpen = True Then
-            PrintHeader()
+            'PrintHeader()
             PrintBody(id_pos, copy)
-            'PrintFooter()
+            PrintFooter()
             EndPrint()
         End If
     End Sub
