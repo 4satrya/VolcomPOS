@@ -834,41 +834,41 @@
         TxtTotal.EditValue = subtotal - discount + tax
 
         'get total normal price
-        'Dim total_normal As Decimal = 0.00
-        'TxtTotalNormal.EditValue = 0
-        'makeSafeGV(GVPOS)
-        'GVPOS.ActiveFilterString = "[id_design_cat]=1"
-        'Try
-        '    TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
-        'Catch ex As Exception
-        'End Try
-        'GVPOS.ActiveFilterString = ""
-        'Dim data_filter_normal As DataRow() = dtp.Select("[id_design_cat]=1 AND " + decimalSQL(TxtTotalNormal.EditValue.ToString) + ">=[limit_value]")
-        'If data_filter_normal.Count > 0 Then
-        '    infoCustom("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString)
-        '    is_get_promo = "1"
-        'Else
-        '    is_get_promo = "2"
-        'End If
+        Dim total_normal As Decimal = 0.00
+        TxtTotalNormal.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=1"
+        Try
+            TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+        Catch ex As Exception
+        End Try
+        GVPOS.ActiveFilterString = ""
+        Dim data_filter_normal As DataRow() = dtp.Select("[id_design_cat]=1 AND " + decimalSQL(TxtTotalNormal.EditValue.ToString) + ">=[limit_value]")
+        If data_filter_normal.Count > 0 Then
+            infoCustom("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString)
+            is_get_promo = "1"
+        Else
+            is_get_promo = "2"
+        End If
 
-        ''get total sale price
-        'TxtTotalSale.EditValue = 0
-        'makeSafeGV(GVPOS)
-        'GVPOS.ActiveFilterString = "[id_design_cat]=2"
-        'Try
-        '    TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
-        'Catch ex As Exception
-        'End Try
-        'GVPOS.ActiveFilterString = ""
-        'Dim data_filter_sale As DataRow() = dtp.Select("[id_design_cat]=2 AND " + decimalSQL(TxtTotalSale.EditValue.ToString) + ">=[limit_value]")
-        'If data_filter_sale.Count > 0 Then
-        '    infoCustom("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString)
-        '    is_get_promo = "1"
-        'Else
-        '    is_get_promo = "2"
-        'End If
+        'get total sale price
+        TxtTotalSale.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=2"
+        Try
+            TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+        Catch ex As Exception
+        End Try
+        GVPOS.ActiveFilterString = ""
+        Dim data_filter_sale As DataRow() = dtp.Select("[id_design_cat]=2 AND " + decimalSQL(TxtTotalSale.EditValue.ToString) + ">=[limit_value]")
+        If data_filter_sale.Count > 0 Then
+            infoCustom("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString)
+            is_get_promo = "1"
+        Else
+            is_get_promo = "2"
+        End If
 
-        'makeSafeGV(GVPOS)
+        makeSafeGV(GVPOS)
     End Sub
 
     Sub insertStock(ByVal id_item_par As String, id_comp_par As String, qty_par As String, ByVal id_storage_category_par As String, id_stock_par As String)
