@@ -37,6 +37,7 @@ Partial Class FormPOS
         Me.GridColumnId = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnIdStorage = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnIdDesignCat = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnis_free_promo = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControlCode = New DevExpress.XtraEditors.PanelControl()
         Me.TxtPrc = New DevExpress.XtraEditors.TextEdit()
         Me.LabelPrice = New DevExpress.XtraEditors.LabelControl()
@@ -221,7 +222,7 @@ Partial Class FormPOS
         '
         'GVPOS
         '
-        Me.GVPOS.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn1, Me.GridColumn2, Me.GridColumn3, Me.GridColumn4, Me.GridColumn5, Me.GridColumn6, Me.GridColumnidItem, Me.GridColumnEdit, Me.GridColumnComm, Me.GridColumnId, Me.GridColumnIdStorage, Me.GridColumnIdDesignCat})
+        Me.GVPOS.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn1, Me.GridColumn2, Me.GridColumn3, Me.GridColumn4, Me.GridColumn5, Me.GridColumn6, Me.GridColumnidItem, Me.GridColumnEdit, Me.GridColumnComm, Me.GridColumnId, Me.GridColumnIdStorage, Me.GridColumnIdDesignCat, Me.GridColumnis_free_promo})
         Me.GVPOS.GridControl = Me.GCPOS
         Me.GVPOS.Name = "GVPOS"
         Me.GVPOS.OptionsBehavior.Editable = False
@@ -337,6 +338,13 @@ Partial Class FormPOS
         Me.GridColumnIdDesignCat.Caption = "IdDesignCat"
         Me.GridColumnIdDesignCat.FieldName = "id_design_cat"
         Me.GridColumnIdDesignCat.Name = "GridColumnIdDesignCat"
+        '
+        'GridColumnis_free_promo
+        '
+        Me.GridColumnis_free_promo.Caption = "is_free_promo"
+        Me.GridColumnis_free_promo.FieldName = "is_free_promo"
+        Me.GridColumnis_free_promo.Name = "GridColumnis_free_promo"
+        Me.GridColumnis_free_promo.OptionsColumn.AllowEdit = False
         '
         'PanelControlCode
         '
@@ -1498,4 +1506,5 @@ Partial Class FormPOS
     Friend WithEvents TxtTotalNormal As DevExpress.XtraEditors.TextEdit
     Friend WithEvents GridColumnIdDesignCat As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents Timer2 As Timer
+    Friend WithEvents GridColumnis_free_promo As DevExpress.XtraGrid.Columns.GridColumn
 End Class

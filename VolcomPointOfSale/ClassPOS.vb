@@ -81,7 +81,7 @@
         i.item_name, 
         IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
         pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
-        '' AS `is_edit`, i.id_design_cat, sz.size
+        '' AS `is_edit`, i.id_design_cat, sz.size, pd.comm, pd.id_design_cat, pd.is_free_promo
         FROM tb_pos_det pd 
         INNER JOIN tb_item i ON i.id_item = pd.id_item 
         INNER JOIN tb_size sz ON sz.id_size = i.id_size

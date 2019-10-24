@@ -15,8 +15,12 @@
     Dim username_shift As String = "-1"
     Dim id_outlet As String = get_setup_field("id_outlet").ToString
     Public note As String = ""
+
+    'promo var
     Public is_get_promo As String = "2"
     Dim dtp As DataTable = Nothing
+    Dim id_product_promo_normal As String = "-1"
+    Dim id_product_promo_sale As String = "-1"
 
     'scan variable item code
     Private cforKeyDown As Char = vbNullChar
@@ -96,7 +100,7 @@
             'help()
             stock_info()
         ElseIf e.KeyCode = Keys.F2 And new_trans = True Then
-            payment()
+            isGetPromo()
         ElseIf e.KeyCode = Keys.F3 Then
             'price()
         ElseIf e.KeyCode = Keys.F4 Then
@@ -188,14 +192,104 @@
             actionLoad()
 
             'get promo rules
-            Dim qp As String = "SELECT p.id_rules, p.id_design_cat, p.limit_value, p.id_product, i.main_code, i.`name`
+            Dim qp As String = "SELECT p.id_rules, p.id_design_cat, p.limit_value, p.id_product, p.product_code as `main_code`, p.product_name AS `name`
             FROM tb_promo_rules p 
-            INNER JOIN (
-	            SELECT i.id_product,i.item_code_group AS `main_code`, i.item_name AS `name` 
-	            FROM tb_item i
-	            GROUP BY i.id_product
-            ) i ON i.id_product = p.id_product ORDER BY id_rules ASC "
+            WHERE DATE(NOW())>=p.period_start AND DATE(NOW())<=p.period_end
+            ORDER BY p.limit_value DESC LIMIT 1 "
             dtp = execute_query(qp, -1, True, "", "", "", "")
+        End If
+    End Sub
+
+    Private Function getStockPromo(ByVal id_product As String) As Boolean
+        Dim query As String = "SELECT i.id_product,
+        SUM(IF(f.id_storage_category=2, CONCAT('-', f.storage_item_qty), f.storage_item_qty)) AS qty_avl
+        FROM tb_item i  
+        INNER JOIN tb_storage_item f ON f.id_item = i.id_item
+        WHERE i.id_product=" + id_product + "
+        GROUP BY i.id_product "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If data.Rows.Count > 0 Then
+            If data.Rows(0)("qty_avl") > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function isEmptyPromo(ByVal id_product As String) As Boolean
+        Dim query As String = "SELECT SUM(d.qty) AS `total_qty` FROM tb_pos_det d 
+        INNER JOIN tb_item i ON i.id_item = d.id_item
+        WHERE d.id_pos=" + id + " AND i.id_product=" + id_product + "
+        GROUP BY i.id_product "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If data.Rows.Count > 0 Then
+            If data.Rows(0)("total_qty") > 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        Else
+            Return True
+        End If
+    End Function
+
+    Sub isGetPromo()
+        If dtp.Rows.Count > 0 Then
+            'normal
+            Dim data_filter_normal As DataRow() = dtp.Select("[id_design_cat]=1 AND " + decimalSQL(TxtTotalNormal.EditValue.ToString) + ">=[limit_value]")
+            If data_filter_normal.Count > 0 Then
+                Dim id_prod As String = data_filter_normal(0)("id_product").ToString
+                If getStockPromo(id_prod) And isEmptyPromo(id_prod) Then
+                    Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
+                    If confirm = DialogResult.Yes Then
+                        id_product_promo_normal = id_prod
+                    End If
+                Else
+                    id_product_promo_normal = "-1"
+                End If
+            Else
+                id_product_promo_normal = "-1"
+            End If
+
+            'sale
+            Dim data_filter_sale As DataRow() = dtp.Select("[id_design_cat]=2 AND " + decimalSQL(TxtTotalSale.EditValue.ToString) + ">=[limit_value]")
+            If data_filter_sale.Count > 0 Then
+                Dim id_prod As String = data_filter_normal(0)("id_product").ToString
+                If getStockPromo(id_prod) And isEmptyPromo(id_prod) Then
+                    Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
+                    If confirm = DialogResult.Yes Then
+                        id_product_promo_sale = id_prod
+                    End If
+                Else
+                    id_product_promo_sale = "-1"
+                End If
+            Else
+                id_product_promo_sale = "-1"
+            End If
+
+            If id_product_promo_normal <> "-1" Or id_product_promo_sale <> "-1" Then
+                'jika dia lanjut scan
+                newTrans()
+            Else
+                'jika tidak, cek adakah produk promo yg discan ato tidak
+                Dim qcek As String = "SELECT SUM(d.qty) AS `total_qty` FROM tb_pos_det d
+                WHERE d.id_pos=" + id + " AND d.is_free_promo=1
+                GROUP BY d.id_item
+                HAVING total_qty>0 "
+                Dim dcek As DataTable = execute_query(qcek, -1, True, "", "", "", "")
+                If dcek.Rows.Count > 0 Then
+                    is_get_promo = "1"
+                Else
+                    is_get_promo = "2"
+                End If
+                payment()
+            End If
+        Else
+            is_get_promo = "2"
+            payment()
         End If
     End Sub
 
@@ -491,6 +585,7 @@
         Dim query As String = query_c.queryDet("And pd.id_pos=" + id + " ", "1")
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         GCPOS.DataSource = data
+        GVPOS.BestFitColumns()
     End Sub
 
     Sub help()
@@ -616,8 +711,17 @@
             'insert stock
             'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
 
+            'cek jika promo
+            Dim is_free_promo As String = "2"
+            If dt(0)("id_product").ToString = id_product_promo_normal Or dt(0)("id_product").ToString = id_product_promo_sale Then
+                is_free_promo = "1"
+            Else
+                is_free_promo = "2"
+            End If
+
+
             'insert detail
-            insertDetail(dt(0)("id_item").ToString, dt(0)("id_product").ToString, dt(0)("item_code").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString, dt(0)("id_design_cat").ToString)
+            insertDetail(dt(0)("id_item").ToString, dt(0)("id_product").ToString, dt(0)("item_code").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString, dt(0)("id_design_cat").ToString, is_free_promo)
 
             'insert gv
             Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
@@ -630,6 +734,7 @@
             newRow("comm") = dt(0)("comm")
             newRow("is_edit") = "2"
             newRow("id_design_cat") = dt(0)("id_design_cat").ToString
+            newRow("is_free_promo") = is_free_promo
             TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
             GCPOS.RefreshDataSource()
             GVPOS.RefreshData()
@@ -775,7 +880,7 @@
 
                 If (qty * -1) <= max Then
                     'insert detail
-                    insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0", "0")
+                    insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0", "0", "0")
 
                     GVPOS.SetRowCellValue(rh, "qty", qty)
                     GVPOS.SetRowCellValue(rh, "is_edit", "2")
@@ -840,6 +945,7 @@
         Try
             TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
         Catch ex As Exception
+            TxtTotalNormal.EditValue = 0
         End Try
         GVPOS.ActiveFilterString = ""
 
@@ -850,6 +956,7 @@
         Try
             TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
         Catch ex As Exception
+            TxtTotalSale.EditValue = 0
         End Try
         GVPOS.ActiveFilterString = ""
 
@@ -867,13 +974,13 @@
         End If
     End Sub
 
-    Sub insertDetail(ByVal id_item_par As String, ByVal id_product_par As String, ByVal item_code_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String, ByVal id_comp_sup_par As String, ByVal id_design_cat_par As String)
+    Sub insertDetail(ByVal id_item_par As String, ByVal id_product_par As String, ByVal item_code_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String, ByVal id_comp_sup_par As String, ByVal id_design_cat_par As String, ByVal is_free_promo_par As String)
         If id_pos_det_par <> "-1" Then 'edit only qty
             Dim query As String = "UPDATE tb_pos_det SET qty='" + qty_par + "' WHERE id_pos_det='" + id_pos_det_par + "'"
             execute_non_query(query, True, "", "", "", "")
         Else
-            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, id_product,item_code, comm, qty, price, id_comp_sup, id_design_cat) 
-            VALUES ('" + id + "', '" + id_item_par + "', '" + id_product_par + "','" + addSlashes(item_code_par) + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'," + id_comp_sup_par + ", " + id_design_cat_par + "); SELECT LAST_INSERT_ID(); "
+            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, id_product,item_code, comm, qty, price, id_comp_sup, id_design_cat, is_free_promo) 
+            VALUES ('" + id + "', '" + id_item_par + "', '" + id_product_par + "','" + addSlashes(item_code_par) + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'," + id_comp_sup_par + ", " + id_design_cat_par + ", " + is_free_promo_par + "); SELECT LAST_INSERT_ID(); "
             id_detail_last = execute_query(query, 0, True, "", "", "", "")
         End If
     End Sub
