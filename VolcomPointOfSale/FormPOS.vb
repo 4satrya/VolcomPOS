@@ -99,7 +99,7 @@
         If e.KeyCode = Keys.F1 Then
             'help()
             stock_info()
-        ElseIf e.KeyCode = Keys.F2 And new_trans = True Then
+        ElseIf e.KeyCode = Keys.F2 And new_trans = True And is_payment_ok = False Then
             isGetPromo()
         ElseIf e.KeyCode = Keys.F3 Then
             'price()
@@ -246,6 +246,8 @@
                     Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
                     If confirm = DialogResult.Yes Then
                         id_product_promo_normal = id_prod
+                    Else
+                        id_product_promo_normal = "-1"
                     End If
                 Else
                     id_product_promo_normal = "-1"
@@ -262,6 +264,8 @@
                     Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
                     If confirm = DialogResult.Yes Then
                         id_product_promo_sale = id_prod
+                    Else
+                        id_product_promo_sale = "-1"
                     End If
                 Else
                     id_product_promo_sale = "-1"
@@ -943,7 +947,11 @@
         makeSafeGV(GVPOS)
         GVPOS.ActiveFilterString = "[id_design_cat]=1"
         Try
-            TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            If GVPOS.RowCount > 0 Then
+                TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            Else
+                TxtTotalNormal.EditValue = 0
+            End If
         Catch ex As Exception
             TxtTotalNormal.EditValue = 0
         End Try
@@ -954,7 +962,11 @@
         makeSafeGV(GVPOS)
         GVPOS.ActiveFilterString = "[id_design_cat]=2"
         Try
-            TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            If GVPOS.RowCount > 0 Then
+                TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            Else
+                TxtTotalSale.EditValue = 0
+            End If
         Catch ex As Exception
             TxtTotalSale.EditValue = 0
         End Try
