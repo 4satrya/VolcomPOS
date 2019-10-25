@@ -258,7 +258,21 @@
         Dim subtot As Decimal = 0.00
         Dim cek_type As String = "-1"
         For i As Integer = 0 To (dt_det.Rows.Count - 1)
-            If i <> 0 And cek_type <> dt_det.Rows(i)("id_design_cat").ToString Then
+            'initial
+            subtot += dt_det.Rows(i)("amo")
+            cek_type = dt_det.Rows(i)("id_design_cat").ToString
+
+            'cetak detil
+            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+
+            'cek tipe harga setelahnya
+            Dim next_type As String = "-1"
+            Try
+                next_type = dt_det.Rows(i + 1)("id_design_cat").ToString
+            Catch ex As Exception
+                next_type = "-1"
+            End Try
+            If dt_det.Rows(i)("id_design_cat").ToString <> next_type Then
                 If subtot > 0 And (cek_type = "1" Or cek_type = "2") Then
                     Dim subtot_view As String = Decimal.Parse(subtot.ToString).ToString("N0")
                     Dim subtot_view_max As Integer = 15
@@ -281,10 +295,9 @@
                 End If
                 subtot = 0.00
             End If
-            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+
+            'next numbering
             no += 1
-            subtot += dt_det.Rows(i)("amo")
-            cek_type = dt_det.Rows(i)("id_design_cat").ToString
             Print(eLeft + "")
         Next
 
