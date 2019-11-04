@@ -548,7 +548,7 @@
                 total_vch += dtvch.Rows(i)("voucher")
 
                 'time
-                Dim time_vch As String = DateTime.Parse(dtf.Rows(i)("pos_date").ToString).ToString("HH:mm")
+                Dim time_vch As String = DateTime.Parse(dtvch.Rows(i)("pos_date").ToString).ToString("HH:mm")
 
                 Print(eLeft + "   " + no + " " + number + " " + ref + " " + time_vch + " " + vch)
                 no_vch += 1
