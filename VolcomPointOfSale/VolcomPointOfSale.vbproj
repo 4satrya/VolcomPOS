@@ -276,6 +276,12 @@
     <Compile Include="FormLoginInv.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormLogSync.Designer.vb">
+      <DependentUpon>FormLogSync.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogSync.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormMasterCompany.designer.vb">
       <DependentUpon>FormMasterCompany.vb</DependentUpon>
     </Compile>
@@ -668,6 +674,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoginInv.resx">
       <DependentUpon>FormLoginInv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogSync.resx">
+      <DependentUpon>FormLogSync.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMasterCompany.resx">
       <DependentUpon>FormMasterCompany.vb</DependentUpon>

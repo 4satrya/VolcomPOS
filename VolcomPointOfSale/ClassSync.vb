@@ -17,8 +17,10 @@ Public Class ClassSync
     Dim dtl As DataTable
     Dim id_comp_sup_normal As String = "-1"
     Dim id_comp_sup_sale As String = "-1"
+    Public show_log As Boolean = False
 
     Public Sub New(ByVal id_sync_data As String)
+        show_log = False
         Dim query As String = "SELECT * FROM tb_opt"
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         'koneksi office
@@ -138,6 +140,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '1', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -186,6 +189,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '4', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -252,6 +256,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '3', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -454,6 +459,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '4', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -522,6 +528,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '2', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -551,6 +558,7 @@ Public Class ClassSync
             is_success = "1"
         Else
             is_success = "2"
+            show_log = True
         End If
         Dim qlast As String = "INSERT INTO tb_sync_log(sync_time, id_sync_data, is_success, remark) VALUES('" + curr_time + "', '3', '" + is_success + "','" + addSlashes(err) + "') "
         execute_non_query(qlast, True, "", "", "", "")
@@ -604,6 +612,10 @@ Public Class ClassSync
             BackupCustomTable()
             RestoreCustomTable()
             startofSync()
+            If show_log Then
+                stopCustom("There are some synchronization processes that failed.")
+                FormLogSync.ShowDialog()
+            End If
         End If
     End Sub
 

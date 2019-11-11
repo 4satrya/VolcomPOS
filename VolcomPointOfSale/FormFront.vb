@@ -78,16 +78,9 @@ Public Class FormFront
 
     Private Sub FormFront_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.F1 Then
-            '20x2
-            Dim sp As New IO.Ports.SerialPort()
-
-            sp.PortName = "COM4"
-            sp.BaudRate = 9600
-            sp.Open()
-            sp.WriteLine("                                        ")
-            sp.Close()
-            sp.Dispose()
-            sp = Nothing
+            Cursor = Cursors.WaitCursor
+            FormLogSync.ShowDialog()
+            Cursor = Cursors.Default
 
 
             'Cursor = Cursors.WaitCursor
