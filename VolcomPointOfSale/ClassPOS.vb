@@ -794,8 +794,8 @@
         INNER JOIN tb_pos p ON p.id_pos = ps.id_pos
         WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "';
         /*insert pos summary*/
-        INSERT INTO tb_pos_summary(id_pos, id_item, item_code, id_product, id_comp_sup, comm, qty, price)
-        SELECT pd.id_pos, pd.id_item, pd.item_code, pd.id_product, pd.id_comp_sup, pd.comm, SUM(pd.qty) AS `qty`, pd.price 
+        INSERT INTO tb_pos_summary(id_pos, id_item, item_code, id_product, id_comp_sup, comm, qty, price, id_design_cat, is_free_promo)
+        SELECT pd.id_pos, pd.id_item, pd.item_code, pd.id_product, pd.id_comp_sup, pd.comm, SUM(pd.qty) AS `qty`, pd.price, pd.id_design_cat, pd.is_free_promo
         FROM tb_pos p
         INNER JOIN tb_pos_det pd ON pd.id_pos = p.id_pos
         WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "'
