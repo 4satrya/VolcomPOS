@@ -83,11 +83,6 @@ Public Class FormDatabase
     End Sub
 
     Private Sub FormDatabase_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Cursor = Cursors.WaitCursor
-
-
-
-        Cursor = Cursors.Default
     End Sub
 
     Private Sub FormDatabase_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed

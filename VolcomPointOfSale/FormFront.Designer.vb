@@ -20,8 +20,8 @@ Partial Class FormFront
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormFront))
-        Dim TileItemElement1 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
-        Dim TileItemElement2 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
+        Dim TileItemElement3 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
+        Dim TileItemElement4 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Me.TIExit = New DevExpress.XtraEditors.TileItem()
         Me.TileItem2 = New DevExpress.XtraEditors.TileItem()
         Me.PanelBasic = New DevExpress.XtraEditors.PanelControl()
@@ -30,9 +30,6 @@ Partial Class FormFront
         Me.LabelCsh = New DevExpress.XtraEditors.LabelControl()
         Me.LabelInfo = New DevExpress.XtraEditors.LabelControl()
         Me.LabelStoreName = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
-        Me.PCClose = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
         Me.PIStock = New DevExpress.XtraEditors.PictureEdit()
@@ -50,9 +47,6 @@ Partial Class FormFront
         Me.PanelBasic.SuspendLayout()
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl3.SuspendLayout()
-        CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControl4.SuspendLayout()
-        CType(Me.PCClose, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
         CType(Me.PIStock.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,9 +64,9 @@ Partial Class FormFront
         Me.TIExit.AppearanceItem.Normal.Options.UseBackColor = True
         Me.TIExit.AppearanceItem.Normal.Options.UseBorderColor = True
         Me.TIExit.BackgroundImage = CType(resources.GetObject("TIExit.BackgroundImage"), System.Drawing.Image)
-        TileItemElement1.Text = "Exit"
-        TileItemElement1.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomCenter
-        Me.TIExit.Elements.Add(TileItemElement1)
+        TileItemElement3.Text = "Exit"
+        TileItemElement3.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomCenter
+        Me.TIExit.Elements.Add(TileItemElement3)
         Me.TIExit.Id = 29
         Me.TIExit.ItemSize = DevExpress.XtraEditors.TileItemSize.Medium
         Me.TIExit.Name = "TIExit"
@@ -85,9 +79,9 @@ Partial Class FormFront
         Me.TileItem2.AppearanceItem.Normal.Options.UseBorderColor = True
         Me.TileItem2.BackgroundImage = CType(resources.GetObject("TileItem2.BackgroundImage"), System.Drawing.Image)
         Me.TileItem2.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter
-        TileItemElement2.Text = "Exit Program"
-        TileItemElement2.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
-        Me.TileItem2.Elements.Add(TileItemElement2)
+        TileItemElement4.Text = "Exit Program"
+        TileItemElement4.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
+        Me.TileItem2.Elements.Add(TileItemElement4)
         Me.TileItem2.Id = 45
         Me.TileItem2.ItemSize = DevExpress.XtraEditors.TileItemSize.Wide
         Me.TileItem2.Name = "TileItem2"
@@ -104,7 +98,6 @@ Partial Class FormFront
         Me.PanelBasic.Controls.Add(Me.LabelCsh)
         Me.PanelBasic.Controls.Add(Me.LabelInfo)
         Me.PanelBasic.Controls.Add(Me.LabelStoreName)
-        Me.PanelBasic.Controls.Add(Me.PanelControl4)
         Me.PanelBasic.Controls.Add(Me.PanelControl2)
         Me.PanelBasic.Dock = System.Windows.Forms.DockStyle.Fill
         Me.PanelBasic.Location = New System.Drawing.Point(0, 0)
@@ -122,9 +115,9 @@ Partial Class FormFront
         Me.PanelControl3.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControl3.Controls.Add(Me.LabelDate)
         Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl3.Location = New System.Drawing.Point(457, 28)
+        Me.PanelControl3.Location = New System.Drawing.Point(457, 2)
         Me.PanelControl3.Name = "PanelControl3"
-        Me.PanelControl3.Size = New System.Drawing.Size(221, 161)
+        Me.PanelControl3.Size = New System.Drawing.Size(221, 183)
         Me.PanelControl3.TabIndex = 6
         '
         'LabelDate
@@ -143,7 +136,7 @@ Partial Class FormFront
         '
         Me.LabelCsh.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelCsh.Appearance.ForeColor = System.Drawing.Color.White
-        Me.LabelCsh.Location = New System.Drawing.Point(32, 107)
+        Me.LabelCsh.Location = New System.Drawing.Point(32, 83)
         Me.LabelCsh.Name = "LabelCsh"
         Me.LabelCsh.Size = New System.Drawing.Size(134, 21)
         Me.LabelCsh.TabIndex = 5
@@ -153,7 +146,7 @@ Partial Class FormFront
         '
         Me.LabelInfo.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelInfo.Appearance.ForeColor = System.Drawing.Color.WhiteSmoke
-        Me.LabelInfo.Location = New System.Drawing.Point(32, 80)
+        Me.LabelInfo.Location = New System.Drawing.Point(32, 56)
         Me.LabelInfo.Name = "LabelInfo"
         Me.LabelInfo.Size = New System.Drawing.Size(113, 21)
         Me.LabelInfo.TabIndex = 1
@@ -163,44 +156,11 @@ Partial Class FormFront
         '
         Me.LabelStoreName.Appearance.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelStoreName.Appearance.ForeColor = System.Drawing.Color.White
-        Me.LabelStoreName.Location = New System.Drawing.Point(32, 45)
+        Me.LabelStoreName.Location = New System.Drawing.Point(32, 21)
         Me.LabelStoreName.Name = "LabelStoreName"
         Me.LabelStoreName.Size = New System.Drawing.Size(153, 32)
         Me.LabelStoreName.TabIndex = 1
         Me.LabelStoreName.Text = "STORE NAME"
-        '
-        'PanelControl4
-        '
-        Me.PanelControl4.Appearance.BackColor = System.Drawing.SystemColors.InactiveCaptionText
-        Me.PanelControl4.Appearance.Options.UseBackColor = True
-        Me.PanelControl4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControl4.Controls.Add(Me.PCClose)
-        Me.PanelControl4.Controls.Add(Me.LabelControl1)
-        Me.PanelControl4.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControl4.Location = New System.Drawing.Point(2, 2)
-        Me.PanelControl4.Name = "PanelControl4"
-        Me.PanelControl4.Size = New System.Drawing.Size(676, 26)
-        Me.PanelControl4.TabIndex = 1
-        '
-        'PCClose
-        '
-        Me.PCClose.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PCClose.ContentImage = CType(resources.GetObject("PCClose.ContentImage"), System.Drawing.Image)
-        Me.PCClose.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PCClose.Location = New System.Drawing.Point(652, 0)
-        Me.PCClose.Name = "PCClose"
-        Me.PCClose.Size = New System.Drawing.Size(24, 26)
-        Me.PCClose.TabIndex = 2
-        '
-        'LabelControl1
-        '
-        Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Segoe UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl1.Appearance.ForeColor = System.Drawing.Color.White
-        Me.LabelControl1.Location = New System.Drawing.Point(7, 4)
-        Me.LabelControl1.Name = "LabelControl1"
-        Me.LabelControl1.Size = New System.Drawing.Size(74, 17)
-        Me.LabelControl1.TabIndex = 0
-        Me.LabelControl1.Text = "Volcom POS"
         '
         'PanelControl2
         '
@@ -217,9 +177,9 @@ Partial Class FormFront
         Me.PanelControl2.Controls.Add(Me.PIInv)
         Me.PanelControl2.Controls.Add(Me.PanelControl1)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl2.Location = New System.Drawing.Point(2, 189)
+        Me.PanelControl2.Location = New System.Drawing.Point(2, 185)
         Me.PanelControl2.Name = "PanelControl2"
-        Me.PanelControl2.Size = New System.Drawing.Size(676, 274)
+        Me.PanelControl2.Size = New System.Drawing.Size(676, 278)
         Me.PanelControl2.TabIndex = 1
         '
         'LabelControl2
@@ -318,7 +278,7 @@ Partial Class FormFront
         Me.PanelControl1.Controls.Add(Me.LabelControl6)
         Me.PanelControl1.Controls.Add(Me.LabelFooter)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(0, 250)
+        Me.PanelControl1.Location = New System.Drawing.Point(0, 254)
         Me.PanelControl1.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.Flat
         Me.PanelControl1.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControl1.Name = "PanelControl1"
@@ -364,10 +324,10 @@ Partial Class FormFront
         Me.ClientSize = New System.Drawing.Size(680, 465)
         Me.Controls.Add(Me.PanelBasic)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -381,10 +341,6 @@ Partial Class FormFront
         CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl3.ResumeLayout(False)
         Me.PanelControl3.PerformLayout()
-        CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControl4.ResumeLayout(False)
-        Me.PanelControl4.PerformLayout()
-        CType(Me.PCClose, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
@@ -402,8 +358,6 @@ Partial Class FormFront
     Friend WithEvents TileItem2 As DevExpress.XtraEditors.TileItem
     Friend WithEvents PanelBasic As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents PanelControl4 As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelStoreName As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelInfo As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelDate As DevExpress.XtraEditors.LabelControl
@@ -416,7 +370,6 @@ Partial Class FormFront
     Friend WithEvents PIPOS As DevExpress.XtraEditors.PictureEdit
     Friend WithEvents LabelControl7 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents PIInv As DevExpress.XtraEditors.PictureEdit
-    Friend WithEvents PCClose As DevExpress.XtraEditors.PanelControl
     Friend WithEvents LabelCsh As DevExpress.XtraEditors.LabelControl
     Friend WithEvents SplashScreenManager1 As DevExpress.XtraSplashScreen.SplashScreenManager
     Friend WithEvents LabelControl2 As DevExpress.XtraEditors.LabelControl
