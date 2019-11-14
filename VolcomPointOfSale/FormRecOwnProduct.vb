@@ -330,6 +330,8 @@ Public Class FormRecOwnProduct
         makeSafeGV(GVData)
         GVSummary.FocusedRowHandle = find_row(GVSummary, "id_delivery_slip", id_delivery_slip_par)
         GVSummary.SetFocusedRowCellValue("qty", tot)
+        GCSummary.RefreshDataSource()
+        GVSummary.RefreshData()
     End Sub
 
     Private Sub BtnDelete_Click(sender As Object, e As EventArgs) Handles BtnDelete.Click
