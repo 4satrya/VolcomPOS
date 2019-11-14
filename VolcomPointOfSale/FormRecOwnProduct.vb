@@ -487,6 +487,19 @@ Public Class FormRecOwnProduct
                         INNER JOIN tb_m_comp str ON str.id_comp = ds.id_store
                         LEFT JOIN tb_item i ON i.item_code = ds.item_code
                         WHERE rd.id_rec_own=" + id + " AND ISNULL(i.id_item) GROUP BY ds.id_product, ds.item_code;
+                        /*update aktif item*/
+                        UPDATE tb_item main
+                        INNER JOIN (
+	                        SELECT i.id_item
+	                        FROM tb_rec_own_det rd 
+	                        INNER JOIN tb_rec_own r ON r.id_rec_own = rd.id_rec_own
+	                        INNER JOIN tb_delivery_slip ds ON ds.id_delivery_slip = rd.id_delivery_slip
+	                        INNER JOIN tb_m_comp str ON str.id_comp = ds.id_store
+	                        INNER JOIN tb_item i ON i.item_code = ds.item_code
+	                        WHERE rd.id_rec_own=" + id + "
+	                        GROUP BY i.id_item
+                        ) src ON src.id_item = main.id_item	
+                        SET main.is_active=1;
                         /*storage*/
                         INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status)
                         SELECT r.id_comp_to, 1, i.id_item, 8, r.id_rec_own, rd.qty, NOW(), 1
