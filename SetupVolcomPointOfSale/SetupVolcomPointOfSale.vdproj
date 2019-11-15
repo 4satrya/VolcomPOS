@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0200B16FE0954C621A89A744C5DC42DC"
-        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_026023E5939C7C023321987087890FF4"
         "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
@@ -33,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0A0C08CA13C34F9786270F3AA9274E52"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0A493633B70E56B101C9CD8AFBCE859A"
         "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
@@ -41,12 +41,6 @@
         {
         "MsmKey" = "8:_0A493633B70E56B101C9CD8AFBCE859A"
         "OwnerKey" = "8:_8971433D507E0D80041B859D83005C70"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0C570299956CD6904DEC8821218CC497"
-        "OwnerKey" = "8:_C8C5E13F0E52673A8477781DEB723B49"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -153,14 +147,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_113EDC62DB161377577C591E34FB46FF"
-        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmKey" = "8:_0C570299956CD6904DEC8821218CC497"
+        "OwnerKey" = "8:_C8C5E13F0E52673A8477781DEB723B49"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_115EE64A09B24FD8A19AB0D42F829AA2"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_113EDC62DB161377577C591E34FB46FF"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -347,24 +341,6 @@
         {
         "MsmKey" = "8:_293A6B1A7285495C302E8ED04837C641"
         "OwnerKey" = "8:_120CFCCBB9BAEF75AC9E51E9F023DB52"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B9C8F88B3AD046B2FAD42BD2F6421B0"
-        "OwnerKey" = "8:_E9E8E9F9DA1696FB64E0D95BE4CF29F8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B9C8F88B3AD046B2FAD42BD2F6421B0"
-        "OwnerKey" = "8:_0200B16FE0954C621A89A744C5DC42DC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2B9C8F88B3AD046B2FAD42BD2F6421B0"
-        "OwnerKey" = "8:_9961604F4EE30BA8DAD09E1B268659E7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -447,8 +423,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4839269E6A9110E69475524ABC02A16C"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
-        "OwnerKey" = "8:_41A465E80CE9C708225021123246456C"
+        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -574,12 +556,6 @@
         "Entry"
         {
         "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
-        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
         "OwnerKey" = "8:_5F0CF59A58760E1BBCC88B64F694F692"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -587,12 +563,6 @@
         {
         "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
         "OwnerKey" = "8:_A7C96DBDB89DCECCE8B0296E58C55460"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
-        "OwnerKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -623,6 +593,18 @@
         {
         "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
         "OwnerKey" = "8:_28FE04504CE2938423A848D7BA1480D8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
+        "OwnerKey" = "8:_41A465E80CE9C708225021123246456C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
+        "OwnerKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -699,6 +681,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9072064AE22D4A00B38B50BD4DC6811E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9187BFA1FFAE1273163BCC5837D3C6D7"
         "OwnerKey" = "8:_AE028EAC086FF00D7696042FBF59AFFA"
         "MsmSig" = "8:_UNDEFINED"
@@ -723,6 +711,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_919E15B26E2A61906C76700EAF451688"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_919E15B26E2A61906C76700EAF451688"
+        "OwnerKey" = "8:_A3E5C01B287745A490D76EF394313E52"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_919E15B26E2A61906C76700EAF451688"
+        "OwnerKey" = "8:_4839269E6A9110E69475524ABC02A16C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9626A29B3C958DFAA32C99BCBF834457"
         "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
@@ -741,20 +747,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9961604F4EE30BA8DAD09E1B268659E7"
-        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9DAC04D4643C595D4CB6621F63B900D2"
         "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A4849EF785D940F78913077A4CB798DC"
+        "MsmKey" = "8:_9F8439FB684A618A9015A860D1ADA175"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A0453AFFFFDC4BD0802419F55FC66DFA"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A3E5C01B287745A490D76EF394313E52"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -987,7 +999,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BA7CEBA8714D58744B90677E244E38D8"
+        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C00841322B8942E680FB1F59A8CF7720"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1005,14 +1029,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C29B630FA8FF4E15A38769E90F64B86A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C33968FEE746B8253563C88677EB96CD"
-        "OwnerKey" = "8:_334ED5AB17FAD8058BE755CF7B449E23"
+        "OwnerKey" = "8:_BA7CEBA8714D58744B90677E244E38D8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1025,6 +1043,12 @@
         {
         "MsmKey" = "8:_C33968FEE746B8253563C88677EB96CD"
         "OwnerKey" = "8:_714281E718C80BCD0C860DC5C955F782"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C33968FEE746B8253563C88677EB96CD"
+        "OwnerKey" = "8:_334ED5AB17FAD8058BE755CF7B449E23"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1059,8 +1083,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E9E8E9F9DA1696FB64E0D95BE4CF29F8"
-        "OwnerKey" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
+        "MsmKey" = "8:_DE9C97FD2405406B98800F21B6B68BC8"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1114,7 +1138,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
-        "OwnerKey" = "8:_C8C5E13F0E52673A8477781DEB723B49"
+        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1228,12 +1252,6 @@
         "Entry"
         {
         "MsmKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
-        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
         "OwnerKey" = "8:_A7C96DBDB89DCECCE8B0296E58C55460"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1245,8 +1263,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_113EDC62DB161377577C591E34FB46FF"
+        "MsmKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
+        "OwnerKey" = "8:_C8C5E13F0E52673A8477781DEB723B49"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1270,7 +1288,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA7CEBA8714D58744B90677E244E38D8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C33968FEE746B8253563C88677EB96CD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9F8439FB684A618A9015A860D1ADA175"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1288,25 +1318,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0200B16FE0954C621A89A744C5DC42DC"
+        "OwnerKey" = "8:_A3E5C01B287745A490D76EF394313E52"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9961604F4EE30BA8DAD09E1B268659E7"
+        "OwnerKey" = "8:_4839269E6A9110E69475524ABC02A16C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E9E8E9F9DA1696FB64E0D95BE4CF29F8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2B9C8F88B3AD046B2FAD42BD2F6421B0"
+        "OwnerKey" = "8:_919E15B26E2A61906C76700EAF451688"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1444,12 +1468,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A7C96DBDB89DCECCE8B0296E58C55460"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1457,12 +1475,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_5F0CF59A58760E1BBCC88B64F694F692"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1492,6 +1504,24 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_113EDC62DB161377577C591E34FB46FF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0C570299956CD6904DEC8821218CC497"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FF9ED97D7CA903D19043B58C4FD3A74D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4A87F3FC0C6BD8DA64D6E46175AA533E"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1513,6 +1543,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -1529,6 +1567,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -1558,37 +1604,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0200B16FE0954C621A89A744C5DC42DC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySql.Web, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_0200B16FE0954C621A89A744C5DC42DC"
-                    {
-                    "Name" = "8:MySql.Web.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Web.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_026023E5939C7C023321987087890FF4"
             {
             "AssemblyRegister" = "3:1"
@@ -1618,6 +1633,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A0C08CA13C34F9786270F3AA9274E52"
+            {
+            "SourcePath" = "8:D:\\work\\other\\installer_package\\uninstall.ico"
+            "TargetName" = "8:uninstall.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0A493633B70E56B101C9CD8AFBCE859A"
@@ -1711,26 +1746,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_115EE64A09B24FD8A19AB0D42F829AA2"
-            {
-            "SourcePath" = "8:D:\\work\\installer_package\\uninstall_command.bat"
-            "TargetName" = "8:uninstall_command.bat"
-            "Tag" = "8:"
-            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_120CFCCBB9BAEF75AC9E51E9F023DB52"
@@ -1888,37 +1903,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2B9C8F88B3AD046B2FAD42BD2F6421B0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_2B9C8F88B3AD046B2FAD42BD2F6421B0"
-                    {
-                    "Name" = "8:MySql.Data.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Data.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_334ED5AB17FAD8058BE755CF7B449E23"
             {
             "AssemblyRegister" = "3:1"
@@ -2057,6 +2041,37 @@
                     }
                 }
             "SourcePath" = "8:DevExpress.Charts.v15.1.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4839269E6A9110E69475524ABC02A16C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Data.Entity.EF6, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_4839269E6A9110E69475524ABC02A16C"
+                    {
+                    "Name" = "8:MySql.Data.Entity.EF6.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Data.Entity.EF6.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
@@ -2260,6 +2275,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9072064AE22D4A00B38B50BD4DC6811E"
+            {
+            "SourcePath" = "8:D:\\work\\other\\installer_package\\pos\\pos.ico"
+            "TargetName" = "8:pos.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9187BFA1FFAE1273163BCC5837D3C6D7"
             {
             "AssemblyRegister" = "3:1"
@@ -2274,6 +2309,37 @@
                     }
                 }
             "SourcePath" = "8:DevExpress.XtraVerticalGrid.v15.1.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_919E15B26E2A61906C76700EAF451688"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_919E15B26E2A61906C76700EAF451688"
+                    {
+                    "Name" = "8:MySql.Data.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Data.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
@@ -2322,37 +2388,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9961604F4EE30BA8DAD09E1B268659E7"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data.Entity.EF6, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9961604F4EE30BA8DAD09E1B268659E7"
-                    {
-                    "Name" = "8:MySql.Data.Entity.EF6.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Data.Entity.EF6.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9DAC04D4643C595D4CB6621F63B900D2"
             {
             "AssemblyRegister" = "3:1"
@@ -2384,10 +2419,41 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A4849EF785D940F78913077A4CB798DC"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F8439FB684A618A9015A860D1ADA175"
             {
-            "SourcePath" = "8:D:\\work\\installer_package\\uninstall.vbs"
-            "TargetName" = "8:uninstall.vbs"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9F8439FB684A618A9015A860D1ADA175"
+                    {
+                    "Name" = "8:FastMember.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:FastMember.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0453AFFFFDC4BD0802419F55FC66DFA"
+            {
+            "SourcePath" = "8:D:\\work\\other\\installer_package\\uninstall_command.bat"
+            "TargetName" = "8:uninstall_command.bat"
             "Tag" = "8:"
             "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
             "Condition" = "8:"
@@ -2402,6 +2468,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A3E5C01B287745A490D76EF394313E52"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Web, Version=6.10.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A3E5C01B287745A490D76EF394313E52"
+                    {
+                    "Name" = "8:MySql.Web.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Web.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7C96DBDB89DCECCE8B0296E58C55460"
@@ -2590,6 +2687,57 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BA7CEBA8714D58744B90677E244E38D8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Data.Entity.EF5, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BA7CEBA8714D58744B90677E244E38D8"
+                    {
+                    "Name" = "8:MySql.Data.Entity.EF5.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Data.Entity.EF5.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C00841322B8942E680FB1F59A8CF7720"
+            {
+            "SourcePath" = "8:D:\\work\\other\\installer_package\\error.wav"
+            "TargetName" = "8:error.wav"
+            "Tag" = "8:"
+            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C2089A059718E05E553123593D2F92EE"
             {
             "AssemblyRegister" = "3:1"
@@ -2619,26 +2767,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C29B630FA8FF4E15A38769E90F64B86A"
-            {
-            "SourcePath" = "8:D:\\work\\installer_package\\uninstall.ico"
-            "TargetName" = "8:uninstall.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C33968FEE746B8253563C88677EB96CD"
@@ -2734,21 +2862,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E9E8E9F9DA1696FB64E0D95BE4CF29F8"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DE9C97FD2405406B98800F21B6B68BC8"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data.Entity.EF5, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E9E8E9F9DA1696FB64E0D95BE4CF29F8"
-                    {
-                    "Name" = "8:MySql.Data.Entity.EF5.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Data.Entity.EF5.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:D:\\work\\other\\installer_package\\uninstall.vbs"
+            "TargetName" = "8:uninstall.vbs"
             "Tag" = "8:"
             "Folder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
             "Condition" = "8:"
@@ -2762,7 +2879,7 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EA4EA2BBC7B84095EFD934547B836E5C"
@@ -2955,7 +3072,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:SetupVolcomPointOfSale"
+        "ProductName" = "8:Volcom POS"
         "ProductCode" = "8:{6FF36265-CEB1-4346-BE0A-8EDE5160DD28}"
         "PackageCode" = "8:{F30EDCD5-444F-4F64-8A8A-D06B10A612B5}"
         "UpgradeCode" = "8:{0723499A-03D1-4C1E-B6EE-7C62A7D644DE}"
@@ -2965,12 +3082,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Volcom Indonesia"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:SetupVolcomPointOfSale"
+        "Title" = "8:Setup Volcom POS"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:IT Management"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -3077,7 +3194,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_1C5B7FDADCEB444E85E9B0F7A2C3D639"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_11D7FB50F27248F8A70D4D8ADDDBDA12"
             {
             "Name" = "8:uninstall"
             "Arguments" = "8:"
@@ -3085,10 +3202,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A4849EF785D940F78913077A4CB798DC"
+            "Target" = "8:_DE9C97FD2405406B98800F21B6B68BC8"
             "Folder" = "8:_2021ADB8F7114293BC44E884FF35A609"
             "WorkingFolder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Icon" = "8:_C29B630FA8FF4E15A38769E90F64B86A"
+            "Icon" = "8:_0A0C08CA13C34F9786270F3AA9274E52"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_54452D7682F340638C25DAC7ECA0B013"
@@ -3102,7 +3219,7 @@
             "Target" = "8:_BE0D94EAFC694F12945AEFBC56FA4A60"
             "Folder" = "8:_2021ADB8F7114293BC44E884FF35A609"
             "WorkingFolder" = "8:_DAEDAAE7D9DE43B580DF259B970F6E6E"
-            "Icon" = "8:"
+            "Icon" = "8:_9072064AE22D4A00B38B50BD4DC6811E"
             "Feature" = "8:"
             }
         }
