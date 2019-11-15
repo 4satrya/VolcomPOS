@@ -18,6 +18,7 @@ Public Class ClassSync
     Dim id_comp_sup_normal As String = "-1"
     Dim id_comp_sup_sale As String = "-1"
     Public show_log As Boolean = False
+    Dim id_outlet_current As String = ""
 
     Public Sub New(ByVal id_sync_data As String)
         show_log = False
@@ -39,6 +40,7 @@ Public Class ClassSync
         is_reset_config = data.Rows(0)("is_reset_config").ToString
         id_comp_sup_normal = data.Rows(0)("acc_normal_origin").ToString
         id_comp_sup_sale = data.Rows(0)("acc_sale_origin").ToString
+        id_outlet_current = data.Rows(0)("id_outlet").ToString
 
         'get sync list
         Dim cond As String = ""
@@ -658,15 +660,24 @@ Public Class ClassSync
                 execute_non_query("CALL generate_delivery_slip(" + acc_normal + ", " + acc_sale + ", '" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
                 dic.Add("tb_sync_delivery", "SELECT * FROM tb_sync_delivery;")
             ElseIf ix = "3" Then 'item price    
-                Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
-                Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
-                If dql.Rows.Count > 0 Then
-                    last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
-                Else
-                    last_upd = "1945-08-17 00:00:10"
-                End If
-                execute_non_query("CALL generate_design_price('" + last_upd + "')", False, host_main, username_main, pass_main, db_main)
-                dic.Add("tb_sync_design_price", "SELECT * FROM tb_sync_design_price;")
+                'old method
+                'Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=3 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
+                'Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
+                'If dql.Rows.Count > 0 Then
+                'last_upd = DateTime.Parse(dql.Rows(0)("sync_time").ToString).ToString("yyyy-MM-dd HH:mm:ss")
+                'Else
+                'last_upd = "1945-08-17 00:00:10"
+                'End If
+
+                'cari item active
+                Dim qa As String = "SELECT 
+                GROUP_CONCAT(DISTINCT i.id_design ORDER BY i.id_design ASC SEPARATOR ',') AS `id_design`
+                FROM tb_item i
+                WHERE i.is_active=1 "
+                Dim id_dsg_par As String = execute_query(qa, 0, True, "", "", "", "")
+
+                execute_non_query("CALL generate_design_price_active(" + id_outlet_current + ", '" + id_dsg_par + "')", False, host_main, username_main, pass_main, db_main)
+                dic.Add("tb_sync_design_price", "SELECT * FROM tb_sync_design_price WHERE id_outlet='" + id_outlet_current + "';")
             ElseIf ix = "4" Then 'comp
                 Dim ql As String = "SELECT a.sync_time FROM tb_sync_log a WHERE a.id_sync_data=4 AND a.is_success=1 ORDER BY a.sync_time DESC LIMIT 1"
                 Dim dql As DataTable = execute_query(ql, -1, True, "", "", "", "")
