@@ -43,7 +43,7 @@
         CAST(((o.tax/(100+o.tax))*p.total) AS DECIMAL(15,0)) AS `ppn`,
         p.id_voucher, p.voucher_number, p.voucher, p.point, p.cash, (p.total-(p.card+p.voucher)) AS `cash_drawer`,
         p.card, p.id_card_type, card.card_type, p.card_number, p.card_name, p.`change`, p.`total_qty`, (p.`total_qty`*-1) AS `total_qty_refund`,
-        p.id_sales, emp.employee_code AS `sales_number`, emp.employee_name AS `sales_name`, p.id_country, cty.country,p.is_payment_ok
+        p.id_sales, emp.employee_code AS `sales_number`, emp.employee_name AS `sales_name`, p.id_country, cty.country,p.is_payment_ok, p.is_get_promo
         FROM tb_pos p 
         INNER JOIN tb_shift s ON s.id_shift = p.id_shift 
         INNER JOIN tb_shift_type st ON st.id_shift_type = s.id_shift_type 
@@ -81,12 +81,41 @@
         i.item_name, 
         IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
         pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
-        '' AS `is_edit`
+        '' AS `is_edit`, i.id_design_cat, sz.size, pd.comm, pd.id_design_cat, pd.is_free_promo
         FROM tb_pos_det pd 
         INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
         WHERE pd.id_pos>0 "
         query += condition + " "
         query += "ORDER BY pd.id_pos_det " + order_type
+        Return query
+    End Function
+
+    Public Function queryDetNew(ByVal id As String)
+        Dim query As String = "SELECT pd.id_pos_det, pd.id_pos,
+        pd.id_item, i.item_code, 
+        i.item_name, 
+        IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
+        pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
+        '' AS `is_edit`, pd.id_design_cat, sz.size, cls.class_display AS `class`
+        FROM tb_pos_det pd 
+        INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
+        INNER JOIN tb_class cls ON cls.id_class = i.id_class
+        WHERE pd.id_pos>0 AND pd.id_pos=" + id + " AND cls.class_display!='VSB' 
+        UNION 
+        SELECT pd.id_pos_det, pd.id_pos,
+        pd.id_item, i.item_code, 
+        i.item_name, 
+        IF(LENGTH(i.item_name)<=35,i.item_name, SUBSTRING(i.item_name,1,35)) AS `item_name_display`,
+        pd.comm, pd.qty, pd.price, (pd.price*pd.qty) AS `amo`, 
+        '' AS `is_edit`, 3 AS `id_design_cat`, sz.size, cls.class_display AS `class`
+        FROM tb_pos_det pd 
+        INNER JOIN tb_item i ON i.id_item = pd.id_item 
+        INNER JOIN tb_size sz ON sz.id_size = i.id_size
+        INNER JOIN tb_class cls ON cls.id_class = i.id_class
+        WHERE pd.id_pos>0 AND pd.id_pos=" + id + " AND cls.class_display='VSB' 
+        ORDER BY id_design_cat ASC, id_pos_det ASC "
         Return query
     End Function
 
@@ -112,7 +141,7 @@
         End If
 
         Dim query As String = "SELECT s.id_shift, s.id_shift_type, st.shift_type, st.shift_name, st.shift_start, 
-        s.id_user, u.`username`, s.id_pos_dev, dev.pos_dev, dev.mac_address, s.open_shift, DATE_FORMAT(s.open_shift,'%d/%m/%Y') AS  `open_shift_display`, s.close_shift, s.cash, s.is_open 
+        s.id_user, u.`username`, u.id_employee, s.id_pos_dev, dev.pos_dev, dev.mac_address, s.open_shift, DATE_FORMAT(s.open_shift,'%d/%m/%Y') AS  `open_shift_display`, s.close_shift, s.cash, s.is_open 
         FROM tb_shift s 
         INNER JOIN tb_shift_type st ON st.id_shift_type = s.id_shift_type 
         INNER JOIN tb_pos_dev dev ON dev.id_pos_dev = s.id_pos_dev
@@ -168,7 +197,7 @@
         Print(eNmlText + Chr(27) + Chr(77) + "1" + data.Rows(0)("header_2").ToString)
         Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_3").ToString)
         Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_4").ToString)
-        Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_5").ToString + eLeft)
+        'Print(Chr(27) + Chr(77) + "1" + data.Rows(0)("header_5").ToString + eLeft)
         PrintDashes()
     End Sub
 
@@ -192,7 +221,7 @@
         Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
         Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
         Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
-        Print(eLeft + dt_main.Rows(0)("pos_dev").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
+        Print(eLeft + dt_main.Rows(0)("cashier").ToString.ToUpper + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
 
         If copy Then
             Dim dt As String = DateTime.Parse(getTimeDB.ToString).ToString("dd\/MM\/yyyy HH:mm:ss")
@@ -201,14 +230,75 @@
             Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "- C  O  P  Y -" + eNmlText + Chr(27) + Chr(77) + "1")
         End If
 
+        'get promo
+        If dt_main.Rows(0)("is_get_promo").ToString = "1" Then
+            Dim qpr As String = "SELECT i.item_name FROM tb_pos_det d  INNER JOIN tb_item i ON i.id_item = d.id_item WHERE d.id_pos=" + id_pos + " AND d.is_free_promo=1 "
+            Dim dtr As DataTable = execute_query(qpr, -1, True, "", "", "", "")
+            Dim pr_name As String = ""
+            If dtr.Rows.Count > 0 Then
+                pr_name = dtr.Rows(0)("item_name").ToString
+            Else
+                pr_name = "-"
+            End If
+
+            PrintDashes()
+            Print(eCentre + Chr(27) + Chr(33) + Chr(16) + "CONGRATULATION" + eNmlText + Chr(27) + Chr(77) + "1")
+            Print(eCentre + "YOU ARE ENTITLED TO A FREE")
+            Print(eCentre + pr_name)
+            Print(eCentre + "(STOCK AVAILABLE)")
+            Print(eCentre + "")
+        End If
+
 
         Print(eLeft + "No.--------Code--------Qty--------Amount")
-        Dim query_det As String = queryDet("AND pd.id_pos=" + id_pos + "", "1")
+        Print(eLeft + "")
+        Dim query_det As String = queryDetNew(id_pos)
         Dim dt_det As DataTable = execute_query(query_det, -1, True, "", "", "", "")
         Dim no As Integer = 1
+        Dim subtot As Decimal = 0.00
+        Dim cek_type As String = "-1"
         For i As Integer = 0 To (dt_det.Rows.Count - 1)
-            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+            'initial
+            subtot += dt_det.Rows(i)("amo")
+            cek_type = dt_det.Rows(i)("id_design_cat").ToString
+
+            'cetak detil
+            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+
+            'cek tipe harga setelahnya
+            Dim next_type As String = "-1"
+            Try
+                next_type = dt_det.Rows(i + 1)("id_design_cat").ToString
+            Catch ex As Exception
+                next_type = "-1"
+            End Try
+            If dt_det.Rows(i)("id_design_cat").ToString <> next_type Then
+                If subtot > 0 And (cek_type = "1" Or cek_type = "2") Then
+                    Dim subtot_view As String = Decimal.Parse(subtot.ToString).ToString("N0")
+                    Dim subtot_view_max As Integer = 15
+                    If subtot_view.Length < subtot_view_max Then
+                        For a = 1 To (subtot_view_max - subtot_view.Length)
+                            subtot_view = " " + subtot_view
+                        Next
+                    Else
+                        subtot_view = subtot_view
+                    End If
+
+                    Print(eLeft + "                         " + "---------------")
+                    If cek_type = "1" Then
+                        Print(eLeft + "      Subtotal Reguler : " + subtot_view)
+                        Print(eLeft + "")
+                    Else
+                        Print(eLeft + "         Subtotal Sale : " + subtot_view)
+                        Print(eLeft + "")
+                    End If
+                End If
+                subtot = 0.00
+            End If
+
+            'next numbering
             no += 1
+            Print(eLeft + "")
         Next
 
         PrintDashes()
@@ -219,8 +309,8 @@
             total_qty = total_qty
         End If
         Print(eLeft + "Total                  " + total_qty + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("total")).ToString("N0"))
-        Print(eLeft + "Dasar Kena PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
-        Print(eLeft + "PPN" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
+        Print(eLeft + "Tax Base" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("kena_ppn")).ToString("N0"))
+        Print(eLeft + "Tax" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("ppn")).ToString("N0"))
         Print(eLeft + "Cash" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("cash")).ToString("N0"))
         If dt_main.Rows(0)("card") > 0 Then
             Print(eLeft + "Card" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("card")).ToString("N0"))
@@ -231,33 +321,34 @@
         Print(eLeft + "Change" + Chr(13) + eRight + Decimal.Parse(dt_main.Rows(0)("change")).ToString("N0"))
 
         'jika ada card/voucher
-        Print(vbLf)
         If dt_main.Rows(0)("card") > 0 Then
+            Print(eLeft + "")
             Print(eLeft + "       Card Type" + "    : " + dt_main.Rows(0)("card_type").ToString)
             Print(eLeft + "       Number" + "       : " + dt_main.Rows(0)("card_number").ToString)
             Print(eLeft + "       Holder" + "       : " + dt_main.Rows(0)("card_name").ToString)
         End If
         If dt_main.Rows(0)("voucher") > 0 Then
+            Print(eLeft + "")
             Print(eLeft + "       Voucher No." + "  : " + dt_main.Rows(0)("voucher_number"))
         End If
 
         stt_pos = dt_main.Rows(0)("id_pos_status").ToString
         is_payment_ok = dt_main.Rows(0)("is_payment_ok").ToString
-        Print(vbLf)
+        Print(eLeft + "")
     End Sub
 
     Private Sub PrintBodyRefund(ByVal id_pos As String)
         Dim query_main As String = queryMain("AND p.id_pos=" + id_pos + "", "1")
         Dim dt_main As DataTable = execute_query(query_main, -1, True, "", "", "", "")
         Print(eLeft + dt_main.Rows(0)("pos_number").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_date_display").ToString)
-        Print(eLeft + dt_main.Rows(0)("pos_dev").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
+        Print(eLeft + dt_main.Rows(0)("cashier").ToString + Chr(13) + eRight + dt_main.Rows(0)("pos_time_display").ToString)
 
         Print(eLeft + "No.--------Code--------Qty--------Amount")
         Dim query_det As String = queryDet("AND pd.id_pos=" + id_pos + "", "1")
         Dim dt_det As DataTable = execute_query(query_det, -1, True, "", "", "", "")
         Dim no As Integer = 1
         For i As Integer = 0 To (dt_det.Rows.Count - 1)
-            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
+            printItem(no.ToString, dt_det.Rows(i)("item_code").ToString, dt_det.Rows(i)("item_name_display").ToString, dt_det.Rows(i)("size").ToString, Decimal.Parse(dt_det.Rows(i)("qty")).ToString("N0"), Decimal.Parse(dt_det.Rows(i)("amo")).ToString("N0"))
             no += 1
         Next
 
@@ -457,7 +548,7 @@
                 total_vch += dtvch.Rows(i)("voucher")
 
                 'time
-                Dim time_vch As String = DateTime.Parse(dtf.Rows(i)("pos_date").ToString).ToString("HH:mm")
+                Dim time_vch As String = DateTime.Parse(dtvch.Rows(i)("pos_date").ToString).ToString("HH:mm")
 
                 Print(eLeft + "   " + no + " " + number + " " + ref + " " + time_vch + " " + vch)
                 no_vch += 1
@@ -551,7 +642,7 @@
     End Sub
 
 
-    Private Sub printItem(ByVal no As String, code As String, desc As String, qty As String, amount As String)
+    Private Sub printItem(ByVal no As String, code As String, desc As String, size As String, qty As String, amount As String)
         'no=5; code=18; qty=2; amount=15
         If no.Length = "1" Then
             no = " " + no + ".  "
@@ -582,18 +673,26 @@
         Else
             amount = amount
         End If
+
+        Dim desc_max As Integer = 32
+        If desc.Length < desc_max Then
+            For d = 1 To (desc_max - desc.Length)
+                desc += " "
+            Next
+        Else
+            desc = desc
+        End If
         Print(eLeft + no + code + qty + amount)
-        Print(eLeft + "     " + desc)
+        Print(eLeft + "     " + desc + size)
     End Sub
 
     Private Sub PrintFooter()
         If stt_pos = "2" Or (stt_pos = "1" And is_payment_ok = "1") Then 'closed
             Dim query As String = "SELECT * FROM tb_opt"
             Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
-            Print(eCentre + data.Rows(0)("footer_1").ToString)
-            Print(eCentre + data.Rows(0)("footer_2").ToString)
-            Print(eCentre + data.Rows(0)("footer_3").ToString)
-            Print(eCentre + data.Rows(0)("footer_4").ToString)
+            Print(eCentre + data.Rows(0)("footer").ToString)
+            Print(eLeft + "")
+            Print(eLeft + data.Rows(0)("policy").ToString)
         ElseIf stt_pos = "3" Then 'cancelled
             Print(eCentre + "*** CANCELLED TRANSACTION ***")
         Else
@@ -686,6 +785,25 @@
             sp = Nothing
         Catch ex As Exception
         End Try
+    End Sub
+
+    Public Sub endOfDay(ByVal date_now As String)
+        'update
+        Dim query As String = "/*delete pos summary*/
+        DELETE ps.* FROM tb_pos_summary ps
+        INNER JOIN tb_pos p ON p.id_pos = ps.id_pos
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "';
+        /*insert pos summary*/
+        INSERT INTO tb_pos_summary(id_pos, id_item, item_code, id_product, id_comp_sup, comm, qty, price, id_design_cat, is_free_promo)
+        SELECT pd.id_pos, pd.id_item, pd.item_code, pd.id_product, pd.id_comp_sup, pd.comm, SUM(pd.qty) AS `qty`, pd.price, pd.id_design_cat, pd.is_free_promo
+        FROM tb_pos p
+        INNER JOIN tb_pos_det pd ON pd.id_pos = p.id_pos
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "'
+        GROUP BY pd.id_pos,pd.item_code;
+        /*update*/
+        UPDATE tb_pos p SET p.is_closed=1, p.closed_date=now(), p.closed_by=" + id_employee_user + " 
+        WHERE p.id_pos_status=2 AND DATE(p.pos_date)='" + date_now + "'; "
+        execute_non_query(query, True, "", "", "", "")
     End Sub
 
 End Class

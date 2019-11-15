@@ -75,6 +75,11 @@
     <Reference Include="DevExpress.XtraScheduler.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraScheduler.v15.1.Core, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeList.v15.1, Version=15.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="FastMember, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMember.1.3.0\lib\net45\FastMember.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Software\MySqlBackup.NET 2.0.9.5\Net45\MySql.Data.dll</HintPath>
@@ -133,6 +138,7 @@
     <Compile Include="ClassRawPrint.vb" />
     <Compile Include="ClassRec.vb" />
     <Compile Include="ClassRet.vb" />
+    <Compile Include="ClassSendEmail.vb" />
     <Compile Include="ClassSO.vb" />
     <Compile Include="ClassSync.vb" />
     <Compile Include="ClassTrf.vb" />
@@ -192,6 +198,18 @@
     <Compile Include="FormDatabase.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormDeleteScan.Designer.vb">
+      <DependentUpon>FormDeleteScan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDeleteScan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDeliverySlip.Designer.vb">
+      <DependentUpon>FormDeliverySlip.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormDeliverySlip.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormDept.Designer.vb">
       <DependentUpon>FormDept.vb</DependentUpon>
     </Compile>
@@ -202,6 +220,18 @@
       <DependentUpon>FormEmp.vb</DependentUpon>
     </Compile>
     <Compile Include="FormEmp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEndOfDay.Designer.vb">
+      <DependentUpon>FormEndOfDay.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormEndOfDay.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormError.designer.vb">
+      <DependentUpon>FormError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormError.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormFront.Designer.vb">
@@ -244,6 +274,12 @@
       <DependentUpon>FormLoginInv.vb</DependentUpon>
     </Compile>
     <Compile Include="FormLoginInv.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogSync.Designer.vb">
+      <DependentUpon>FormLogSync.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogSync.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMasterCompany.designer.vb">
@@ -330,6 +366,12 @@
     <Compile Include="FormRecDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormRecOwnProduct.Designer.vb">
+      <DependentUpon>FormRecOwnProduct.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRecOwnProduct.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormReportCopyReceipt.Designer.vb">
       <DependentUpon>FormReportCopyReceipt.vb</DependentUpon>
     </Compile>
@@ -394,6 +436,12 @@
       <DependentUpon>FormTemp.vb</DependentUpon>
     </Compile>
     <Compile Include="FormTemp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTransList.Designer.vb">
+      <DependentUpon>FormTransList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormTransList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormTrf.Designer.vb">
@@ -490,6 +538,18 @@
     <Compile Include="ReportRec.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportRecOwn.Designer.vb">
+      <DependentUpon>ReportRecOwn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRecOwn.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportRecOwnPre.Designer.vb">
+      <DependentUpon>ReportRecOwnPre.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRecOwnPre.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ReportRet.Designer.vb">
       <DependentUpon>ReportRet.vb</DependentUpon>
     </Compile>
@@ -576,11 +636,23 @@
     <EmbeddedResource Include="FormDatabase.resx">
       <DependentUpon>FormDatabase.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDeleteScan.resx">
+      <DependentUpon>FormDeleteScan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDeliverySlip.resx">
+      <DependentUpon>FormDeliverySlip.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDept.resx">
       <DependentUpon>FormDept.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEmp.resx">
       <DependentUpon>FormEmp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEndOfDay.resx">
+      <DependentUpon>FormEndOfDay.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormError.resx">
+      <DependentUpon>FormError.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormFront.resx">
       <DependentUpon>FormFront.vb</DependentUpon>
@@ -602,6 +674,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoginInv.resx">
       <DependentUpon>FormLoginInv.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogSync.resx">
+      <DependentUpon>FormLogSync.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMasterCompany.resx">
       <DependentUpon>FormMasterCompany.vb</DependentUpon>
@@ -645,6 +720,9 @@
     <EmbeddedResource Include="FormRecDet.resx">
       <DependentUpon>FormRecDet.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormRecOwnProduct.resx">
+      <DependentUpon>FormRecOwnProduct.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReportCopyReceipt.resx">
       <DependentUpon>FormReportCopyReceipt.vb</DependentUpon>
     </EmbeddedResource>
@@ -677,6 +755,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormTemp.resx">
       <DependentUpon>FormTemp.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTransList.resx">
+      <DependentUpon>FormTransList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTrf.resx">
       <DependentUpon>FormTrf.vb</DependentUpon>
@@ -722,6 +803,12 @@
     <EmbeddedResource Include="ReportRec.resx">
       <DependentUpon>ReportRec.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReportRecOwn.resx">
+      <DependentUpon>ReportRecOwn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReportRecOwnPre.resx">
+      <DependentUpon>ReportRecOwnPre.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportRet.resx">
       <DependentUpon>ReportRet.vb</DependentUpon>
     </EmbeddedResource>
@@ -766,6 +853,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\blurred_purple-wallpaper-1366x768.jpg" />
   </ItemGroup>
   <ItemGroup>

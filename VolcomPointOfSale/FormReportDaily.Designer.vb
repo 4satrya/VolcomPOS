@@ -20,9 +20,6 @@ Partial Class FormReportDaily
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReportDaily))
-        Me.PanelControlTitle = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl11 = New DevExpress.XtraEditors.LabelControl()
@@ -75,9 +72,9 @@ Partial Class FormReportDaily
         Me.DEUntil = New DevExpress.XtraEditors.DateEdit()
         Me.LabelControl3 = New DevExpress.XtraEditors.LabelControl()
         Me.DEFrom = New DevExpress.XtraEditors.DateEdit()
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControlTitle.SuspendLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
+        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -92,50 +89,21 @@ Partial Class FormReportDaily
         CType(Me.DEUntil.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DEFrom.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DEFrom.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'PanelControlTitle
-        '
-        Me.PanelControlTitle.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlTitle.Controls.Add(Me.LabelControl13)
-        Me.PanelControlTitle.Controls.Add(Me.PanelControlBack)
-        Me.PanelControlTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlTitle.Location = New System.Drawing.Point(20, 20)
-        Me.PanelControlTitle.Name = "PanelControlTitle"
-        Me.PanelControlTitle.Size = New System.Drawing.Size(815, 61)
-        Me.PanelControlTitle.TabIndex = 4
-        '
-        'LabelControl13
-        '
-        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
-        Me.LabelControl13.Name = "LabelControl13"
-        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
-        Me.LabelControl13.Size = New System.Drawing.Size(195, 46)
-        Me.LabelControl13.TabIndex = 1
-        Me.LabelControl13.Text = "Daily Transaction"
-        '
-        'PanelControlBack
-        '
-        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
-        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
-        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControlBack.Name = "PanelControlBack"
-        Me.PanelControlBack.Size = New System.Drawing.Size(40, 61)
-        Me.PanelControlBack.TabIndex = 4
         '
         'PanelControl1
         '
         Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl1.Controls.Add(Me.LabelControl13)
+        Me.PanelControl1.Controls.Add(Me.PanelControlBack)
         Me.PanelControl1.Controls.Add(Me.PanelControl2)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(20, 373)
+        Me.PanelControl1.Location = New System.Drawing.Point(0, 418)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(815, 35)
+        Me.PanelControl1.Size = New System.Drawing.Size(855, 10)
         Me.PanelControl1.TabIndex = 5
+        Me.PanelControl1.Visible = False
         '
         'PanelControl2
         '
@@ -145,9 +113,9 @@ Partial Class FormReportDaily
         Me.PanelControl2.Controls.Add(Me.LabelControl8)
         Me.PanelControl2.Controls.Add(Me.LabelControl9)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl2.Location = New System.Drawing.Point(684, 0)
+        Me.PanelControl2.Location = New System.Drawing.Point(724, 0)
         Me.PanelControl2.Name = "PanelControl2"
-        Me.PanelControl2.Size = New System.Drawing.Size(131, 35)
+        Me.PanelControl2.Size = New System.Drawing.Size(131, 10)
         Me.PanelControl2.TabIndex = 8
         '
         'LabelControl11
@@ -189,12 +157,12 @@ Partial Class FormReportDaily
         'GCDaily
         '
         Me.GCDaily.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCDaily.Location = New System.Drawing.Point(20, 122)
+        Me.GCDaily.Location = New System.Drawing.Point(0, 70)
         Me.GCDaily.LookAndFeel.SkinName = "Office 2010 Blue"
         Me.GCDaily.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCDaily.MainView = Me.GVDaily
         Me.GCDaily.Name = "GCDaily"
-        Me.GCDaily.Size = New System.Drawing.Size(815, 251)
+        Me.GCDaily.Size = New System.Drawing.Size(855, 348)
         Me.GCDaily.TabIndex = 6
         Me.GCDaily.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVDaily})
         '
@@ -522,6 +490,7 @@ Partial Class FormReportDaily
         '
         'PanelControlStock
         '
+        Me.PanelControlStock.Controls.Add(Me.BtnPrint)
         Me.PanelControlStock.Controls.Add(Me.LEStatus)
         Me.PanelControlStock.Controls.Add(Me.LabelControl4)
         Me.PanelControlStock.Controls.Add(Me.BtnView)
@@ -532,26 +501,26 @@ Partial Class FormReportDaily
         Me.PanelControlStock.Controls.Add(Me.LabelControl3)
         Me.PanelControlStock.Controls.Add(Me.DEFrom)
         Me.PanelControlStock.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlStock.Location = New System.Drawing.Point(20, 81)
+        Me.PanelControlStock.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlStock.Name = "PanelControlStock"
-        Me.PanelControlStock.Size = New System.Drawing.Size(815, 41)
+        Me.PanelControlStock.Size = New System.Drawing.Size(855, 70)
         Me.PanelControlStock.TabIndex = 7
         '
         'LEStatus
         '
-        Me.LEStatus.Location = New System.Drawing.Point(442, 10)
+        Me.LEStatus.Location = New System.Drawing.Point(46, 36)
         Me.LEStatus.Name = "LEStatus"
         Me.LEStatus.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LEStatus.Properties.Appearance.Options.UseFont = True
         Me.LEStatus.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.LEStatus.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("id_pos_status", "ID", 20, DevExpress.Utils.FormatType.None, "", False, DevExpress.Utils.HorzAlignment.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("pos_status", "Status")})
-        Me.LEStatus.Size = New System.Drawing.Size(129, 20)
+        Me.LEStatus.Size = New System.Drawing.Size(158, 20)
         Me.LEStatus.TabIndex = 2
         '
         'LabelControl4
         '
         Me.LabelControl4.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl4.Location = New System.Drawing.Point(404, 13)
+        Me.LabelControl4.Location = New System.Drawing.Point(8, 39)
         Me.LabelControl4.Name = "LabelControl4"
         Me.LabelControl4.Size = New System.Drawing.Size(32, 13)
         Me.LabelControl4.TabIndex = 9
@@ -565,7 +534,7 @@ Partial Class FormReportDaily
         Me.BtnView.Appearance.Options.UseBackColor = True
         Me.BtnView.Appearance.Options.UseFont = True
         Me.BtnView.Appearance.Options.UseForeColor = True
-        Me.BtnView.Location = New System.Drawing.Point(692, 10)
+        Me.BtnView.Location = New System.Drawing.Point(411, 23)
         Me.BtnView.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
         Me.BtnView.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
         Me.BtnView.LookAndFeel.SkinName = "Metropolis"
@@ -578,19 +547,19 @@ Partial Class FormReportDaily
         '
         'LEShift
         '
-        Me.LEShift.Location = New System.Drawing.Point(606, 10)
+        Me.LEShift.Location = New System.Drawing.Point(241, 36)
         Me.LEShift.Name = "LEShift"
         Me.LEShift.Properties.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LEShift.Properties.Appearance.Options.UseFont = True
         Me.LEShift.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
         Me.LEShift.Properties.Columns.AddRange(New DevExpress.XtraEditors.Controls.LookUpColumnInfo() {New DevExpress.XtraEditors.Controls.LookUpColumnInfo("id_shift_type", "ID", 20, DevExpress.Utils.FormatType.None, "", False, DevExpress.Utils.HorzAlignment.[Default]), New DevExpress.XtraEditors.Controls.LookUpColumnInfo("shift_type", "Shift")})
-        Me.LEShift.Size = New System.Drawing.Size(80, 20)
+        Me.LEShift.Size = New System.Drawing.Size(157, 20)
         Me.LEShift.TabIndex = 3
         '
         'LabelControl2
         '
         Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl2.Location = New System.Drawing.Point(576, 13)
+        Me.LabelControl2.Location = New System.Drawing.Point(210, 39)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(24, 13)
         Me.LabelControl2.TabIndex = 7
@@ -624,7 +593,7 @@ Partial Class FormReportDaily
         'LabelControl3
         '
         Me.LabelControl3.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl3.Location = New System.Drawing.Point(14, 13)
+        Me.LabelControl3.Location = New System.Drawing.Point(8, 13)
         Me.LabelControl3.Name = "LabelControl3"
         Me.LabelControl3.Size = New System.Drawing.Size(26, 13)
         Me.LabelControl3.TabIndex = 4
@@ -646,6 +615,47 @@ Partial Class FormReportDaily
         Me.DEFrom.TabIndex = 0
         Me.DEFrom.ToolTipIconType = DevExpress.Utils.ToolTipIconType.Information
         '
+        'PanelControlBack
+        '
+        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
+        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControlBack.Name = "PanelControlBack"
+        Me.PanelControlBack.Size = New System.Drawing.Size(40, 10)
+        Me.PanelControlBack.TabIndex = 9
+        '
+        'LabelControl13
+        '
+        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
+        Me.LabelControl13.Name = "LabelControl13"
+        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
+        Me.LabelControl13.Size = New System.Drawing.Size(195, 46)
+        Me.LabelControl13.TabIndex = 10
+        Me.LabelControl13.Text = "Daily Transaction"
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrint.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrint.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrint.Appearance.Options.UseBackColor = True
+        Me.BtnPrint.Appearance.Options.UseFont = True
+        Me.BtnPrint.Appearance.Options.UseForeColor = True
+        Me.BtnPrint.Location = New System.Drawing.Point(472, 23)
+        Me.BtnPrint.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrint.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrint.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrint.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrint.TabIndex = 10
+        Me.BtnPrint.Text = "Print"
+        '
         'FormReportDaily
         '
         Me.Appearance.Options.UseFont = True
@@ -655,26 +665,19 @@ Partial Class FormReportDaily
         Me.Controls.Add(Me.GCDaily)
         Me.Controls.Add(Me.PanelControlStock)
         Me.Controls.Add(Me.PanelControl1)
-        Me.Controls.Add(Me.PanelControlTitle)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormReportDaily"
-        Me.Padding = New System.Windows.Forms.Padding(20)
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Daily Transaction"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControlTitle.ResumeLayout(False)
-        Me.PanelControlTitle.PerformLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
+        Me.PanelControl1.PerformLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
@@ -689,13 +692,10 @@ Partial Class FormReportDaily
         CType(Me.DEUntil.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DEFrom.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DEFrom.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents PanelControlTitle As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControl1 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControl2 As DevExpress.XtraEditors.PanelControl
     Friend WithEvents LabelControl11 As DevExpress.XtraEditors.LabelControl
@@ -748,4 +748,7 @@ Partial Class FormReportDaily
     Friend WithEvents gridBand4 As DevExpress.XtraGrid.Views.BandedGrid.GridBand
     Friend WithEvents gridBand18 As DevExpress.XtraGrid.Views.BandedGrid.GridBand
     Friend WithEvents gridBand17 As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
 End Class

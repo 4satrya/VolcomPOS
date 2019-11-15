@@ -43,6 +43,12 @@ Partial Class FormStock
         Me.GridColumn31 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn33 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn34 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumndesign_cat = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumnPrice = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.PanelControl3 = New DevExpress.XtraEditors.PanelControl()
+        Me.PanelControl4 = New DevExpress.XtraEditors.PanelControl()
+        Me.SimpleButton2 = New DevExpress.XtraEditors.SimpleButton()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         Me.XTPStock = New DevExpress.XtraTab.XtraTabPage()
         Me.GCStock = New DevExpress.XtraGrid.GridControl()
         Me.GVStock = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -56,6 +62,7 @@ Partial Class FormStock
         Me.GridColumnRes = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumnTotal = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PanelControlStock = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnPrintSOH = New DevExpress.XtraEditors.SimpleButton()
         Me.CEActive = New DevExpress.XtraEditors.CheckEdit()
         Me.SLESupplier = New DevExpress.XtraEditors.SearchLookUpEdit()
         Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
@@ -87,6 +94,7 @@ Partial Class FormStock
         Me.GridColumn25 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.GridColumn26 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.PCCard = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnPrintStockCard = New DevExpress.XtraEditors.SimpleButton()
         Me.DEFromCard = New DevExpress.XtraEditors.DateEdit()
         Me.LabelControl7 = New DevExpress.XtraEditors.LabelControl()
         Me.SimpleButton1 = New DevExpress.XtraEditors.SimpleButton()
@@ -117,6 +125,10 @@ Partial Class FormStock
         Me.XTPSum.SuspendLayout()
         CType(Me.GCSum, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVSum, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl3.SuspendLayout()
+        CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.PanelControl4.SuspendLayout()
         Me.XTPStock.SuspendLayout()
         CType(Me.GCStock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GVStock, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -154,10 +166,11 @@ Partial Class FormStock
         Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
         Me.PanelControl1.Controls.Add(Me.PanelControl2)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(20, 545)
+        Me.PanelControl1.Location = New System.Drawing.Point(0, 565)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(842, 35)
+        Me.PanelControl1.Size = New System.Drawing.Size(954, 35)
         Me.PanelControl1.TabIndex = 6
+        Me.PanelControl1.Visible = False
         '
         'PanelControl2
         '
@@ -169,7 +182,7 @@ Partial Class FormStock
         Me.PanelControl2.Controls.Add(Me.LabelControl8)
         Me.PanelControl2.Controls.Add(Me.LabelControl9)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl2.Location = New System.Drawing.Point(522, 0)
+        Me.PanelControl2.Location = New System.Drawing.Point(634, 0)
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(320, 35)
         Me.PanelControl2.TabIndex = 7
@@ -250,43 +263,45 @@ Partial Class FormStock
         '
         Me.XTCStock.Dock = System.Windows.Forms.DockStyle.Fill
         Me.XTCStock.HeaderLocation = DevExpress.XtraTab.TabHeaderLocation.Left
-        Me.XTCStock.Location = New System.Drawing.Point(20, 81)
+        Me.XTCStock.Location = New System.Drawing.Point(0, 43)
+        Me.XTCStock.LookAndFeel.SkinName = "Metropolis"
+        Me.XTCStock.LookAndFeel.UseDefaultLookAndFeel = False
         Me.XTCStock.Name = "XTCStock"
         Me.XTCStock.SelectedTabPage = Me.XTPSum
-        Me.XTCStock.Size = New System.Drawing.Size(842, 464)
+        Me.XTCStock.Size = New System.Drawing.Size(954, 522)
         Me.XTCStock.TabIndex = 9
         Me.XTCStock.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPSum, Me.XTPStock, Me.XTPStockCard})
         '
         'XTPSum
         '
         Me.XTPSum.Controls.Add(Me.GCSum)
+        Me.XTPSum.Controls.Add(Me.PanelControl3)
         Me.XTPSum.Name = "XTPSum"
-        Me.XTPSum.Size = New System.Drawing.Size(816, 462)
+        Me.XTPSum.Size = New System.Drawing.Size(928, 520)
         Me.XTPSum.Text = "Summary"
         '
         'GCSum
         '
         Me.GCSum.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GCSum.Location = New System.Drawing.Point(0, 0)
-        Me.GCSum.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCSum.Location = New System.Drawing.Point(0, 35)
+        Me.GCSum.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCSum.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCSum.MainView = Me.GVSum
         Me.GCSum.Name = "GCSum"
-        Me.GCSum.Size = New System.Drawing.Size(816, 462)
+        Me.GCSum.Size = New System.Drawing.Size(928, 485)
         Me.GCSum.TabIndex = 2
         Me.GCSum.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVSum})
         '
         'GVSum
         '
-        Me.GVSum.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn27, Me.GridColumn28, Me.GridColumn29, Me.GridColumn30, Me.GridColumn31, Me.GridColumn33, Me.GridColumn34})
+        Me.GVSum.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn27, Me.GridColumn28, Me.GridColumn29, Me.GridColumn30, Me.GridColumn31, Me.GridColumn33, Me.GridColumn34, Me.GridColumndesign_cat, Me.GridColumnPrice})
         Me.GVSum.GridControl = Me.GCSum
-        Me.GVSum.GroupCount = 1
         Me.GVSum.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "stocker", Me.GridColumn33, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "display", Me.GridColumn34, "{0:n0}")})
         Me.GVSum.Name = "GVSum"
         Me.GVSum.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVSum.OptionsFind.AlwaysVisible = True
         Me.GVSum.OptionsView.ShowFooter = True
         Me.GVSum.OptionsView.ShowGroupPanel = False
-        Me.GVSum.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn29, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
         'GridColumn27
         '
@@ -317,7 +332,7 @@ Partial Class FormStock
         Me.GridColumn30.FieldName = "size"
         Me.GridColumn30.Name = "GridColumn30"
         Me.GridColumn30.Visible = True
-        Me.GridColumn30.VisibleIndex = 2
+        Me.GridColumn30.VisibleIndex = 3
         Me.GridColumn30.Width = 56
         '
         'GridColumn31
@@ -326,7 +341,7 @@ Partial Class FormStock
         Me.GridColumn31.FieldName = "class"
         Me.GridColumn31.Name = "GridColumn31"
         Me.GridColumn31.Visible = True
-        Me.GridColumn31.VisibleIndex = 1
+        Me.GridColumn31.VisibleIndex = 2
         '
         'GridColumn33
         '
@@ -337,7 +352,7 @@ Partial Class FormStock
         Me.GridColumn33.Name = "GridColumn33"
         Me.GridColumn33.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "stocker", "{0:n0}")})
         Me.GridColumn33.Visible = True
-        Me.GridColumn33.VisibleIndex = 3
+        Me.GridColumn33.VisibleIndex = 6
         Me.GridColumn33.Width = 148
         '
         'GridColumn34
@@ -349,26 +364,106 @@ Partial Class FormStock
         Me.GridColumn34.Name = "GridColumn34"
         Me.GridColumn34.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "display", "{0:n0}")})
         Me.GridColumn34.Visible = True
-        Me.GridColumn34.VisibleIndex = 4
+        Me.GridColumn34.VisibleIndex = 7
         Me.GridColumn34.Width = 152
+        '
+        'GridColumndesign_cat
+        '
+        Me.GridColumndesign_cat.Caption = "Status"
+        Me.GridColumndesign_cat.FieldName = "design_cat"
+        Me.GridColumndesign_cat.Name = "GridColumndesign_cat"
+        Me.GridColumndesign_cat.Visible = True
+        Me.GridColumndesign_cat.VisibleIndex = 5
+        '
+        'GridColumnPrice
+        '
+        Me.GridColumnPrice.Caption = "Price"
+        Me.GridColumnPrice.DisplayFormat.FormatString = "N0"
+        Me.GridColumnPrice.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.GridColumnPrice.FieldName = "price"
+        Me.GridColumnPrice.Name = "GridColumnPrice"
+        Me.GridColumnPrice.Visible = True
+        Me.GridColumnPrice.VisibleIndex = 4
+        '
+        'PanelControl3
+        '
+        Me.PanelControl3.Controls.Add(Me.PanelControl4)
+        Me.PanelControl3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PanelControl3.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControl3.Name = "PanelControl3"
+        Me.PanelControl3.Size = New System.Drawing.Size(928, 35)
+        Me.PanelControl3.TabIndex = 3
+        '
+        'PanelControl4
+        '
+        Me.PanelControl4.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl4.Controls.Add(Me.SimpleButton2)
+        Me.PanelControl4.Controls.Add(Me.BtnPrint)
+        Me.PanelControl4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PanelControl4.Location = New System.Drawing.Point(774, 2)
+        Me.PanelControl4.Name = "PanelControl4"
+        Me.PanelControl4.Size = New System.Drawing.Size(152, 31)
+        Me.PanelControl4.TabIndex = 7
+        '
+        'SimpleButton2
+        '
+        Me.SimpleButton2.Appearance.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.SimpleButton2.Appearance.BorderColor = System.Drawing.Color.DeepSkyBlue
+        Me.SimpleButton2.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SimpleButton2.Appearance.ForeColor = System.Drawing.Color.White
+        Me.SimpleButton2.Appearance.Options.UseBackColor = True
+        Me.SimpleButton2.Appearance.Options.UseBorderColor = True
+        Me.SimpleButton2.Appearance.Options.UseFont = True
+        Me.SimpleButton2.Appearance.Options.UseForeColor = True
+        Me.SimpleButton2.Location = New System.Drawing.Point(8, 5)
+        Me.SimpleButton2.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.SimpleButton2.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.SimpleButton2.LookAndFeel.SkinName = "Metropolis"
+        Me.SimpleButton2.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.SimpleButton2.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.SimpleButton2.Name = "SimpleButton2"
+        Me.SimpleButton2.Size = New System.Drawing.Size(77, 20)
+        Me.SimpleButton2.TabIndex = 8
+        Me.SimpleButton2.Text = "Refresh View"
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrint.Appearance.BorderColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnPrint.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrint.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrint.Appearance.Options.UseBackColor = True
+        Me.BtnPrint.Appearance.Options.UseBorderColor = True
+        Me.BtnPrint.Appearance.Options.UseFont = True
+        Me.BtnPrint.Appearance.Options.UseForeColor = True
+        Me.BtnPrint.Location = New System.Drawing.Point(88, 5)
+        Me.BtnPrint.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrint.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrint.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrint.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrint.TabIndex = 6
+        Me.BtnPrint.Text = "Print"
         '
         'XTPStock
         '
         Me.XTPStock.Controls.Add(Me.GCStock)
         Me.XTPStock.Controls.Add(Me.PanelControlStock)
         Me.XTPStock.Name = "XTPStock"
-        Me.XTPStock.Size = New System.Drawing.Size(816, 462)
+        Me.XTPStock.Size = New System.Drawing.Size(928, 520)
         Me.XTPStock.Text = "Stock"
         '
         'GCStock
         '
         Me.GCStock.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCStock.Location = New System.Drawing.Point(0, 68)
-        Me.GCStock.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCStock.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCStock.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCStock.MainView = Me.GVStock
         Me.GCStock.Name = "GCStock"
-        Me.GCStock.Size = New System.Drawing.Size(816, 394)
+        Me.GCStock.Size = New System.Drawing.Size(928, 452)
         Me.GCStock.TabIndex = 1
         Me.GCStock.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVStock})
         '
@@ -376,13 +471,12 @@ Partial Class FormStock
         '
         Me.GVStock.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn7, Me.GridColumn8, Me.GridColumn9, Me.GridColumn10, Me.GridColumn11, Me.GridColumn12, Me.GridColumnAvail, Me.GridColumnRes, Me.GridColumnTotal})
         Me.GVStock.GridControl = Me.GCStock
-        Me.GVStock.GroupCount = 2
         Me.GVStock.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_avl", Me.GridColumnAvail, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_res", Me.GridColumnRes, "{0:n0}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_tot", Me.GridColumnTotal, "{0:n0}")})
         Me.GVStock.Name = "GVStock"
         Me.GVStock.OptionsBehavior.AutoExpandAllGroups = True
+        Me.GVStock.OptionsFind.AlwaysVisible = True
         Me.GVStock.OptionsView.ShowFooter = True
         Me.GVStock.OptionsView.ShowGroupPanel = False
-        Me.GVStock.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn11, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.GridColumn9, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
         'GridColumn7
         '
@@ -412,7 +506,7 @@ Partial Class FormStock
         Me.GridColumn10.FieldName = "size"
         Me.GridColumn10.Name = "GridColumn10"
         Me.GridColumn10.Visible = True
-        Me.GridColumn10.VisibleIndex = 1
+        Me.GridColumn10.VisibleIndex = 2
         '
         'GridColumn11
         '
@@ -420,7 +514,7 @@ Partial Class FormStock
         Me.GridColumn11.FieldName = "class"
         Me.GridColumn11.Name = "GridColumn11"
         Me.GridColumn11.Visible = True
-        Me.GridColumn11.VisibleIndex = 4
+        Me.GridColumn11.VisibleIndex = 5
         '
         'GridColumn12
         '
@@ -428,7 +522,7 @@ Partial Class FormStock
         Me.GridColumn12.FieldName = "comp_name"
         Me.GridColumn12.Name = "GridColumn12"
         Me.GridColumn12.Visible = True
-        Me.GridColumn12.VisibleIndex = 2
+        Me.GridColumn12.VisibleIndex = 3
         '
         'GridColumnAvail
         '
@@ -439,7 +533,7 @@ Partial Class FormStock
         Me.GridColumnAvail.Name = "GridColumnAvail"
         Me.GridColumnAvail.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_avl", "{0:n0}")})
         Me.GridColumnAvail.Visible = True
-        Me.GridColumnAvail.VisibleIndex = 3
+        Me.GridColumnAvail.VisibleIndex = 4
         '
         'GridColumnRes
         '
@@ -450,7 +544,7 @@ Partial Class FormStock
         Me.GridColumnRes.Name = "GridColumnRes"
         Me.GridColumnRes.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_res", "{0:n0}")})
         Me.GridColumnRes.Visible = True
-        Me.GridColumnRes.VisibleIndex = 4
+        Me.GridColumnRes.VisibleIndex = 6
         '
         'GridColumnTotal
         '
@@ -461,10 +555,11 @@ Partial Class FormStock
         Me.GridColumnTotal.Name = "GridColumnTotal"
         Me.GridColumnTotal.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "qty_tot", "{0:n0}")})
         Me.GridColumnTotal.Visible = True
-        Me.GridColumnTotal.VisibleIndex = 5
+        Me.GridColumnTotal.VisibleIndex = 7
         '
         'PanelControlStock
         '
+        Me.PanelControlStock.Controls.Add(Me.BtnPrintSOH)
         Me.PanelControlStock.Controls.Add(Me.CEActive)
         Me.PanelControlStock.Controls.Add(Me.SLESupplier)
         Me.PanelControlStock.Controls.Add(Me.LabelControl4)
@@ -477,9 +572,32 @@ Partial Class FormStock
         Me.PanelControlStock.Controls.Add(Me.LabelControl1)
         Me.PanelControlStock.Dock = System.Windows.Forms.DockStyle.Top
         Me.PanelControlStock.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControlStock.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
+        Me.PanelControlStock.LookAndFeel.UseDefaultLookAndFeel = False
         Me.PanelControlStock.Name = "PanelControlStock"
-        Me.PanelControlStock.Size = New System.Drawing.Size(816, 68)
+        Me.PanelControlStock.Size = New System.Drawing.Size(928, 68)
         Me.PanelControlStock.TabIndex = 0
+        '
+        'BtnPrintSOH
+        '
+        Me.BtnPrintSOH.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrintSOH.Appearance.BorderColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnPrintSOH.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrintSOH.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrintSOH.Appearance.Options.UseBackColor = True
+        Me.BtnPrintSOH.Appearance.Options.UseBorderColor = True
+        Me.BtnPrintSOH.Appearance.Options.UseFont = True
+        Me.BtnPrintSOH.Appearance.Options.UseForeColor = True
+        Me.BtnPrintSOH.Location = New System.Drawing.Point(797, 21)
+        Me.BtnPrintSOH.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrintSOH.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrintSOH.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrintSOH.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrintSOH.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrintSOH.Name = "BtnPrintSOH"
+        Me.BtnPrintSOH.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrintSOH.TabIndex = 9
+        Me.BtnPrintSOH.Text = "Print"
         '
         'CEActive
         '
@@ -682,18 +800,18 @@ Partial Class FormStock
         Me.XTPStockCard.Controls.Add(Me.GCCard)
         Me.XTPStockCard.Controls.Add(Me.PCCard)
         Me.XTPStockCard.Name = "XTPStockCard"
-        Me.XTPStockCard.Size = New System.Drawing.Size(816, 462)
+        Me.XTPStockCard.Size = New System.Drawing.Size(928, 520)
         Me.XTPStockCard.Text = "Stock Card"
         '
         'GCCard
         '
         Me.GCCard.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCCard.Location = New System.Drawing.Point(0, 68)
-        Me.GCCard.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCCard.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCCard.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCCard.MainView = Me.GVCard
         Me.GCCard.Name = "GCCard"
-        Me.GCCard.Size = New System.Drawing.Size(816, 394)
+        Me.GCCard.Size = New System.Drawing.Size(928, 452)
         Me.GCCard.TabIndex = 2
         Me.GCCard.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVCard})
         '
@@ -704,6 +822,7 @@ Partial Class FormStock
         Me.GVCard.Name = "GVCard"
         Me.GVCard.OptionsBehavior.AutoExpandAllGroups = True
         Me.GVCard.OptionsBehavior.Editable = False
+        Me.GVCard.OptionsFind.AlwaysVisible = True
         Me.GVCard.OptionsView.ShowFooter = True
         Me.GVCard.OptionsView.ShowGroupPanel = False
         '
@@ -759,6 +878,7 @@ Partial Class FormStock
         '
         'PCCard
         '
+        Me.PCCard.Controls.Add(Me.BtnPrintStockCard)
         Me.PCCard.Controls.Add(Me.DEFromCard)
         Me.PCCard.Controls.Add(Me.LabelControl7)
         Me.PCCard.Controls.Add(Me.SimpleButton1)
@@ -771,8 +891,29 @@ Partial Class FormStock
         Me.PCCard.Dock = System.Windows.Forms.DockStyle.Top
         Me.PCCard.Location = New System.Drawing.Point(0, 0)
         Me.PCCard.Name = "PCCard"
-        Me.PCCard.Size = New System.Drawing.Size(816, 68)
+        Me.PCCard.Size = New System.Drawing.Size(928, 68)
         Me.PCCard.TabIndex = 1
+        '
+        'BtnPrintStockCard
+        '
+        Me.BtnPrintStockCard.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrintStockCard.Appearance.BorderColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnPrintStockCard.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrintStockCard.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrintStockCard.Appearance.Options.UseBackColor = True
+        Me.BtnPrintStockCard.Appearance.Options.UseBorderColor = True
+        Me.BtnPrintStockCard.Appearance.Options.UseFont = True
+        Me.BtnPrintStockCard.Appearance.Options.UseForeColor = True
+        Me.BtnPrintStockCard.Location = New System.Drawing.Point(710, 21)
+        Me.BtnPrintStockCard.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrintStockCard.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrintStockCard.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrintStockCard.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrintStockCard.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrintStockCard.Name = "BtnPrintStockCard"
+        Me.BtnPrintStockCard.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrintStockCard.TabIndex = 10
+        Me.BtnPrintStockCard.Text = "Print"
         '
         'DEFromCard
         '
@@ -952,10 +1093,11 @@ Partial Class FormStock
         Me.PanelControlTitle.Controls.Add(Me.LabelControl13)
         Me.PanelControlTitle.Controls.Add(Me.PanelControlBack)
         Me.PanelControlTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlTitle.Location = New System.Drawing.Point(20, 20)
+        Me.PanelControlTitle.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlTitle.Name = "PanelControlTitle"
-        Me.PanelControlTitle.Size = New System.Drawing.Size(842, 61)
+        Me.PanelControlTitle.Size = New System.Drawing.Size(954, 43)
         Me.PanelControlTitle.TabIndex = 11
+        Me.PanelControlTitle.Visible = False
         '
         'LabelControl13
         '
@@ -968,6 +1110,7 @@ Partial Class FormStock
         Me.LabelControl13.Size = New System.Drawing.Size(65, 46)
         Me.LabelControl13.TabIndex = 1
         Me.LabelControl13.Text = "Stock"
+        Me.LabelControl13.Visible = False
         '
         'PanelControlBack
         '
@@ -978,25 +1121,24 @@ Partial Class FormStock
         Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
         Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlBack.Name = "PanelControlBack"
-        Me.PanelControlBack.Size = New System.Drawing.Size(40, 61)
+        Me.PanelControlBack.Size = New System.Drawing.Size(40, 43)
         Me.PanelControlBack.TabIndex = 4
+        Me.PanelControlBack.Visible = False
         '
         'FormStock
         '
         Me.Appearance.Options.UseFont = True
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(882, 600)
+        Me.ClientSize = New System.Drawing.Size(954, 600)
         Me.Controls.Add(Me.XTCStock)
         Me.Controls.Add(Me.PanelControl1)
         Me.Controls.Add(Me.PanelControlTitle)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
         Me.Name = "FormStock"
-        Me.Padding = New System.Windows.Forms.Padding(20)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Stock"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
@@ -1011,6 +1153,10 @@ Partial Class FormStock
         Me.XTPSum.ResumeLayout(False)
         CType(Me.GCSum, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVSum, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PanelControl3, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl3.ResumeLayout(False)
+        CType(Me.PanelControl4, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.PanelControl4.ResumeLayout(False)
         Me.XTPStock.ResumeLayout(False)
         CType(Me.GCStock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GVStock, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1133,4 +1279,12 @@ Partial Class FormStock
     Friend WithEvents GridColumn31 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumn33 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GridColumn34 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents PanelControl3 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents PanelControl4 As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents SimpleButton2 As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BtnPrintSOH As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents BtnPrintStockCard As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents GridColumndesign_cat As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents GridColumnPrice As DevExpress.XtraGrid.Columns.GridColumn
 End Class

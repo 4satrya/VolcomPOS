@@ -29,16 +29,19 @@ Partial Class FormLogin
         Me.TxtUsername = New DevExpress.XtraEditors.TextEdit()
         Me.TxtPassword = New DevExpress.XtraEditors.TextEdit()
         Me.EPLogin = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.LabelReason = New DevExpress.XtraEditors.LabelControl()
+        Me.MEReason = New DevExpress.XtraEditors.MemoEdit()
         CType(Me.PictureEditIcon.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.EPLogin, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MEReason.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PictureEditIcon
         '
         Me.PictureEditIcon.EditValue = CType(resources.GetObject("PictureEditIcon.EditValue"), Object)
-        Me.PictureEditIcon.Location = New System.Drawing.Point(12, 14)
+        Me.PictureEditIcon.Location = New System.Drawing.Point(25, 154)
         Me.PictureEditIcon.Name = "PictureEditIcon"
         Me.PictureEditIcon.Properties.Appearance.BackColor = System.Drawing.Color.Transparent
         Me.PictureEditIcon.Properties.Appearance.Options.UseBackColor = True
@@ -67,7 +70,7 @@ Partial Class FormLogin
         Me.BtnLogin.Appearance.Options.UseBackColor = True
         Me.BtnLogin.Appearance.Options.UseFont = True
         Me.BtnLogin.Appearance.Options.UseForeColor = True
-        Me.BtnLogin.Location = New System.Drawing.Point(302, 120)
+        Me.BtnLogin.Location = New System.Drawing.Point(278, 65)
         Me.BtnLogin.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
         Me.BtnLogin.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
         Me.BtnLogin.LookAndFeel.SkinName = "Metropolis"
@@ -81,7 +84,7 @@ Partial Class FormLogin
         'LabelControl1
         '
         Me.LabelControl1.Appearance.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl1.Location = New System.Drawing.Point(163, 10)
+        Me.LabelControl1.Location = New System.Drawing.Point(12, 12)
         Me.LabelControl1.Name = "LabelControl1"
         Me.LabelControl1.Size = New System.Drawing.Size(55, 15)
         Me.LabelControl1.TabIndex = 46
@@ -90,7 +93,7 @@ Partial Class FormLogin
         'LabelControl2
         '
         Me.LabelControl2.Appearance.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl2.Location = New System.Drawing.Point(163, 64)
+        Me.LabelControl2.Location = New System.Drawing.Point(12, 39)
         Me.LabelControl2.Name = "LabelControl2"
         Me.LabelControl2.Size = New System.Drawing.Size(54, 15)
         Me.LabelControl2.TabIndex = 47
@@ -98,21 +101,21 @@ Partial Class FormLogin
         '
         'TxtUsername
         '
-        Me.TxtUsername.Location = New System.Drawing.Point(163, 31)
+        Me.TxtUsername.Location = New System.Drawing.Point(89, 9)
         Me.TxtUsername.Name = "TxtUsername"
         Me.TxtUsername.Properties.Appearance.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtUsername.Properties.Appearance.Options.UseFont = True
-        Me.TxtUsername.Size = New System.Drawing.Size(214, 22)
+        Me.TxtUsername.Size = New System.Drawing.Size(264, 22)
         Me.TxtUsername.TabIndex = 0
         '
         'TxtPassword
         '
-        Me.TxtPassword.Location = New System.Drawing.Point(163, 85)
+        Me.TxtPassword.Location = New System.Drawing.Point(89, 36)
         Me.TxtPassword.Name = "TxtPassword"
         Me.TxtPassword.Properties.Appearance.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtPassword.Properties.Appearance.Options.UseFont = True
         Me.TxtPassword.Properties.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TxtPassword.Size = New System.Drawing.Size(214, 22)
+        Me.TxtPassword.Size = New System.Drawing.Size(264, 22)
         Me.TxtPassword.TabIndex = 1
         '
         'EPLogin
@@ -120,13 +123,33 @@ Partial Class FormLogin
         Me.EPLogin.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink
         Me.EPLogin.ContainerControl = Me
         '
+        'LabelReason
+        '
+        Me.LabelReason.Appearance.Font = New System.Drawing.Font("Calibri", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelReason.Location = New System.Drawing.Point(12, 65)
+        Me.LabelReason.Name = "LabelReason"
+        Me.LabelReason.Size = New System.Drawing.Size(40, 15)
+        Me.LabelReason.TabIndex = 48
+        Me.LabelReason.Text = "Reason"
+        Me.LabelReason.Visible = False
+        '
+        'MEReason
+        '
+        Me.MEReason.Location = New System.Drawing.Point(89, 64)
+        Me.MEReason.Name = "MEReason"
+        Me.MEReason.Size = New System.Drawing.Size(183, 35)
+        Me.MEReason.TabIndex = 49
+        Me.MEReason.Visible = False
+        '
         'FormLogin
         '
         Me.AcceptButton = Me.BtnLogin
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.BtnClose
-        Me.ClientSize = New System.Drawing.Size(401, 151)
+        Me.ClientSize = New System.Drawing.Size(365, 111)
+        Me.Controls.Add(Me.MEReason)
+        Me.Controls.Add(Me.LabelReason)
         Me.Controls.Add(Me.BtnClose)
         Me.Controls.Add(Me.TxtPassword)
         Me.Controls.Add(Me.BtnLogin)
@@ -147,6 +170,7 @@ Partial Class FormLogin
         CType(Me.TxtUsername.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtPassword.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.EPLogin, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MEReason.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -159,4 +183,6 @@ Partial Class FormLogin
     Friend WithEvents TxtUsername As DevExpress.XtraEditors.TextEdit
     Friend WithEvents TxtPassword As DevExpress.XtraEditors.TextEdit
     Friend WithEvents EPLogin As System.Windows.Forms.ErrorProvider
+    Friend WithEvents LabelReason As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents MEReason As DevExpress.XtraEditors.MemoEdit
 End Class

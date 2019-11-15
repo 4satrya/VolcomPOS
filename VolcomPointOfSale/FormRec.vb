@@ -1,9 +1,14 @@
 ﻿Public Class FormRec
+    Public is_new_rec As String = "-1"
+
     Private Sub FormRec_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Dispose()
     End Sub
 
     Private Sub FormRec_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim dt_now As DateTime = getTimeDB()
+        DEFromOwn.EditValue = dt_now
+        DEUntilOwn.EditValue = dt_now
         viewRec()
     End Sub
 
@@ -24,14 +29,36 @@
     End Sub
 
     Sub insert()
-        FormRecDet.action = "ins"
-        FormRecDet.ShowDialog()
+        Cursor = Cursors.WaitCursor
+        If XTCRec.SelectedTabPageIndex = 0 Then
+            If XTCOwn.SelectedTabPageIndex = 1 And GVDS.RowCount > 0 And GVDS.FocusedRowHandle >= 0 Then
+                Cursor = Cursors.WaitCursor
+                FormRecOwnProduct.action = "ins"
+                FormRecOwnProduct.id_pl_sales_order_del = GVDS.GetFocusedRowCellValue("id_pl_sales_order_del").ToString
+                FormRecOwnProduct.ShowDialog()
+                Cursor = Cursors.Default
+            End If
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            FormRecDet.action = "ins"
+            FormRecDet.ShowDialog()
+        End If
+        Cursor = Cursors.Default
     End Sub
 
     Sub edit()
-        FormRecDet.action = "upd"
-        FormRecDet.id = GVRec.GetFocusedRowCellValue("id_rec").ToString
-        FormRecDet.ShowDialog()
+        Cursor = Cursors.WaitCursor
+        If XTCRec.SelectedTabPageIndex = 0 Then
+            If XTCOwn.SelectedTabPageIndex = 0 Then
+                FormRecOwnProduct.action = "upd"
+                FormRecOwnProduct.id = GVRecOwn.GetFocusedRowCellValue("id_rec_own").ToString
+                FormRecOwnProduct.ShowDialog()
+            End If
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            FormRecDet.action = "upd"
+            FormRecDet.id = GVRec.GetFocusedRowCellValue("id_rec").ToString
+            FormRecDet.ShowDialog()
+        End If
+        Cursor = Cursors.Default
     End Sub
 
     Sub delete()
@@ -50,6 +77,18 @@
         'End If
     End Sub
 
+    Sub refreshData()
+        If XTCRec.SelectedTabPageIndex = 0 Then
+            If XTCOwn.SelectedTabPageIndex = 0 Then
+                viewRecOwn()
+            ElseIf XTCOwn.SelectedTabPageIndex = 1 Then
+                viewDS()
+            End If
+        ElseIf XTCRec.SelectedTabPageIndex = 1 Then
+            viewRec()
+        End If
+    End Sub
+
     Sub exitForm()
         Close()
     End Sub
@@ -58,6 +97,29 @@
         FormBlack.Show()
         print(GCRec, "Product List")
         FormBlack.Close()
+    End Sub
+
+    Sub viewRecOwn()
+        Cursor = Cursors.WaitCursor
+
+        Dim date_from As String = ""
+        Try
+            date_from = DateTime.Parse(DEFromOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+        Dim date_until As String = ""
+        Try
+            date_until = DateTime.Parse(DEUntilOwn.EditValue.ToString).ToString("yyyy-MM-dd")
+        Catch ex As Exception
+        End Try
+
+        Dim cond As String = "AND (DATE(r.rec_date)>='" + date_from + "' AND DATE(r.rec_date)<='" + date_until + "' )"
+        Dim r As New ClassRec()
+        Dim query As String = r.queryMainOwn(cond, "2")
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        GCRecOwn.DataSource = data
+        GVRecOwn.BestFitColumns()
+        Cursor = Cursors.Default
     End Sub
 
     Sub viewRec()
@@ -97,5 +159,80 @@
 
     Private Sub PanelControlBack_MouseLeave(sender As Object, e As EventArgs) Handles PanelControlBack.MouseLeave
         PanelControlBack.Cursor = Cursors.Default
+    End Sub
+
+    Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
+        refreshData()
+    End Sub
+
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
+    End Sub
+
+    Private Sub BtnNew_Click(sender As Object, e As EventArgs) Handles BtnNew.Click
+        insert()
+    End Sub
+
+    Sub viewDS()
+        Cursor = Cursors.WaitCursor
+        Dim query As String = "SELECT a.id_pl_sales_order_del, a.number, a.created_date 
+        FROM (
+	        SELECT d.id_pl_sales_order_del, d.number, d.created_date, (d.qty-IFNULL(r.qty,0)) AS `bal`
+	        FROM tb_delivery_slip d
+	        LEFT JOIN (
+		        SELECT rd.id_delivery_slip, SUM(rd.qty) AS `qty`
+		        FROM tb_rec_own_det rd
+		        INNER JOIN tb_rec_own r ON r.id_rec_own = rd.id_rec_own
+		        WHERE r.id_report_status!=5
+		        GROUP BY rd.id_delivery_slip
+	        ) r ON r.id_delivery_slip = d.id_delivery_slip
+	        HAVING bal>0
+        ) a
+        GROUP BY a.id_pl_sales_order_del "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        GCDS.DataSource = data
+        GVDS.BestFitColumns()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub XTCOwn_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCOwn.SelectedPageChanged
+        If XTCOwn.SelectedTabPageIndex = 0 Then
+        ElseIf XTCOwn.SelectedTabPageIndex = 1 Then
+            viewDS()
+        End If
+    End Sub
+
+    Private Sub GVDS_DoubleClick(sender As Object, e As EventArgs) Handles GVDS.DoubleClick
+        If GVDS.RowCount > 0 And GVDS.FocusedRowHandle >= 0 Then
+            Cursor = Cursors.WaitCursor
+            FormDeliverySlip.id = GVDS.GetFocusedRowCellValue("id_pl_sales_order_del").ToString
+            FormDeliverySlip.ShowDialog()
+            Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub BtnView_Click(sender As Object, e As EventArgs) Handles BtnView.Click
+        viewRecOwn()
+    End Sub
+
+    Private Sub GVRecOwn_DoubleClick(sender As Object, e As EventArgs) Handles GVRecOwn.DoubleClick
+        If GVRecOwn.RowCount > 0 And GVRecOwn.FocusedRowHandle >= 0 Then
+            edit()
+        End If
+    End Sub
+
+    Sub syncPrice()
+        SplashScreenManager1.ShowWaitForm()
+        SplashScreenManager1.SetWaitFormDescription("Sync price")
+        Dim sy As New ClassSync("3")
+        sy.splash = "0"
+        sy.synchronize()
+        SplashScreenManager1.CloseWaitForm()
+    End Sub
+
+    Private Sub FormRec_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If is_new_rec = "1" Then
+            syncPrice()
+        End If
     End Sub
 End Class

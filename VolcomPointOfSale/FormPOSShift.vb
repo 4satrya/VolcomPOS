@@ -23,6 +23,12 @@
         Dim dt_comp As DataTable = comp.getPOSDev()
         TxtPOS.Text = dt_comp.Rows(0)("pos_dev").ToString
         id_pos_dev = dt_comp.Rows(0)("id_pos_dev").ToString
+
+        If TxtShift.Text = "" Then
+            stopCustom("Shift hasn't started yet, please try again later")
+            Close()
+            Exit Sub
+        End If
     End Sub
 
     Private Sub BtnOK_Click(sender As Object, e As EventArgs) Handles BtnOK.Click

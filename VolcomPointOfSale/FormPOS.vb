@@ -1,6 +1,9 @@
 ﻿Public Class FormPOS
     Public id As String = "-1"
     Public id_shift As String = "-1"
+    Public shift_type As String = "-1"
+    Public id_user_employee As String
+    Public id_user_employee_cancel As String = "-1"
     Dim id_user_shift As String = "-1"
     Public new_trans As Boolean = False
     Dim id_stock_last As String = "-1"
@@ -10,8 +13,36 @@
     Dim is_payment_ok As Boolean = False
     Dim id_voucher_db As String = "-1"
     Dim username_shift As String = "-1"
+    Dim id_outlet As String = get_setup_field("id_outlet").ToString
+    Public note As String = ""
+
+    'promo var
+    Public is_get_promo As String = "2"
+    Dim dtp As DataTable = Nothing
+    Dim id_product_promo_normal As String = "-1"
+    Dim id_product_promo_sale As String = "-1"
+
+    'scan variable item code
+    Private cforKeyDown As Char = vbNullChar
+    Private cforKeyDownVcr As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Private _lastKeystrokeVcr As DateTime = DateTime.Now
+    Public open_scan As Boolean = False
+    Public UseKeyboard As String = "-1"
+    Public speed_barcode_read As Integer = 0
+    Public speed_barcode_read_timer As Integer = 0
+
 
     Private Sub FormPOS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'scan opt
+        Dim query_opt As String = "SELECT is_use_keyboard, speed_barcode_read, speed_barcode_read_timer  FROM tb_opt; "
+        Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+        UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
+        speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
+        speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
+        Timer1.Interval = speed_barcode_read_timer
+        Timer2.Interval = speed_barcode_read_timer
+
         LabelInfoLeft.Focus()
         viewCountry()
         viewCardType()
@@ -46,6 +77,8 @@
             Exit Sub
         Else
             id_shift = dt_open.Rows(0)("id_shift").ToString
+            shift_type = dt_open.Rows(0)("shift_type").ToString
+            id_user_employee = dt_open.Rows(0)("id_employee").ToString
             TxtShift.Text = dt_open.Rows(0)("shift_type").ToString
             TxtPOS.Text = dt_open.Rows(0)("pos_dev").ToString
             username_shift = dt_open.Rows(0)("username").ToString
@@ -66,8 +99,8 @@
         If e.KeyCode = Keys.F1 Then
             'help()
             stock_info()
-        ElseIf e.KeyCode = Keys.F2 And new_trans = True Then
-            payment()
+        ElseIf e.KeyCode = Keys.F2 And new_trans = True And is_payment_ok = False Then
+            isGetPromo()
         ElseIf e.KeyCode = Keys.F3 Then
             'price()
         ElseIf e.KeyCode = Keys.F4 Then
@@ -86,10 +119,12 @@
             bonus()
         ElseIf e.KeyCode = Keys.F11 Then
             voucher()
-        ElseIf e.KeyCode = Keys.Insert And is_payment_ok = False 'new trans
+        ElseIf e.KeyCode = Keys.Insert And is_payment_ok = False Then 'new trans
             newTrans()
         ElseIf e.KeyCode = Keys.Escape Then
             exitForm()
+        ElseIf e.KeyCode = Keys.Add And new_trans = True And is_payment_ok = False Then 'revise qty
+            reviseQty()
         End If
     End Sub
 
@@ -143,16 +178,122 @@
     End Sub
 
     Sub newTrans()
+        open_scan = True
         resetPayment()
 
         TxtItemCode.Enabled = True
         TxtItemCode.Focus()
         If Not new_trans Then
-            Dim query As String = "INSERT INTO tb_pos(id_shift, pos_number, pos_date, id_pos_status, id_pos_cat) 
-            VALUES('" + id_shift + "', header_number(4), NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
+            Dim query As String = "INSERT INTO tb_pos(id_outlet,id_shift, shift_type, id_user_employee, pos_number, pos_date, id_pos_status, id_pos_cat) 
+            VALUES(" + id_outlet + ",'" + id_shift + "','" + shift_type + "', '" + id_user_employee + "', '', NOW(), 1, 1); SELECT LAST_INSERT_ID(); "
             id = execute_query(query, 0, True, "", "", "", "")
+            execute_non_query("CALL gen_number(" + id + ", 4)", True, "", "", "", "")
             new_trans = True
             actionLoad()
+
+            'get promo rules
+            Dim qp As String = "SELECT p.id_rules, p.id_design_cat, p.limit_value, p.id_product, p.product_code as `main_code`, p.product_name AS `name`
+            FROM tb_promo_rules p 
+            WHERE DATE(NOW())>=p.period_start AND DATE(NOW())<=p.period_end
+            ORDER BY p.limit_value DESC LIMIT 1 "
+            dtp = execute_query(qp, -1, True, "", "", "", "")
+        End If
+    End Sub
+
+    Private Function getStockPromo(ByVal id_product As String) As Boolean
+        Dim query As String = "SELECT i.id_product,
+        SUM(IF(f.id_storage_category=2, CONCAT('-', f.storage_item_qty), f.storage_item_qty)) AS qty_avl
+        FROM tb_item i  
+        INNER JOIN tb_storage_item f ON f.id_item = i.id_item
+        WHERE i.id_product=" + id_product + "
+        GROUP BY i.id_product "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If data.Rows.Count > 0 Then
+            If data.Rows(0)("qty_avl") > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function isEmptyPromo(ByVal id_product As String) As Boolean
+        Dim query As String = "SELECT SUM(d.qty) AS `total_qty` FROM tb_pos_det d 
+        INNER JOIN tb_item i ON i.id_item = d.id_item
+        WHERE d.id_pos=" + id + " AND i.id_product=" + id_product + "
+        GROUP BY i.id_product "
+        Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If data.Rows.Count > 0 Then
+            If data.Rows(0)("total_qty") > 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        Else
+            Return True
+        End If
+    End Function
+
+    Sub isGetPromo()
+        If dtp.Rows.Count > 0 Then
+            'normal
+            Dim data_filter_normal As DataRow() = dtp.Select("[id_design_cat]=1 AND " + decimalSQL(TxtTotalNormal.EditValue.ToString) + ">=[limit_value]")
+            If data_filter_normal.Count > 0 Then
+                Dim id_prod As String = data_filter_normal(0)("id_product").ToString
+                If getStockPromo(id_prod) And isEmptyPromo(id_prod) Then
+                    Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_normal(0)("main_code").ToString + " - " + data_filter_normal(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
+                    If confirm = DialogResult.Yes Then
+                        id_product_promo_normal = id_prod
+                    Else
+                        id_product_promo_normal = "-1"
+                    End If
+                Else
+                    id_product_promo_normal = "-1"
+                End If
+            Else
+                id_product_promo_normal = "-1"
+            End If
+
+            'sale
+            Dim data_filter_sale As DataRow() = dtp.Select("[id_design_cat]=2 AND " + decimalSQL(TxtTotalSale.EditValue.ToString) + ">=[limit_value]")
+            If data_filter_sale.Count > 0 Then
+                Dim id_prod As String = data_filter_normal(0)("id_product").ToString
+                If getStockPromo(id_prod) And isEmptyPromo(id_prod) Then
+                    Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Congratulation, you are entitled to a free " + data_filter_sale(0)("main_code").ToString + " - " + data_filter_sale(0)("name").ToString + ". Do you want to proceed this item? ", "Free Product", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button2)
+                    If confirm = DialogResult.Yes Then
+                        id_product_promo_sale = id_prod
+                    Else
+                        id_product_promo_sale = "-1"
+                    End If
+                Else
+                    id_product_promo_sale = "-1"
+                End If
+            Else
+                id_product_promo_sale = "-1"
+            End If
+
+            If id_product_promo_normal <> "-1" Or id_product_promo_sale <> "-1" Then
+                'jika dia lanjut scan
+                newTrans()
+            Else
+                'jika tidak, cek adakah produk promo yg discan ato tidak
+                Dim qcek As String = "SELECT SUM(d.qty) AS `total_qty` FROM tb_pos_det d
+                WHERE d.id_pos=" + id + " AND d.is_free_promo=1
+                GROUP BY d.id_item
+                HAVING total_qty>0 "
+                Dim dcek As DataTable = execute_query(qcek, -1, True, "", "", "", "")
+                If dcek.Rows.Count > 0 Then
+                    is_get_promo = "1"
+                Else
+                    is_get_promo = "2"
+                End If
+                payment()
+            End If
+        Else
+            is_get_promo = "2"
+            payment()
         End If
     End Sub
 
@@ -162,29 +303,40 @@
             resetPayment()
             showDisplay("Total  :", "-", TxtTotal.Text)
             TxtItemCode.Enabled = False
-            TxtDiscount.Enabled = True
-            TxtDiscount.Focus()
+
+            'discount gak kepake
+            'TxtDiscount.Enabled = True
+            'TxtDiscount.Focus()
+
+            'langsung focus ke cash
+            TxtDiscount.EditValue = 0
+            getSubTotal()
+            TxtDiscount.Enabled = False
+            TxtCash.Enabled = True
+            TxtCash.EditValue = TxtTotal.EditValue
+            TxtCash.Focus()
             Cursor = Cursors.Default
         End If
     End Sub
 
     Sub price()
-        Cursor = Cursors.WaitCursor
-        FormLogin.menu_acc = "15"
-        FormLogin.is_open_form = False
-        FormLogin.ShowDialog()
-        If GVPOS.RowCount > 0 And is_auth Then
-            Dim last_index As Integer = GVPOS.RowCount - 1
-            TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
-            TxtItemCode.Enabled = False
-            GVPOS.SetRowCellValue(last_index, "is_edit", "1")
-            LabelPrice.Visible = True
-            TxtPrc.Visible = True
-            TxtPrc.Focus()
-        Else
-            TxtItemCode.Focus()
-        End If
-        Cursor = Cursors.Default
+        ' nonaktif menu
+        'Cursor = Cursors.WaitCursor
+        'FormLogin.menu_acc = "15"
+        'FormLogin.is_open_form = False
+        'FormLogin.ShowDialog()
+        'If GVPOS.RowCount > 0 And is_auth Then
+        '    Dim last_index As Integer = GVPOS.RowCount - 1
+        '    TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
+        '    TxtItemCode.Enabled = False
+        '    GVPOS.SetRowCellValue(last_index, "is_edit", "1")
+        '    LabelPrice.Visible = True
+        '    TxtPrc.Visible = True
+        '    TxtPrc.Focus()
+        'Else
+        '    TxtItemCode.Focus()
+        'End If
+        'Cursor = Cursors.Default
     End Sub
 
     Sub member()
@@ -194,52 +346,53 @@
     End Sub
 
     Sub refund()
-        FormLogin.menu_acc = "16"
-        FormLogin.is_open_form = False
-        FormLogin.ShowDialog()
-        BringToFront()
+        'nonaktif menu
+        'FormLogin.menu_acc = "16"
+        'FormLogin.is_open_form = False
+        'FormLogin.ShowDialog()
+        'BringToFront()
 
-        If is_auth Then
-            FormBlack.Show()
-            Cursor = Cursors.WaitCursor
-            FormPOSRefund.ShowDialog()
-            Cursor = Cursors.Default
-            FormBlack.Close()
-            BringToFront()
-            If new_trans = True Then
-                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to refund this sales?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
-                If confirm = DialogResult.Yes Then
-                    'insert main
-                    Dim query As String = "INSERT INTO tb_pos(id_pos_ref, pos_number, pos_date, id_shift, id_pos_status, id_pos_cat, subtotal, discount, tax, total, id_voucher, voucher_number, voucher, `point`, cash, card, id_card_type, card_number, card_name, `change`, total_qty, id_sales, id_country, is_payment_ok ) 
-                    SELECT '" + id + "', header_number(4), NOW(), '" + id_shift + "', '2', '2',subtotal*-1, discount*-1, tax*-1, total*-1, id_voucher, voucher_number, voucher*-1, `point`*-1, cash*-1, card*-1, id_card_type, card_number, card_name, `change`*-1, total_qty*-1, id_sales, id_country, is_payment_ok
-                    FROM tb_pos WHERE id_pos='" + id + "'; SELECT LAST_INSERT_ID(); "
-                    Dim id_refund As String = execute_query(query, 0, True, "", "", "", "")
+        'If is_auth Then
+        '    FormBlack.Show()
+        '    Cursor = Cursors.WaitCursor
+        '    FormPOSRefund.ShowDialog()
+        '    Cursor = Cursors.Default
+        '    FormBlack.Close()
+        '    BringToFront()
+        '    If new_trans = True Then
+        '        Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to refund this sales?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+        '        If confirm = DialogResult.Yes Then
+        '            'insert main
+        '            Dim query As String = "INSERT INTO tb_pos(id_pos_ref, pos_number, pos_date, id_shift, id_pos_status, id_pos_cat, subtotal, discount, tax, total, id_voucher, voucher_number, voucher, `point`, cash, card, id_card_type, card_number, card_name, `change`, total_qty, id_sales, id_country, is_payment_ok ) 
+        '            SELECT '" + id + "', header_number(4), NOW(), '" + id_shift + "', '2', '2',subtotal*-1, discount*-1, tax*-1, total*-1, id_voucher, voucher_number, voucher*-1, `point`*-1, cash*-1, card*-1, id_card_type, card_number, card_name, `change`*-1, total_qty*-1, id_sales, id_country, is_payment_ok
+        '            FROM tb_pos WHERE id_pos='" + id + "'; SELECT LAST_INSERT_ID(); "
+        '            Dim id_refund As String = execute_query(query, 0, True, "", "", "", "")
 
-                    'insert det
-                    Dim query_det As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, qty, price) 
-                    SELECT '" + id_refund + "', id_item, comm, qty*-1, price FROM tb_pos_det WHERE id_pos='" + id + "' "
-                    execute_non_query(query_det, True, "", "", "", "")
+        '            'insert det
+        '            Dim query_det As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, id_comp_sup, qty, price) 
+        '            SELECT '" + id_refund + "', id_item, comm,id_comp_sup , qty*-1, price FROM tb_pos_det WHERE id_pos='" + id + "' "
+        '            execute_non_query(query_det, True, "", "", "", "")
 
-                    'stock
-                    Dim query_stc As String = "INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status) 
-                    SELECT '" + id_display_default + "', IF(qty>=0,'1', '2'), id_item, '4', '" + id_refund + "', ABS(qty), NOW(), '1' 
-                    FROM tb_pos_det WHERE id_pos=" + id_refund + " "
-                    execute_non_query(query_stc, True, "", "", "", "")
+        '            'stock
+        '            Dim query_stc As String = "INSERT INTO tb_storage_item(id_comp, id_storage_category, id_item, report_mark_type, id_report, storage_item_qty, storage_item_datetime, id_stock_status) 
+        '            SELECT '" + id_display_default + "', IF(qty>=0,'2', '1'), id_item, '4', '" + id_refund + "', ABS(qty), NOW(), '1' 
+        '            FROM tb_pos_det WHERE id_pos=" + id_refund + " "
+        '            execute_non_query(query_stc, True, "", "", "", "")
 
-                    'print
-                    Dim prn As New ClassPOS()
-                    prn.printRefund(id_refund)
-                    is_auth = False
+        '            'print
+        '            Dim prn As New ClassPOS()
+        '            prn.printRefund(id_refund)
+        '            is_auth = False
 
-                    Close()
-                Else
-                    id = "-1"
-                    new_trans = False
-                    actionLoad()
-                    is_auth = False
-                End If
-            End If
-        End If
+        '            Close()
+        '        Else
+        '            id = "-1"
+        '            new_trans = False
+        '            actionLoad()
+        '            is_auth = False
+        '        End If
+        '    End If
+        'End If
     End Sub
 
     Sub pickup()
@@ -436,6 +589,7 @@
         Dim query As String = query_c.queryDet("And pd.id_pos=" + id + " ", "1")
         Dim data As DataTable = execute_query(query, -1, True, "", "", "", "")
         GCPOS.DataSource = data
+        GVPOS.BestFitColumns()
     End Sub
 
     Sub help()
@@ -446,16 +600,33 @@
         'End If
     End Sub
 
+
     Sub exitForm()
         If id <> "-1" Then
             FormLogin.menu_acc = "20"
             FormLogin.is_open_form = False
             FormLogin.ShowDialog()
             If is_auth Then
-                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3 WHERE id_pos=" + id + ""
+                'update status
+                Dim query_upd_stt As String = "UPDATE tb_pos SET id_pos_status=3, note='" + addSlashes(note) + "', pos_closed_date=NOW(), id_user_employee_cancel='" + id_user_employee_cancel + "' WHERE id_pos=" + id + ""
                 execute_non_query(query_upd_stt, True, "", "", "", "")
+
+                'send email
+                Try
+                    Dim m As New ClassSendEmail()
+                    m.report_mark_type = "14"
+                    m.id_report = id
+                    m.opt = "1"
+                    m.send_email()
+                Catch ex As Exception
+                    Dim err_note As String = addSlashes("Cancelled Transaction Email;id=" + id + ";" + ex.ToString + "")
+                    execute_non_query("INSERT INTO tb_log_mail(report_mark_type, opt, note, log_date) VALUES(14,1, '" + err_note + "', NOW()); ", True, "", "", "", "")
+                End Try
+
+                'print struk
                 Dim prn As New ClassPOS()
                 prn.printPos(id, False)
+
                 is_auth = False
                 Close()
             End If
@@ -484,68 +655,119 @@
     End Sub
 
     Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim val As String = TxtItemCode.Text.Trim()
-            If val = "" Then
-                FormBlack.Show()
-                Cursor = Cursors.WaitCursor
-                FormPOSItem.ShowDialog()
-                Cursor = Cursors.Default
-                FormBlack.Close()
-                BringToFront()
-            Else
-                Dim code As String = TxtItemCode.Text
-                Dim i As New ClassItem()
-                Dim query As String = i.queryMainUpd("AND i.is_active=1 AND i.item_code='" + code + "' ")
-                Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
-                If dt.Rows.Count > 0 Then
-                    'Dim qty_avail As Decimal = dt.Rows(0)("qty_avl")
-                    'If qty_avail <= 0 Then
-                    '    stopCustom("No stock available")
-                    'Else
+        cforKeyDown = ChrW(e.KeyCode)
+        'If e.KeyCode = Keys.Enter Then
+        'Dim code As String = TxtItemCode.Text.Trim()
+
+        'ElseIf e.KeyCode = Keys.Add Then
+
+        'End If
+    End Sub
+
+    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
+        If UseKeyboard = "2" Then
+            If open_scan Then
+                'barcode scanner
+                If Len(TxtItemCode.Text) > 1 Then
+                    If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                        cforKeyDown = vbNullChar
+                        TxtItemCode.Text = ""
+                        Return
+                    End If
+
+
+                    Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                    '(DateTime.Now.Millisecond - _lastKeystroke)
+                    If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+
+                    'If e.KeyCode <> Keys.[Return] Then
+                    '    TxtItemCode.Text += ChrW(e.KeyData)
                     'End If
-                    'insert stock
-                    'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
 
-                    'insert detail
-                    insertDetail(dt(0)("id_item").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1")
-
-                    'insert gv
-                    Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
-                    newRow("id_pos_det") = id_detail_last
-                    newRow("id_item") = dt(0)("id_item").ToString
-                    newRow("item_code") = dt(0)("item_code").ToString
-                    newRow("item_name") = dt(0)("item_name").ToString
-                    newRow("qty") = 1
-                    newRow("price") = dt(0)("price")
-                    newRow("comm") = dt(0)("comm")
-                    newRow("is_edit") = "2"
-                    TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
-                    GCPOS.RefreshDataSource()
-                    GVPOS.RefreshData()
-
-                    'info
-                    getSubTotal()
-                    Dim rh As Integer = GVPOS.RowCount - 1
-                    showDisplay(dt(0)("item_name").ToString, "1", GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
-                Else
-                    stopCustom("Code not found")
+                    If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                        checkCode(TxtItemCode.Text.Trim)
+                        TxtItemCode.Text = ""
+                    End If
                 End If
-                TxtQty.EditValue = 1
+            End If
+            _lastKeystroke = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                checkCode(TxtItemCode.Text)
                 TxtItemCode.Text = ""
-                TxtItemCode.Focus()
+            ElseIf e.KeyCode = Keys.Add AndAlso TxtItemCode.Text.Count > 0 Then
+                reviseQty()
             End If
-        ElseIf e.KeyCode = Keys.add Then
-            If GVPOS.RowCount > 0 Then
-                Dim last_index As Integer = GVPOS.RowCount - 1
-                TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
-                TxtItemCode.Enabled = False
-                GVPOS.SetRowCellValue(last_index, "is_edit", "1")
-                TxtQty.Enabled = True
-                TxtQty.Focus()
+        End If
+    End Sub
+
+    Sub checkCode(ByVal code As String)
+        Dim i As New ClassItem()
+        Dim query As String = i.queryMainUpd("AND i.is_active=1 AND i.item_code='" + code + "' ")
+        Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If dt.Rows.Count > 0 Then
+            'Dim qty_avail As Decimal = dt.Rows(0)("qty_avl")
+            'If qty_avail <= 0 Then
+            '    stopCustom("No stock available")
+            'Else
+            'End If
+            'insert stock
+            'insertStock(dt(0)("id_item").ToString, id_display_default, "1", "2", "-1")
+
+            'cek jika promo
+            Dim is_free_promo As String = "2"
+            If dt(0)("id_product").ToString = id_product_promo_normal Or dt(0)("id_product").ToString = id_product_promo_sale Then
+                is_free_promo = "1"
+            Else
+                is_free_promo = "2"
             End If
-        ElseIf e.KeyCode = Keys.f3 Then
-            price()
+
+
+            'insert detail
+            insertDetail(dt(0)("id_item").ToString, dt(0)("id_product").ToString, dt(0)("item_code").ToString, decimalSQL(dt(0)("comm").ToString), "1", decimalSQL(dt(0)("price").ToString), "-1", dt(0)("id_comp_sup").ToString, dt(0)("id_design_cat").ToString, is_free_promo)
+
+            'insert gv
+            Dim newRow As DataRow = (TryCast(GCPOS.DataSource, DataTable)).NewRow()
+            newRow("id_pos_det") = id_detail_last
+            newRow("id_item") = dt(0)("id_item").ToString
+            newRow("item_code") = dt(0)("item_code").ToString
+            newRow("item_name") = dt(0)("item_name").ToString
+            newRow("qty") = 1
+            newRow("price") = dt(0)("price")
+            newRow("comm") = dt(0)("comm")
+            newRow("is_edit") = "2"
+            newRow("id_design_cat") = dt(0)("id_design_cat").ToString
+            newRow("is_free_promo") = is_free_promo
+            TryCast(GCPOS.DataSource, DataTable).Rows.Add(newRow)
+            GCPOS.RefreshDataSource()
+            GVPOS.RefreshData()
+
+            'info
+            getSubTotal()
+            Dim rh As Integer = GVPOS.RowCount - 1
+            showDisplay(dt(0)("item_name").ToString, "1", GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
+        Else
+            stopCustom("Code not found")
+        End If
+        TxtQty.EditValue = 1
+        TxtItemCode.Text = ""
+        TxtItemCode.Focus()
+    End Sub
+
+    Sub reviseQty()
+        If GVPOS.RowCount > 0 Then
+            open_scan = False
+
+            Dim last_index As Integer = GVPOS.RowCount - 1
+            TxtItemCode.Text = GVPOS.GetRowCellValue(last_index, "item_code").ToString
+            TxtItemCode.Enabled = False
+            GVPOS.SetRowCellValue(last_index, "is_edit", "1")
+            TxtQty.Enabled = True
+            TxtQty.Focus()
+        Else
+            TxtItemCode.Text = ""
+            TxtItemCode.Focus()
         End If
     End Sub
 
@@ -615,20 +837,27 @@
 
 
             If qty > 0 Then 'plus
-                'insert detail
-                insertDetail("0", "0", qty.ToString, "0", id_pos_det)
-
-                GVPOS.SetRowCellValue(rh, "qty", qty)
-                GVPOS.SetRowCellValue(rh, "is_edit", "2")
-                GCPOS.RefreshDataSource()
-                GVPOS.RefreshData()
-                getSubTotal()
-                showDisplay(GVPOS.GetRowCellDisplayText(rh, "item_name").ToString, qty, GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
                 TxtQty.EditValue = 1
                 TxtQty.Enabled = False
                 TxtItemCode.Enabled = True
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
+                open_scan = True
+
+                'insert detail
+                'insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0")
+
+                'GVPOS.SetRowCellValue(rh, "qty", qty)
+                'GVPOS.SetRowCellValue(rh, "is_edit", "2")
+                'GCPOS.RefreshDataSource()
+                'GVPOS.RefreshData()
+                'getSubTotal()
+                'showDisplay(GVPOS.GetRowCellDisplayText(rh, "item_name").ToString, qty, GVPOS.GetRowCellDisplayText(rh, "amount").ToString)
+                'TxtQty.EditValue = 1
+                'TxtQty.Enabled = False
+                'TxtItemCode.Enabled = True
+                'TxtItemCode.Text = ""
+                'TxtItemCode.Focus()
             ElseIf qty = 0 Then 'zero
                 GVPOS.SetRowCellValue(rh, "is_edit", "2")
                 GCPOS.RefreshDataSource()
@@ -638,6 +867,7 @@
                 TxtItemCode.Enabled = True
                 TxtItemCode.Text = ""
                 TxtItemCode.Focus()
+                open_scan = True
             Else 'minus
                 Dim id_item As String = GVPOS.GetRowCellValue(rh, "id_item").ToString
                 GVPOS.ActiveFilterString = "[id_item]='" + id_item + "' AND [is_edit]='2' "
@@ -654,7 +884,7 @@
 
                 If (qty * -1) <= max Then
                     'insert detail
-                    insertDetail("0", "0", qty.ToString, "0", id_pos_det)
+                    insertDetail("0", "0", "0", "0", qty.ToString, "0", id_pos_det, "0", "0", "0")
 
                     GVPOS.SetRowCellValue(rh, "qty", qty)
                     GVPOS.SetRowCellValue(rh, "is_edit", "2")
@@ -667,6 +897,7 @@
                     TxtItemCode.Enabled = True
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
+                    open_scan = True
                 Else
                     GVPOS.SetRowCellValue(rh, "is_edit", "2")
                     GCPOS.RefreshDataSource()
@@ -676,16 +907,8 @@
                     TxtItemCode.Enabled = True
                     TxtItemCode.Text = ""
                     TxtItemCode.Focus()
+                    open_scan = True
                 End If
-            End If
-        End If
-    End Sub
-
-    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
-        If GVPOS.RowCount <= 0 Then
-            If e.KeyCode = Keys.Add Then
-                TxtItemCode.Text = ""
-                TxtItemCode.Focus()
             End If
         End If
     End Sub
@@ -718,6 +941,38 @@
         End Try
 
         TxtTotal.EditValue = subtotal - discount + tax
+
+        'get total normal price
+        TxtTotalNormal.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=1"
+        Try
+            If GVPOS.RowCount > 0 Then
+                TxtTotalNormal.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            Else
+                TxtTotalNormal.EditValue = 0
+            End If
+        Catch ex As Exception
+            TxtTotalNormal.EditValue = 0
+        End Try
+        GVPOS.ActiveFilterString = ""
+
+        'get total sale price
+        TxtTotalSale.EditValue = 0
+        makeSafeGV(GVPOS)
+        GVPOS.ActiveFilterString = "[id_design_cat]=2"
+        Try
+            If GVPOS.RowCount > 0 Then
+                TxtTotalSale.EditValue = GVPOS.Columns("amount").SummaryItem.SummaryValue()
+            Else
+                TxtTotalSale.EditValue = 0
+            End If
+        Catch ex As Exception
+            TxtTotalSale.EditValue = 0
+        End Try
+        GVPOS.ActiveFilterString = ""
+
+        makeSafeGV(GVPOS)
     End Sub
 
     Sub insertStock(ByVal id_item_par As String, id_comp_par As String, qty_par As String, ByVal id_storage_category_par As String, id_stock_par As String)
@@ -731,13 +986,13 @@
         End If
     End Sub
 
-    Sub insertDetail(ByVal id_item_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String)
+    Sub insertDetail(ByVal id_item_par As String, ByVal id_product_par As String, ByVal item_code_par As String, ByVal comm_par As String, ByVal qty_par As String, ByVal price_par As String, ByVal id_pos_det_par As String, ByVal id_comp_sup_par As String, ByVal id_design_cat_par As String, ByVal is_free_promo_par As String)
         If id_pos_det_par <> "-1" Then 'edit only qty
             Dim query As String = "UPDATE tb_pos_det SET qty='" + qty_par + "' WHERE id_pos_det='" + id_pos_det_par + "'"
             execute_non_query(query, True, "", "", "", "")
         Else
-            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, comm, qty, price) 
-            VALUES ('" + id + "', '" + id_item_par + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'); SELECT LAST_INSERT_ID(); "
+            Dim query As String = "INSERT INTO tb_pos_det(id_pos, id_item, id_product,item_code, comm, qty, price, id_comp_sup, id_design_cat, is_free_promo) 
+            VALUES ('" + id + "', '" + id_item_par + "', '" + id_product_par + "','" + addSlashes(item_code_par) + "', '" + comm_par + "', '" + qty_par + "', '" + price_par + "'," + id_comp_sup_par + ", " + id_design_cat_par + ", " + is_free_promo_par + "); SELECT LAST_INSERT_ID(); "
             id_detail_last = execute_query(query, 0, True, "", "", "", "")
         End If
     End Sub
@@ -905,7 +1160,8 @@
             subtotal='" + subtotal + "', discount='" + discount + "', tax='" + tax + "',
             total='" + total + "', id_voucher=" + id_voucher + ", voucher_number='" + voucher_number + "',
             voucher='" + voucher + "', point='" + point + "', cash='" + cash + "', card='" + card + "',
-            id_card_type=" + id_card_type + ", card_number='" + card_number + "', card_name='" + card_name + "', `change`='" + change + "', total_qty='" + total_qty + "'
+            id_card_type=" + id_card_type + ", card_number='" + card_number + "', card_name='" + card_name + "', `change`='" + change + "', total_qty='" + total_qty + "',
+            is_get_promo = " + is_get_promo + "
             WHERE id_pos=" + id + " "
             execute_non_query(query, True, "", "", "", "")
             is_payment_ok = True
@@ -914,8 +1170,8 @@
             If id_voucher_db <> "-1" Then
                 Dim query_opt As String = "SELECT * FROM tb_opt"
                 Dim dt_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
-                Dim query_v As String = "UPDATE tb_m_voucher SET id_outlet='" + dt_opt.Rows(0)("id_outlet").ToString + "',
-                used_date=NOW(), id_report='" + id + "' WHERE id_voucher='" + id_voucher_db + "'"
+                Dim query_v As String = "UPDATE tb_pos_voucher SET id_outlet='" + dt_opt.Rows(0)("id_outlet").ToString + "',
+                used_date=NOW(), id_report='" + id + "' WHERE id_pos_voucher='" + id_voucher_db + "'"
                 execute_non_query(query_v, False, dt_opt.Rows(0)("host_main").ToString, dt_opt.Rows(0)("username_main").ToString, dt_opt.Rows(0)("pass_main").ToString, dt_opt.Rows(0)("db_main").ToString)
             End If
 
@@ -934,9 +1190,9 @@
         Dim query_opt As String = "SELECT * FROM tb_opt "
         Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
 
-        Dim query_vch As String = "SELECT * FROM tb_m_voucher v 
+        Dim query_vch As String = "SELECT * FROM tb_pos_voucher v 
         WHERE v.voucher_number='" + voucher_number + "' 
-        AND ISNULL(v.id_outlet) AND v.expire_date>= DATE(NOW()) LIMIT 1 "
+        AND ISNULL(v.id_outlet) AND v.is_active=1 AND (DATE(NOW())>=v.period_start AND DATE(NOW())<=v.period_end) LIMIT 1 "
 
         If type = "1" Then 'return datatable
             Return execute_query(query_vch, -1, False, data_opt.Rows(0)("host_main").ToString, data_opt.Rows(0)("username_main").ToString, data_opt.Rows(0)("pass_main").ToString, data_opt.Rows(0)("db_main").ToString)
@@ -1075,7 +1331,7 @@
         execute_non_query(query_stc, True, "", "", "", "")
 
         'closed pos
-        Dim query As String = "UPDATE tb_pos SET id_sales='" + id_sales + "', id_country='" + LENation.EditValue.ToString + "', id_pos_status=2 WHERE id_pos=" + id + ""
+        Dim query As String = "UPDATE tb_pos SET id_sales='" + id_sales + "', id_country='" + LENation.EditValue.ToString + "', id_pos_status=2, pos_closed_date=NOW() WHERE id_pos=" + id + ""
         execute_non_query(query, True, "", "", "", "")
         Close()
     End Sub
@@ -1126,45 +1382,106 @@
     End Sub
 
     Private Sub TxtVoucherNo_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtVoucherNo.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Cursor = Cursors.WaitCursor
-            Dim voucher_number As String = TxtVoucherNo.Text
+        cforKeyDownVcr = ChrW(e.KeyCode)
+        'If e.KeyCode = Keys.Enter Then
+        '    checkVoucher(addSlashes(TxtVoucherNo.Text))
+        'End If
+    End Sub
 
-            If voucher_number = "" Then
-                TxtVoucherNo.Text = ""
-                TxtVoucherNo.Enabled = False
-                TxtCash.EditValue = TxtTotal.EditValue
-                TxtCash.Enabled = True
-                TxtCash.Focus()
-            Else
-                Dim dt_vch As DataTable = checkVoucher(voucher_number, "1")
-                If dt_vch.Rows.Count > 0 Then
-                    TxtCash.EditValue = Nothing
-                    TxtCard.EditValue = Nothing
-                    id_voucher_db = dt_vch.Rows(0)("id_voucher").ToString
-                    Dim voucher As Decimal = dt_vch.Rows(0)("voucher")
-                    If voucher >= TxtTotal.EditValue Then
-                        TxtVoucher.EditValue = TxtTotal.EditValue
-                        TxtVoucherNo.Enabled = False
-                        TxtCash.EditValue = 0
-                        TxtCash.Enabled = True
-                        TxtCash.Focus()
-                    Else
-                        TxtVoucher.EditValue = voucher
-                        TxtVoucherNo.Enabled = False
-                        TxtCash.EditValue = TxtTotal.EditValue - TxtVoucher.EditValue
-                        TxtCash.Enabled = True
-                        TxtCash.Focus()
-                    End If
-                    showDisplay("Voucher  :", "-", TxtVoucher.Text)
-                Else
-                    stopCustom("Voucher is not found")
+    Private Sub TxtVoucherNo_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtVoucherNo.KeyUp
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtVoucherNo.Text) > 1 Then
+                If cforKeyDownVcr <> ChrW(e.KeyCode) OrElse cforKeyDownVcr = vbNullChar Then
+                    cforKeyDownVcr = vbNullChar
                     TxtVoucherNo.Text = ""
-                    TxtVoucherNo.Focus()
+                    Return
+                End If
+
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystrokeVcr
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtVoucherNo.Text = ""
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtVoucherNo.Text.Count > 0 Then
+                    checkVoucherCode(addSlashes(TxtVoucherNo.Text))
                 End If
             End If
-            Cursor = Cursors.Default
+            _lastKeystrokeVcr = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtVoucherNo.Text.Count > 0 Then
+                checkVoucherCode(addSlashes(TxtVoucherNo.Text))
+            End If
         End If
     End Sub
 
+    Sub checkVoucherCode(ByVal vcr As String)
+        Cursor = Cursors.WaitCursor
+        id_voucher_db = "-1"
+        Dim voucher_number As String = vcr
+
+        If voucher_number = "" Then
+            TxtVoucherNo.Text = ""
+            TxtVoucherNo.Enabled = False
+            TxtCash.EditValue = TxtTotal.EditValue
+            TxtCash.Enabled = True
+            TxtCash.Focus()
+        Else
+            Dim dt_vch As DataTable = checkVoucher(voucher_number, "1")
+            If dt_vch.Rows.Count > 0 Then
+                TxtCash.EditValue = Nothing
+                TxtCard.EditValue = Nothing
+                id_voucher_db = dt_vch.Rows(0)("id_pos_voucher").ToString
+                Dim voucher As Decimal = dt_vch.Rows(0)("voucher_value")
+                If voucher >= TxtTotal.EditValue Then
+                    TxtVoucher.EditValue = TxtTotal.EditValue
+                    TxtVoucherNo.Enabled = False
+                    TxtCash.EditValue = 0
+                    TxtCash.Enabled = True
+                    TxtCash.Focus()
+                Else
+                    TxtVoucher.EditValue = voucher
+                    TxtVoucherNo.Enabled = False
+                    TxtCash.EditValue = TxtTotal.EditValue - TxtVoucher.EditValue
+                    TxtCash.Enabled = True
+                    TxtCash.Focus()
+                End If
+                showDisplay("Voucher  :", "-", TxtVoucher.Text)
+            Else
+                stopCustom("Voucher is not found")
+                TxtVoucherNo.Text = ""
+                TxtVoucherNo.Focus()
+            End If
+        End If
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If UseKeyboard = "2" Then
+            TxtItemCode.Text = ""
+            Timer1.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
+        If UseKeyboard = "2" And open_scan Then
+            Timer1.Stop()
+            Timer1.Start()
+        End If
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        If UseKeyboard = "2" Then
+            TxtVoucherNo.Text = ""
+            Timer2.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtVoucherNo_TextChanged(sender As Object, e As EventArgs) Handles TxtVoucherNo.TextChanged
+        If UseKeyboard = "2" Then
+            Timer2.Stop()
+            Timer2.Start()
+        End If
+    End Sub
 End Class

@@ -21,15 +21,15 @@ Partial Class FormReportTransSum
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReportTransSum))
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
+        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
+        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl11 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl12 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl8 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl9 = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControlTitle = New DevExpress.XtraEditors.PanelControl()
-        Me.LabelControl13 = New DevExpress.XtraEditors.LabelControl()
-        Me.PanelControlBack = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControlStock = New DevExpress.XtraEditors.PanelControl()
+        Me.BtnPrint = New DevExpress.XtraEditors.SimpleButton()
         Me.LabelControl4 = New DevExpress.XtraEditors.LabelControl()
         Me.BtnView = New DevExpress.XtraEditors.SimpleButton()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -57,11 +57,9 @@ Partial Class FormReportTransSum
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl2.SuspendLayout()
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelControlTitle.SuspendLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControlStock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControlStock.SuspendLayout()
         CType(Me.LEStatus.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,12 +80,39 @@ Partial Class FormReportTransSum
         'PanelControl1
         '
         Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControl1.Controls.Add(Me.LabelControl13)
+        Me.PanelControl1.Controls.Add(Me.PanelControlBack)
         Me.PanelControl1.Controls.Add(Me.PanelControl2)
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.PanelControl1.Location = New System.Drawing.Point(20, 733)
+        Me.PanelControl1.Location = New System.Drawing.Point(0, 753)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(852, 35)
+        Me.PanelControl1.Size = New System.Drawing.Size(892, 35)
         Me.PanelControl1.TabIndex = 7
+        Me.PanelControl1.Visible = False
+        '
+        'LabelControl13
+        '
+        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
+        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
+        Me.LabelControl13.Name = "LabelControl13"
+        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
+        Me.LabelControl13.Size = New System.Drawing.Size(245, 46)
+        Me.LabelControl13.TabIndex = 10
+        Me.LabelControl13.Text = "Transaction Summary"
+        '
+        'PanelControlBack
+        '
+        Me.PanelControlBack.Appearance.BackColor = System.Drawing.Color.White
+        Me.PanelControlBack.Appearance.Options.UseBackColor = True
+        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
+        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
+        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
+        Me.PanelControlBack.Name = "PanelControlBack"
+        Me.PanelControlBack.Size = New System.Drawing.Size(40, 35)
+        Me.PanelControlBack.TabIndex = 9
         '
         'PanelControl2
         '
@@ -97,7 +122,7 @@ Partial Class FormReportTransSum
         Me.PanelControl2.Controls.Add(Me.LabelControl8)
         Me.PanelControl2.Controls.Add(Me.LabelControl9)
         Me.PanelControl2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PanelControl2.Location = New System.Drawing.Point(721, 0)
+        Me.PanelControl2.Location = New System.Drawing.Point(761, 0)
         Me.PanelControl2.Name = "PanelControl2"
         Me.PanelControl2.Size = New System.Drawing.Size(131, 35)
         Me.PanelControl2.TabIndex = 8
@@ -138,43 +163,9 @@ Partial Class FormReportTransSum
         Me.LabelControl9.TabIndex = 14
         Me.LabelControl9.Text = "Esc"
         '
-        'PanelControlTitle
-        '
-        Me.PanelControlTitle.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlTitle.Controls.Add(Me.LabelControl13)
-        Me.PanelControlTitle.Controls.Add(Me.PanelControlBack)
-        Me.PanelControlTitle.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlTitle.Location = New System.Drawing.Point(20, 20)
-        Me.PanelControlTitle.Name = "PanelControlTitle"
-        Me.PanelControlTitle.Size = New System.Drawing.Size(852, 61)
-        Me.PanelControlTitle.TabIndex = 8
-        '
-        'LabelControl13
-        '
-        Me.LabelControl13.Appearance.Font = New System.Drawing.Font("Segoe UI Light", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelControl13.Appearance.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.LabelControl13.Dock = System.Windows.Forms.DockStyle.Left
-        Me.LabelControl13.Location = New System.Drawing.Point(40, 0)
-        Me.LabelControl13.Name = "LabelControl13"
-        Me.LabelControl13.Padding = New System.Windows.Forms.Padding(5, 9, 0, 0)
-        Me.LabelControl13.Size = New System.Drawing.Size(245, 46)
-        Me.LabelControl13.TabIndex = 1
-        Me.LabelControl13.Text = "Transaction Summary"
-        '
-        'PanelControlBack
-        '
-        Me.PanelControlBack.Appearance.BackColor = System.Drawing.Color.White
-        Me.PanelControlBack.Appearance.Options.UseBackColor = True
-        Me.PanelControlBack.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.PanelControlBack.ContentImage = CType(resources.GetObject("PanelControlBack.ContentImage"), System.Drawing.Image)
-        Me.PanelControlBack.Dock = System.Windows.Forms.DockStyle.Left
-        Me.PanelControlBack.Location = New System.Drawing.Point(0, 0)
-        Me.PanelControlBack.Name = "PanelControlBack"
-        Me.PanelControlBack.Size = New System.Drawing.Size(40, 61)
-        Me.PanelControlBack.TabIndex = 4
-        '
         'PanelControlStock
         '
+        Me.PanelControlStock.Controls.Add(Me.BtnPrint)
         Me.PanelControlStock.Controls.Add(Me.LabelControl4)
         Me.PanelControlStock.Controls.Add(Me.BtnView)
         Me.PanelControlStock.Controls.Add(Me.LabelControl1)
@@ -183,10 +174,29 @@ Partial Class FormReportTransSum
         Me.PanelControlStock.Controls.Add(Me.LabelControl3)
         Me.PanelControlStock.Controls.Add(Me.DEFrom)
         Me.PanelControlStock.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PanelControlStock.Location = New System.Drawing.Point(20, 81)
+        Me.PanelControlStock.Location = New System.Drawing.Point(0, 0)
         Me.PanelControlStock.Name = "PanelControlStock"
-        Me.PanelControlStock.Size = New System.Drawing.Size(852, 47)
+        Me.PanelControlStock.Size = New System.Drawing.Size(892, 47)
         Me.PanelControlStock.TabIndex = 9
+        '
+        'BtnPrint
+        '
+        Me.BtnPrint.Appearance.BackColor = System.Drawing.Color.Teal
+        Me.BtnPrint.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnPrint.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnPrint.Appearance.Options.UseBackColor = True
+        Me.BtnPrint.Appearance.Options.UseFont = True
+        Me.BtnPrint.Appearance.Options.UseForeColor = True
+        Me.BtnPrint.Location = New System.Drawing.Point(664, 13)
+        Me.BtnPrint.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnPrint.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnPrint.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnPrint.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnPrint.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnPrint.Name = "BtnPrint"
+        Me.BtnPrint.Size = New System.Drawing.Size(58, 20)
+        Me.BtnPrint.TabIndex = 12
+        Me.BtnPrint.Text = "Print"
         '
         'LabelControl4
         '
@@ -283,11 +293,11 @@ Partial Class FormReportTransSum
         '
         Me.GCSales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCSales.Location = New System.Drawing.Point(2, 21)
-        Me.GCSales.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCSales.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCSales.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCSales.MainView = Me.GVSales
         Me.GCSales.Name = "GCSales"
-        Me.GCSales.Size = New System.Drawing.Size(848, 162)
+        Me.GCSales.Size = New System.Drawing.Size(888, 162)
         Me.GCSales.TabIndex = 11
         Me.GCSales.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVSales})
         '
@@ -388,11 +398,11 @@ Partial Class FormReportTransSum
         '
         Me.GCPayment.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GCPayment.Location = New System.Drawing.Point(2, 21)
-        Me.GCPayment.LookAndFeel.SkinName = "Office 2010 Blue"
+        Me.GCPayment.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.GCPayment.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GCPayment.MainView = Me.GVPayment
         Me.GCPayment.Name = "GCPayment"
-        Me.GCPayment.Size = New System.Drawing.Size(848, 397)
+        Me.GCPayment.Size = New System.Drawing.Size(888, 498)
         Me.GCPayment.TabIndex = 13
         Me.GCPayment.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GVPayment})
         '
@@ -466,11 +476,11 @@ Partial Class FormReportTransSum
         Me.GroupControl1.AppearanceCaption.Options.UseFont = True
         Me.GroupControl1.Controls.Add(Me.GCSales)
         Me.GroupControl1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.GroupControl1.Location = New System.Drawing.Point(20, 128)
+        Me.GroupControl1.Location = New System.Drawing.Point(0, 47)
         Me.GroupControl1.LookAndFeel.SkinName = "Office 2010 Silver"
         Me.GroupControl1.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(852, 185)
+        Me.GroupControl1.Size = New System.Drawing.Size(892, 185)
         Me.GroupControl1.TabIndex = 14
         Me.GroupControl1.Text = "SALES CONTRIBUTION"
         '
@@ -480,11 +490,11 @@ Partial Class FormReportTransSum
         Me.GroupControl2.AppearanceCaption.Options.UseFont = True
         Me.GroupControl2.Controls.Add(Me.GCPayment)
         Me.GroupControl2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupControl2.Location = New System.Drawing.Point(20, 313)
+        Me.GroupControl2.Location = New System.Drawing.Point(0, 232)
         Me.GroupControl2.LookAndFeel.SkinName = "Office 2010 Silver"
         Me.GroupControl2.LookAndFeel.UseDefaultLookAndFeel = False
         Me.GroupControl2.Name = "GroupControl2"
-        Me.GroupControl2.Size = New System.Drawing.Size(852, 420)
+        Me.GroupControl2.Size = New System.Drawing.Size(892, 521)
         Me.GroupControl2.TabIndex = 15
         Me.GroupControl2.Text = "SALES PAYMENT"
         '
@@ -496,28 +506,22 @@ Partial Class FormReportTransSum
         Me.Controls.Add(Me.GroupControl2)
         Me.Controls.Add(Me.GroupControl1)
         Me.Controls.Add(Me.PanelControlStock)
-        Me.Controls.Add(Me.PanelControlTitle)
         Me.Controls.Add(Me.PanelControl1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.KeyPreview = True
-        Me.LookAndFeel.SkinName = "Metropolis"
+        Me.LookAndFeel.SkinName = "Visual Studio 2013 Blue"
         Me.LookAndFeel.UseDefaultLookAndFeel = False
-        Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormReportTransSum"
-        Me.Padding = New System.Windows.Forms.Padding(20)
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Transaction Summary"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
+        Me.PanelControl1.PerformLayout()
+        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl2.ResumeLayout(False)
         Me.PanelControl2.PerformLayout()
-        CType(Me.PanelControlTitle, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelControlTitle.ResumeLayout(False)
-        Me.PanelControlTitle.PerformLayout()
-        CType(Me.PanelControlBack, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControlStock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControlStock.ResumeLayout(False)
         Me.PanelControlStock.PerformLayout()
@@ -544,9 +548,6 @@ Partial Class FormReportTransSum
     Friend WithEvents LabelControl12 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl8 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl9 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents PanelControlTitle As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
-    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
     Friend WithEvents PanelControlStock As DevExpress.XtraEditors.PanelControl
     Friend WithEvents BtnView As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents LabelControl1 As DevExpress.XtraEditors.LabelControl
@@ -573,4 +574,7 @@ Partial Class FormReportTransSum
     Friend WithEvents GridColumnVoucher As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents GroupControl1 As DevExpress.XtraEditors.GroupControl
     Friend WithEvents GroupControl2 As DevExpress.XtraEditors.GroupControl
+    Friend WithEvents LabelControl13 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents PanelControlBack As DevExpress.XtraEditors.PanelControl
+    Friend WithEvents BtnPrint As DevExpress.XtraEditors.SimpleButton
 End Class

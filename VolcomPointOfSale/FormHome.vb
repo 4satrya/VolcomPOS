@@ -156,4 +156,28 @@
         FormAccount.ShowDialog()
         Cursor = Cursors.Default
     End Sub
+
+    Private Sub TIEndOfDay_ItemClick(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TIEndOfDay.ItemClick
+        Cursor = Cursors.WaitCursor
+        FormEndOfDay.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub TITransList_ItemClick(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TITransList.ItemClick
+        Cursor = Cursors.WaitCursor
+        FormTransList.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub TINotif_ItemClick_1(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs) Handles TINotif.ItemClick
+        Dim objSettings As New Printing.PrinterSettings
+        Dim strPrinter As String
+        Try
+            For Each strPrinter In Printing.PrinterSettings.InstalledPrinters
+                Console.WriteLine(strPrinter)
+            Next
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
 End Class

@@ -32,7 +32,8 @@
             id_company = "-1"
         End If
 
-        Dim data As DataTable = execute_query(String.Format("SELECT id_comp_contact, getCompByContact(id_comp_contact, 4) AS `id_wh_drawer`, getCompByContact(id_comp_contact, 6) AS `id_wh_rack`, getCompByContact(id_comp_contact, 7) AS `id_wh_locator`, contact_person,contact_number,is_default FROM tb_m_comp_contact WHERE id_comp='{0}' ORDER BY is_default AND contact_person", id_company), -1, True, "", "", "", "")
+        'getCompByContact(id_comp_contact, 4) AS `id_wh_drawer`, getCompByContact(id_comp_contact, 6) AS `id_wh_rack`, getCompByContact(id_comp_contact, 7) AS `id_wh_locator`
+        Dim data As DataTable = execute_query(String.Format("SELECT id_comp_contact, contact_person,contact_number,is_default FROM tb_m_comp_contact WHERE id_comp='{0}' ORDER BY is_default AND contact_person", id_company), -1, True, "", "", "", "")
         GCCompanyContactList.DataSource = data
         If Not data.Rows.Count > 0 Or id_company = "-1" Then
             BtnSave.Enabled = False
@@ -42,9 +43,19 @@
     End Sub
 
     Sub view_company()
-        Dim query As String = "SELECT tb_m_comp.comp_commission,tb_m_comp.id_comp as id_comp,tb_m_comp.comp_number as comp_number,tb_m_comp.comp_name as comp_name,tb_m_comp.address_primary as address_primary,tb_m_comp.is_active as is_active,tb_m_comp_cat.comp_cat_name as company_category,tb_m_comp_group.comp_group, tb_m_comp.id_wh_type "
+        'Dim qopt As String = "SELECT acc_normal_origin, acc_sale_origin FROM tb_opt "
+        'Dim dopt As DataTable = execute_query(qopt, -1, True, "", "", "", "")
+        'Dim acc_normal_origin As String = dopt(0)("acc_normal_origin").ToString
+        'Dim acc_sale_origin As String = dopt(0)("acc_sale_origin").ToString
+        ' IF(tb_m_comp.id_comp=" + acc_normal_origin + ",'MAIN WH - NORMAL', IF(tb_m_comp.id_comp=" + acc_sale_origin + ",'MAIN WH - SALE', tb_m_comp.comp_name))  as comp_name,
+        'IF(tb_m_comp.id_comp=" + acc_normal_origin + " OR tb_m_comp.id_comp=" + acc_sale_origin + ",'Warehouse',tb_m_comp_cat.comp_cat_name)  as company_category, 
+
+        Dim query As String = "SELECT tb_m_comp.comp_commission,tb_m_comp.id_comp as id_comp,tb_m_comp.comp_number as comp_number,
+        tb_m_comp.comp_name as comp_name,
+        tb_m_comp.address_primary as address_primary,tb_m_comp.is_active as is_active,
+        tb_m_comp_cat.comp_cat_name as company_category, 
+        tb_m_comp.id_wh_type "
         query += " FROM tb_m_comp INNER JOIN tb_m_comp_cat ON tb_m_comp.id_comp_cat=tb_m_comp_cat.id_comp_cat "
-        query += " INNER JOIN tb_m_comp_group ON tb_m_comp_group.id_comp_group=tb_m_comp.id_comp_group "
         If id_cat <> "-1" Then
             query += "AND tb_m_comp.id_comp_cat = '" + id_cat + "' "
         End If
@@ -62,6 +73,19 @@
         'by condition
         If cond <> "" Then
             query += cond + " "
+        End If
+
+
+        If id_pop_up = "2" Or id_pop_up = "3" Or id_pop_up = "5" Or id_pop_up = "6" Or id_pop_up = "10" Then 'rec own product/trf/return
+            Dim query_opt As String = "SELECT id_wh_default, id_display_default FROM tb_opt "
+            Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+            query += "AND (tb_m_comp.id_comp=" + data_opt.Rows(0)("id_wh_default").ToString + " OR tb_m_comp.id_comp=" + data_opt.Rows(0)("id_display_default").ToString + ") "
+        End If
+
+        If id_pop_up = "1" Or id_pop_up = "4" Then 'return to
+            Dim query_opt As String = "SELECT id_wh_default, id_display_default FROM tb_opt "
+            Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+            query += "AND (tb_m_comp.id_comp!=" + data_opt.Rows(0)("id_wh_default").ToString + " AND tb_m_comp.id_comp!=" + data_opt.Rows(0)("id_display_default").ToString + ") "
         End If
 
         query += "ORDER BY comp_name "
@@ -98,12 +122,33 @@
             Close()
         ElseIf id_pop_up = "3" Then
             ' RET FROM
+            If FormRetDet.GVScan.RowCount > 0 Then
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("This action will be remove all product scanned. Are you sure you want to continue this action ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    FormRetDet.viewDetail()
+                Else
+                    Close()
+                    Exit Sub
+                End If
+            End If
+
             FormRetDet.id_comp_from = GVCompany.GetFocusedRowCellValue("id_comp").ToString
             FormRetDet.TxtNameCompFrom.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "1")
             FormRetDet.TxtCodeCompFrom.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "2")
             Close()
         ElseIf id_pop_up = "4" Then
             'RET TO
+            If FormRetDet.GVScan.RowCount > 0 Then
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("This action will be remove all product scanned. Are you sure you want to continue this action ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    FormRetDet.viewDetail()
+                Else
+                    Close()
+                    Exit Sub
+                End If
+            End If
+
+
             FormRetDet.id_comp_to = GVCompany.GetFocusedRowCellValue("id_comp").ToString
             FormRetDet.TxtNameCompTo.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "1")
             FormRetDet.TxtCodeCompTo.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "2")
@@ -142,6 +187,21 @@
             FormAdjIn.TxtNameCompFrom.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "1")
             FormAdjIn.TxtCodeCompFrom.Text = get_company_x(get_id_company(GVCompanyContactList.GetFocusedRowCellDisplayText("id_comp_contact").ToString), "2")
             FormAdjIn.viewDetail()
+            Close()
+        ElseIf id_pop_up = "10" Then
+            ' receive own product
+            If FormRecOwnProduct.GVData.RowCount > 0 Then
+                Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("This action will be remove all product scanned. Are you sure you want to continue this action ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+                If confirm = DialogResult.Yes Then
+                    FormRecOwnProduct.viewDetail()
+                Else
+                    Close()
+                    Exit Sub
+                End If
+            End If
+            FormRecOwnProduct.id_comp_to = GVCompany.GetFocusedRowCellValue("id_comp").ToString
+            FormRecOwnProduct.TxtToCode.Text =GVCompany.GetFocusedRowCellValue("comp_number").ToString
+            FormRecOwnProduct.TxtToName.Text = GVCompany.GetFocusedRowCellValue("comp_name").ToString
             Close()
         End If
         Cursor = Cursors.Default

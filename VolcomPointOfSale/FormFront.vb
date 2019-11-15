@@ -1,19 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Public Class FormFront
-    Public Const WM_NCLBUTTONDOWN As Integer = &HA1
-    Public Const HT_CAPTION As Integer = &H2
     Public connection_problem As Boolean = False
     Public first_open As Boolean = True
-
-    <DllImportAttribute("user32.dll")>
-    Public Shared Function SendMessage(ByVal hWnd As IntPtr,
-      ByVal Msg As Integer, ByVal wParam As Integer,
-      ByVal lParam As Integer) As Integer
-    End Function
-
-    <DllImportAttribute("user32.dll")>
-    Public Shared Function ReleaseCapture() As Boolean
-    End Function
 
     Private Sub TIExitProg_ItemClick(sender As Object, e As DevExpress.XtraEditors.TileItemEventArgs)
         Cursor = Cursors.WaitCursor
@@ -44,7 +32,7 @@ Public Class FormFront
         Catch ex As Exception
             Cursor = Cursors.Default
             connection_problem = True
-            FormDatabase.id_type = "2"
+            FormDatabase.id_type = "1"
             FormDatabase.TopMost = True
             FormDatabase.Show()
             FormDatabase.Focus()
@@ -66,7 +54,7 @@ Public Class FormFront
     Sub syncProcess()
         'sync
         SplashScreenManager1.ShowWaitForm()
-        Dim sy As New ClassSync()
+        Dim sy As New ClassSync("0")
         Dim query As String = "SELECT * FROM tb_sync_data ORDER BY id_sync_data ASC"
         Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
         For i As Integer = 1 To dt.Rows.Count
@@ -78,43 +66,10 @@ Public Class FormFront
 
     Private Sub FormFront_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.F1 Then
-            '20x2
-            Dim sp As New IO.Ports.SerialPort()
-
-            sp.PortName = "COM4"
-            sp.BaudRate = 9600
-            sp.Open()
-            sp.WriteLine("                                        ")
-            sp.Close()
-            sp.Dispose()
-            sp = Nothing
-
-
-            'Cursor = Cursors.WaitCursor
-            'Dim sy As New ClassSync()
-            'sy.BackupCustomTable()
-            'Cursor = Cursors.Default
-            'Dim prn As New ClassPOS()
-            'prn.printPos(90, False)
-            ' FormPOSCopy.ShowDialog()
-            'ReportPOSCopy.id = "89"
-            'Dim Report As New ReportPOSCopy()
-            'Dim Tool As DevExpress.XtraReports.UI.ReportPrintTool = New DevExpress.XtraReports.UI.ReportPrintTool(Report)
-            'Tool.PreviewForm.PrintControl.Zoom = 2.0F
-            'Tool.PreviewForm.FormBorderStyle = FormBorderStyle.None
-            'Tool.ShowPreviewDialog()
+            Cursor = Cursors.WaitCursor
+            FormLogSync.ShowDialog()
+            Cursor = Cursors.Default
         ElseIf e.KeyCode = Keys.F2 Then
-            Dim sp As New IO.Ports.SerialPort()
-
-            sp.PortName = "COM4"
-            sp.BaudRate = 9600
-            sp.Open()
-            sp.Write(Convert.ToString(ChrW(12)))
-            sp.WriteLine("1st line")
-            sp.WriteLine(ChrW(13) & "2nd line")
-            sp.Close()
-            sp.Dispose()
-            sp = Nothing
         End If
     End Sub
 
@@ -122,7 +77,7 @@ Public Class FormFront
         End
     End Sub
 
-    Private Sub PCClose_Click(sender As Object, e As EventArgs) Handles PCClose.Click
+    Private Sub PCClose_Click(sender As Object, e As EventArgs)
         End
     End Sub
 
@@ -188,33 +143,26 @@ Public Class FormFront
         End If
     End Sub
 
-    Private Sub PanelControl4_MouseDown(sender As Object, e As MouseEventArgs) Handles PanelControl4.MouseDown
-        Cursor = Cursors.SizeAll
-        If e.Button = System.Windows.Forms.MouseButtons.Left Then
-            ReleaseCapture()
-            SendMessage(Handle, WM_NCLBUTTONDOWN,
-               HT_CAPTION, 0)
-        End If
-    End Sub
-
-    Private Sub PanelControl4_MouseHover(sender As Object, e As EventArgs) Handles PanelControl4.MouseHover
+    Private Sub PanelControl4_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.SizeAll
     End Sub
 
-    Private Sub PanelControl4_MouseLeave(sender As Object, e As EventArgs) Handles PanelControl4.MouseLeave
+    Private Sub PanelControl4_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs) Handles PCClose.MouseHover
+    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs) Handles PCClose.MouseLeave
+    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
     Private Sub FormFront_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
-        info()
+        If Not connection_problem Then
+            info()
+        End If
     End Sub
 
     Private Sub PictureEdit1_Click(sender As Object, e As EventArgs) Handles PIStock.Click

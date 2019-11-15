@@ -7,7 +7,22 @@
     Dim role_prepared As String = ""
     Dim spv As String = ""
 
+    'scan variable
+    Private cforKeyDown As Char = vbNullChar
+    Private _lastKeystroke As DateTime = DateTime.Now
+    Public UseKeyboard As String = "-1"
+    Public speed_barcode_read As Integer = 0
+    Public speed_barcode_read_timer As Integer = 0
+
     Private Sub FormTrfDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'scan opt
+        Dim query_opt As String = "SELECT is_use_keyboard, speed_barcode_read, speed_barcode_read_timer  FROM tb_opt; "
+        Dim data_opt As DataTable = execute_query(query_opt, -1, True, "", "", "", "")
+        UseKeyboard = data_opt.Rows(0)("is_use_keyboard").ToString
+        speed_barcode_read = data_opt.Rows(0)("speed_barcode_read")
+        speed_barcode_read_timer = data_opt.Rows(0)("speed_barcode_read_timer")
+        Timer1.Interval = speed_barcode_read_timer
+
         viewReportStatus()
         actionLoad()
     End Sub
@@ -46,7 +61,7 @@
         Else
             LEReportStatus.Enabled = False
             BtnPrint.Enabled = False
-            XTPSummary.PageVisible = False
+            XTPSummary.PageVisible = True
         End If
     End Sub
 
@@ -62,24 +77,25 @@
 
 
     Sub allow_status()
-        If check_status(id_report_status_glb) Then
+        If id_report_status_glb = "1" Then
             MENote.Enabled = True
-            BtnSave.Enabled = True
             LEReportStatus.Enabled = True
+            BtnSave.Enabled = True
         Else
             MENote.Enabled = False
-            BtnSave.Enabled = False
             LEReportStatus.Enabled = False
+            BtnSave.Enabled = False
         End If
-        PanelControlItem.Enabled = False
+
+        BtnPrint.Enabled = True
+        PanelControlItem.Visible = False
         TxtCodeCompFrom.Enabled = False
         TxtCodeCompTo.Enabled = False
         BtnBrowseFrom.Enabled = False
         BtnBrowseTo.Enabled = False
 
-        If check_print_report_status(id_report_status_glb) Then
-            BtnPrint.Enabled = True
-        Else
+        'jika cancell
+        If id_report_status_glb = "5" Then
             BtnPrint.Enabled = False
         End If
     End Sub
@@ -157,16 +173,78 @@
     Private Sub FormTrfDet_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.F5 Then 'save
             save()
-        ElseIf e.KeyCode = Keys.Escape Then 'close
+        ElseIf e.KeyCode = Keys.F6 Then 'close
             closeForm()
-        ElseIf e.KeyCode = Keys.F7 Then 'select
-            selectList()
-        ElseIf e.KeyCode = Keys.F8 Then 'add scan
+        ElseIf e.KeyCode = Keys.F7 Then 'add scan
             addScan()
-        ElseIf e.KeyCode = Keys.F9 Then 'remove scan
+        ElseIf e.KeyCode = Keys.F8 Then 'remove scan
             removeScan()
-        ElseIf e.KeyCode = Keys.F10 Then 'print
+        ElseIf e.KeyCode = Keys.F9 Then 'print
             print()
+        End If
+    End Sub
+
+    Sub viewSummary()
+        If GVScan.RowCount > 0 Then
+            Cursor = Cursors.WaitCursor
+            Dim data_temp As DataTable = GCScan.DataSource
+            Dim connection_string As String = String.Format("Data Source={0};User Id={1};Password={2};Database={3};Convert Zero Datetime=True", app_host, app_username, app_password, app_database)
+            Dim connection As New MySql.Data.MySqlClient.MySqlConnection(connection_string)
+            connection.Open()
+            Dim command As MySql.Data.MySqlClient.MySqlCommand = connection.CreateCommand()
+            Dim qry As String = "DROP TABLE IF EXISTS tb_trf_temp; CREATE TEMPORARY TABLE IF NOT EXISTS tb_trf_temp AS ( SELECT * FROM ("
+            For d As Integer = 0 To data_temp.Rows.Count - 1
+                Dim id_item As String = data_temp.Rows(d)("id_item").ToString
+                Dim item_code As String = data_temp.Rows(d)("item_code").ToString
+                Dim item_name As String = data_temp.Rows(d)("item_name").ToString
+                Dim size As String = data_temp.Rows(d)("size").ToString
+                Dim price As String = decimalSQL(data_temp.Rows(d)("price").ToString)
+                If d > 0 Then
+                    qry += "UNION ALL "
+                End If
+                qry += "SELECT '" + id_item + "' AS `id_item`, '" + item_code + "' AS `item_code`, '" + item_name + "' AS `item_name`, '" + size + "' AS `size` , " + price + " AS `price` "
+            Next
+            qry += ") a ); ALTER TABLE tb_trf_temp CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci; "
+            command.CommandText = qry
+            command.ExecuteNonQuery()
+            command.Dispose()
+            ' Console.WriteLine(qry)
+
+            Dim data_view As New DataTable
+            Dim qry_view As String = "SELECT a.id_item, a.item_code, a.item_name, a.size, COUNT(a.id_item) AS `trf_qty`, a.price 
+                                FROM tb_trf_temp a 
+                                GROUP BY a.id_item"
+            Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(qry_view, connection)
+            adapter.SelectCommand.CommandTimeout = 300
+            adapter.Fill(data_view)
+            adapter.Dispose()
+            connection.Close()
+            connection.Dispose()
+
+            'get data stock
+            Dim query_stock As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+            Dim data_stock As DataTable = execute_query(query_stock, -1, True, "", "", "", "")
+            Dim tb1 = data_view.AsEnumerable()
+            Dim tb2 = data_stock.AsEnumerable()
+            Dim query_cek = From table1 In tb1
+                            Group Join table_tmp In tb2 On table1("id_item").ToString Equals table_tmp("id_item").ToString
+                            Into Group
+                            From y1 In Group.DefaultIfEmpty()
+                            Select New With
+                            {
+                                .id_item = table1.Field(Of String)("id_item").ToString,
+                                .item_code = table1.Field(Of String)("item_code").ToString,
+                                .item_name = table1.Field(Of String)("item_name").ToString,
+                                .size = table1.Field(Of String)("size").ToString,
+                                .trf_qty = table1("trf_qty"),
+                                .qty_avl = If(y1 Is Nothing, 0, y1("qty_avl")),
+                                .price = table1("price"),
+                                .amount = table1("trf_qty") * table1("price"),
+                                .status = If(table1("trf_qty") <= If(y1 Is Nothing, 0, y1("qty_avl")), "OK", "Can't exceed " + If(y1 Is Nothing, 0, y1("qty_avl").ToString))
+                            }
+            GCScanSum.DataSource = Nothing
+            GCScanSum.DataSource = query_cek.ToList()
+            Cursor = Cursors.Default
         End If
     End Sub
 
@@ -185,63 +263,7 @@
             'cek stock
             Dim cond_stk As Boolean = True
             If action = "ins" Then
-                Dim data_temp As DataTable = GCScan.DataSource
-                Dim connection_string As String = String.Format("Data Source={0};User Id={1};Password={2};Database={3};Convert Zero Datetime=True", app_host, app_username, app_password, app_database)
-                Dim connection As New MySql.Data.MySqlClient.MySqlConnection(connection_string)
-                connection.Open()
-                Dim command As MySql.Data.MySqlClient.MySqlCommand = connection.CreateCommand()
-                Dim qry As String = "DROP TABLE IF EXISTS tb_trf_temp; CREATE TEMPORARY TABLE IF NOT EXISTS tb_trf_temp AS ( SELECT * FROM ("
-                For d As Integer = 0 To data_temp.Rows.Count - 1
-                    Dim id_item As String = data_temp.Rows(d)("id_item").ToString
-                    Dim item_code As String = data_temp.Rows(d)("item_code").ToString
-                    Dim item_name As String = data_temp.Rows(d)("item_name").ToString
-                    Dim size As String = data_temp.Rows(d)("size").ToString
-                    Dim price As String = decimalSQL(data_temp.Rows(d)("price").ToString)
-                    If d > 0 Then
-                        qry += "UNION ALL "
-                    End If
-                    qry += "SELECT '" + id_item + "' AS `id_item`, '" + item_code + "' AS `item_code`, '" + item_name + "' AS `item_name`, '" + size + "' AS `size` , " + price + " AS `price` "
-                Next
-                qry += ") a ); ALTER TABLE tb_trf_temp CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci; "
-                command.CommandText = qry
-                command.ExecuteNonQuery()
-                command.Dispose()
-                ' Console.WriteLine(qry)
-
-                Dim data_view As New DataTable
-                Dim qry_view As String = "SELECT a.id_item, a.item_code, a.item_name, a.size, COUNT(a.id_item) AS `trf_qty`, a.price 
-                                FROM tb_trf_temp a 
-                                GROUP BY a.id_item"
-                Dim adapter As New MySql.Data.MySqlClient.MySqlDataAdapter(qry_view, connection)
-                adapter.SelectCommand.CommandTimeout = 300
-                adapter.Fill(data_view)
-                adapter.Dispose()
-                connection.Close()
-                connection.Dispose()
-
-                'get data stock
-                Dim query_stock As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
-                Dim data_stock As DataTable = execute_query(query_stock, -1, True, "", "", "", "")
-                Dim tb1 = data_view.AsEnumerable()
-                Dim tb2 = data_stock.AsEnumerable()
-                Dim query_cek = From table1 In tb1
-                                Group Join table_tmp In tb2 On table1("id_item").ToString Equals table_tmp("id_item").ToString
-                                Into Group
-                                From y1 In Group.DefaultIfEmpty()
-                                Select New With
-                                {
-                                    .id_item = table1.Field(Of String)("id_item").ToString,
-                                    .item_code = table1.Field(Of String)("item_code").ToString,
-                                    .item_name = table1.Field(Of String)("item_name").ToString,
-                                    .size = table1.Field(Of String)("size").ToString,
-                                    .trf_qty = table1("trf_qty"),
-                                    .qty_avl = If(y1 Is Nothing, 0, y1("qty_avl")),
-                                    .price = table1("price"),
-                                    .amount = table1("trf_qty") * table1("price"),
-                                    .status = If(table1("trf_qty") <= If(y1 Is Nothing, 0, y1("qty_avl")), "OK", "Can't exceed " + If(y1 Is Nothing, 0, y1("qty_avl").ToString))
-                                }
-                GCScanSum.DataSource = Nothing
-                GCScanSum.DataSource = query_cek.ToList()
+                XTCItem.SelectedTabPageIndex = 1
 
                 'filter OK
                 GVScanSum.ActiveFilterString = "[status]<>'OK' "
@@ -271,8 +293,9 @@
                     If action = "ins" Then
                         'main query
                         Dim query As String = "INSERT INTO tb_trf(id_comp_from, id_comp_to, trf_number, trf_date, trf_note, id_report_status, id_prepared_by) 
-                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', header_number(3), NOW(), '" + trf_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
+                        VALUES('" + id_comp_from + "', '" + id_comp_to + "', '', NOW(), '" + trf_note + "', '1', '" + id_user + "'); SELECT LAST_INSERT_ID(); "
                         id = execute_query(query, 0, True, "", "", "", "")
+                        execute_non_query("CALL gen_number(" + id + ", 3)", True, "", "", "", "")
 
                         'detail
                         Dim query_det As String = "INSERT INTO tb_trf_det(id_trf, id_item, price, trf_qty) VALUES "
@@ -352,9 +375,18 @@
     End Sub
 
     Sub closeForm()
-        Cursor = Cursors.WaitCursor
-        Close()
-        Cursor = Cursors.Default
+        If action = "ins" Then
+            Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to discard this transaction?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            If confirm = DialogResult.Yes Then
+                Cursor = Cursors.WaitCursor
+                Close()
+                Cursor = Cursors.Default
+            End If
+        Else
+            Cursor = Cursors.WaitCursor
+            Close()
+            Cursor = Cursors.Default
+        End If
     End Sub
 
     Sub selectList()
@@ -371,13 +403,22 @@
 
     Sub removeScan()
         If action = "ins" Then
+            'Cursor = Cursors.WaitCursor
+            'Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
+            'If confirm = DialogResult.Yes Then
+            '    GVScan.DeleteSelectedRows()
+            '    GCScan.RefreshDataSource()
+            '    GVScan.RefreshData()
+            'End If
+            'Cursor = Cursors.Default
             Cursor = Cursors.WaitCursor
-            Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want to delete?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
-            If confirm = DialogResult.Yes Then
-                GVScan.DeleteSelectedRows()
-                GCScan.RefreshDataSource()
-                GVScan.RefreshData()
-            End If
+            FormDeleteScan.id_pop_up = "2"
+            FormDeleteScan.cforKeyDown = cforKeyDown
+            FormDeleteScan._lastKeystroke = _lastKeystroke
+            FormDeleteScan.UseKeyboard = UseKeyboard
+            FormDeleteScan.speed_barcode_read = speed_barcode_read
+            FormDeleteScan.speed_barcode_read_timer = speed_barcode_read_timer
+            FormDeleteScan.ShowDialog()
             Cursor = Cursors.Default
         End If
     End Sub
@@ -450,30 +491,81 @@
         print()
     End Sub
 
-    Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim code As String = TxtItemCode.Text
-            Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.item_code=" + code + " AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
-            Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
-            If dt.Rows.Count > 0 Then
-                Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
-                newRow("id_trf_det") = "0"
-                newRow("id_item") = dt(0)("id_item").ToString
-                newRow("item_code") = dt(0)("item_code").ToString
-                newRow("item_name") = dt(0)("item_name").ToString
-                newRow("size") = dt(0)("size").ToString
-                newRow("trf_qty") = 1
-                newRow("price") = dt(0)("price")
-                TryCast(GCScan.DataSource, DataTable).Rows.Add(newRow)
-                GCScan.RefreshDataSource()
-                GVScan.RefreshData()
-            Else
-                stopCustom("Code not found")
+    Sub checkCode(ByVal code_check As String)
+        Dim code As String = addSlashes(code_check)
+        Dim query As String = "CALL view_stock_item('AND f.is_active=1 AND j.id_comp=" + id_comp_from + " AND f.item_code=''" + code + "'' AND j.storage_item_datetime<=''9999-12-01'' ', '2')"
+        Dim dt As DataTable = execute_query(query, -1, True, "", "", "", "")
+        If dt.Rows.Count > 0 Then
+            'cek available 
+            makeSafeGV(GVScan)
+            GVScan.ActiveFilterString = "[id_item]='" + dt(0)("id_item").ToString + "'"
+            If GVScan.RowCount >= dt.Rows(0)("qty_avl") Then
+                stopCustomDialog("No available qty")
+                makeSafeGV(GVScan)
+                GVScan.FocusedRowHandle = GVScan.RowCount - 1
+                TxtItemCode.Text = ""
+                TxtItemCode.Focus()
+                Exit Sub
             End If
-            TxtItemCode.Text = ""
-            TxtItemCode.Focus()
+            makeSafeGV(GVScan)
+
+
+            Dim newRow As DataRow = (TryCast(GCScan.DataSource, DataTable)).NewRow()
+            newRow("id_trf_det") = "0"
+            newRow("id_item") = dt(0)("id_item").ToString
+            newRow("item_code") = dt(0)("item_code").ToString
+            newRow("item_name") = dt(0)("item_name").ToString
+            newRow("size") = dt(0)("size").ToString
+            newRow("trf_qty") = 1
+            newRow("price") = dt(0)("price")
+            TryCast(GCScan.DataSource, DataTable).Rows.Add(newRow)
+            GCScan.RefreshDataSource()
+            GVScan.RefreshData()
+            GVScan.FocusedRowHandle = GVScan.RowCount - 1
+        Else
+            stopCustomDialog("Code not found")
+        End If
+        TxtItemCode.Text = ""
+        TxtItemCode.Focus()
+    End Sub
+
+    Private Sub TxtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyDown
+        cforKeyDown = ChrW(e.KeyCode)
+    End Sub
+
+    Private Sub TxtItemCode_KeyUp(sender As Object, e As KeyEventArgs) Handles TxtItemCode.KeyUp
+        If UseKeyboard = "2" Then
+            'barcode scanner
+            If Len(TxtItemCode.Text) > 1 Then
+                If cforKeyDown <> ChrW(e.KeyCode) OrElse cforKeyDown = vbNullChar Then
+                    cforKeyDown = vbNullChar
+                    TxtItemCode.Text = ""
+                    Return
+                End If
+
+
+                Dim elapsed As TimeSpan = DateTime.Now - _lastKeystroke
+                '(DateTime.Now.Millisecond - _lastKeystroke)
+                If elapsed.TotalMilliseconds > speed_barcode_read Then TxtItemCode.Text = ""
+
+                'If e.KeyCode <> Keys.[Return] Then
+                '    TxtItemCode.Text += ChrW(e.KeyData)
+                'End If
+
+                If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                    checkCode(TxtItemCode.Text)
+                End If
+
+            End If
+            _lastKeystroke = DateTime.Now
+        Else
+            'keyboard
+            If e.KeyCode = Keys.[Return] AndAlso TxtItemCode.Text.Count > 0 Then
+                checkCode(TxtItemCode.Text)
+            End If
         End If
     End Sub
+
 
     Private Sub GVScanSum_CustomColumnDisplayText(sender As Object, e As DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs) Handles GVScanSum.CustomColumnDisplayText
         If e.Column.FieldName = "no" Then
@@ -481,15 +573,35 @@
         End If
     End Sub
 
-    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs) Handles PCClose.MouseHover
+    Private Sub PCClose_MouseHover(sender As Object, e As EventArgs)
         Cursor = Cursors.Hand
     End Sub
 
-    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs) Handles PCClose.MouseLeave
+    Private Sub PCClose_MouseLeave(sender As Object, e As EventArgs)
         Cursor = Cursors.Default
     End Sub
 
-    Private Sub PCClose_Click(sender As Object, e As EventArgs) Handles PCClose.Click
+    Private Sub PCClose_Click(sender As Object, e As EventArgs)
         closeForm()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If UseKeyboard = "2" Then
+            TxtItemCode.Text = ""
+            Timer1.Stop()
+        End If
+    End Sub
+
+    Private Sub TxtItemCode_TextChanged(sender As Object, e As EventArgs) Handles TxtItemCode.TextChanged
+        If UseKeyboard = "2" Then
+            Timer1.Stop()
+            Timer1.Start()
+        End If
+    End Sub
+
+    Private Sub XTCItem_SelectedPageChanged(sender As Object, e As DevExpress.XtraTab.TabPageChangedEventArgs) Handles XTCItem.SelectedPageChanged
+        If XTCItem.SelectedTabPageIndex = 1 Then
+            viewSummary()
+        End If
     End Sub
 End Class

@@ -64,7 +64,7 @@
         Dispose()
     End Sub
 
-    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs) Handles PanelControlBack.Click
+    Private Sub PanelControlBack_Click(sender As Object, e As EventArgs)
         exitForm()
     End Sub
 
@@ -144,5 +144,7 @@
         Cursor = Cursors.Default
     End Sub
 
-
+    Private Sub BtnPrint_Click(sender As Object, e As EventArgs) Handles BtnPrint.Click
+        printPreview()
+    End Sub
 End Class

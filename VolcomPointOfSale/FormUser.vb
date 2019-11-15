@@ -311,7 +311,7 @@ Public Class FormUser
             Dim confirm As DialogResult = DevExpress.XtraEditors.XtraMessageBox.Show("Are you sure you want sync these data?", "Attention", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2)
             If confirm = DialogResult.Yes Then
                 SplashScreenManager1.ShowWaitForm()
-                Dim sy As New ClassSync()
+                Dim sy As New ClassSync("0")
                 sy.splash = "1"
                 For i As Integer = 0 To GVData.RowCount - 1
                     sy.sync_list.Add(GVData.GetRowCellValue(i, "id_sync_data").ToString)

@@ -1082,6 +1082,11 @@ Module Common
         XtraMessageBox.Show(stop_msg, "Stop", MessageBoxButtons.OK, MessageBoxIcon.Stop)
     End Sub
 
+    Sub stopCustomDialog(ByVal stop_msg As String)
+        FormError.LabelContent.Text = stop_msg
+        FormError.ShowDialog()
+    End Sub
+
     Sub infoCustom(ByVal info_msg As String)
         XtraMessageBox.Show(info_msg, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
@@ -1625,6 +1630,17 @@ Module Common
         '    errorConnection()
         'End Try
     End Sub
+    Sub print_raw(ByVal GridControlHere As DevExpress.XtraGrid.GridControl, ByVal title_here As String)
+        title_print = ""
+        title_print = title_here
+        Dim componentLink As New PrintableComponentLink(New PrintingSystem())
+        componentLink.Component = GridControlHere
+        componentLink.Landscape = True
+
+        componentLink.CreateDocument()
+        componentLink.ShowPreview()
+    End Sub
+
     Sub print(ByVal GridControlHere As DevExpress.XtraGrid.GridControl, ByVal title_here As String)
         title_print = ""
         title_print = title_here

@@ -12,6 +12,15 @@ Public Class FormLogin
         For Each ex As Control In Me.Controls
             AddHandler ex.KeyDown, AddressOf FormLogin_KeyUp
         Next
+
+        If menu_acc = "20" And Not is_open_form Then
+            Text = "Cancelled Transaction"
+            LabelReason.Visible = True
+            MEReason.Visible = True
+            BtnLogin.Text = "Confirm"
+            MEReason.TabIndex = 2
+            BtnLogin.TabIndex = 3
+        End If
     End Sub
     'Form Close
     Private Sub FormLogin_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
@@ -27,34 +36,41 @@ Public Class FormLogin
         ValidateChildren()
         If Not formIsValid(EPLogin) Then
             errorInput()
+        ElseIf menu_acc = "20" And Not is_open_form And MEReason.Text = "" Then
+            stopCustom("Please fill reason to cancel this transaction ")
         Else
             Dim query As String
             Dim username As String = addSlashes(TxtUsername.Text)
             Dim password As String = addSlashes(TxtPassword.Text)
             Dim data As DataTable
-            Try
-                Cursor = Cursors.WaitCursor
-                Dim u As New ClassUser()
-                query = String.Format(u.queryMain("AND u.username='{0}' AND u.password=MD5('{1}')", "1"), username, password)
-                data = execute_query(query, -1, True, "", "", "", "")
-                If data.Rows.Count > 0 Then
-                    id_user = data.Rows(0)("id_user").ToString
-                    id_role_login = data.Rows(0)("id_role").ToString
-                    role_login = data.Rows(0)("role").ToString
-                    name_user = data.Rows(0)("employee_name").ToString
-                    username_user = data.Rows(0)("username").ToString
-                    id_employee_user = data.Rows(0)("id_employee").ToString
-                    is_change_pass_user = data.Rows(0)("is_change").ToString
-                    Opacity = 0
-                    Dispose()
-                    u.checkAccess(menu_acc, is_open_form)
-                Else
-                    XtraMessageBox.Show("Login failure, please check your input !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'Try
+            Cursor = Cursors.WaitCursor
+            Dim u As New ClassUser()
+            query = String.Format(u.queryMain("AND u.username='{0}' AND u.password=MD5('{1}')", "1"), username, password)
+            data = execute_query(query, -1, True, "", "", "", "")
+            If data.Rows.Count > 0 Then
+                id_user = data.Rows(0)("id_user").ToString
+                id_role_login = data.Rows(0)("id_role").ToString
+                role_login = data.Rows(0)("role").ToString
+                name_user = data.Rows(0)("employee_name").ToString
+                username_user = data.Rows(0)("username").ToString
+                id_employee_user = data.Rows(0)("id_employee").ToString
+                is_change_pass_user = data.Rows(0)("is_change").ToString
+                'reason
+                If menu_acc = "20" And Not is_open_form Then
+                    FormPOS.id_user_employee_cancel = data.Rows(0)("id_employee").ToString
+                    FormPOS.note = MEReason.Text
                 End If
-                Cursor = Cursors.Default
-            Catch ex As Exception
-                stopCustom(ex.ToString)
-            End Try
+                Opacity = 0
+                Dispose()
+                u.checkAccess(menu_acc, is_open_form)
+            Else
+                XtraMessageBox.Show("Login failure, please check your input !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+            Cursor = Cursors.Default
+            'Catch ex As Exception
+            'stopCustom(ex.ToString)
+            'End Try
         End If
     End Sub
     'Validating Username
@@ -85,5 +101,4 @@ Public Class FormLogin
 
         'End If
     End Sub
-
 End Class
