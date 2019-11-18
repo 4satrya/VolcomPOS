@@ -115,6 +115,14 @@ Partial Class FormUser
         Me.TxtGreet2 = New DevExpress.XtraEditors.TextEdit()
         Me.TxtGreet1 = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl32 = New DevExpress.XtraEditors.LabelControl()
+        Me.XTPGeneral = New DevExpress.XtraTab.XtraTabPage()
+        Me.TxtSpeedBarcodeTimer = New DevExpress.XtraEditors.TextEdit()
+        Me.TxtSpeedBarcode = New DevExpress.XtraEditors.TextEdit()
+        Me.BtnSaveGeneral = New DevExpress.XtraEditors.SimpleButton()
+        Me.LabelControl37 = New DevExpress.XtraEditors.LabelControl()
+        Me.LabelControl36 = New DevExpress.XtraEditors.LabelControl()
+        Me.CEScannerOnly = New DevExpress.XtraEditors.CheckEdit()
+        Me.LabelControl35 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
@@ -180,6 +188,10 @@ Partial Class FormUser
         CType(Me.TxtFW2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtGreet2.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TxtGreet1.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.XTPGeneral.SuspendLayout()
+        CType(Me.TxtSpeedBarcodeTimer.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TxtSpeedBarcode.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CEScannerOnly.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -200,7 +212,7 @@ Partial Class FormUser
         Me.XTCUser.SelectedTabPage = Me.XTPRole
         Me.XTCUser.Size = New System.Drawing.Size(717, 322)
         Me.XTCUser.TabIndex = 0
-        Me.XTCUser.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPRole, Me.XTPUser, Me.XTPPOS, Me.XTPServer, Me.XTPProfile, Me.XTPReceipt, Me.XTPSync, Me.XTPVFD})
+        Me.XTCUser.TabPages.AddRange(New DevExpress.XtraTab.XtraTabPage() {Me.XTPRole, Me.XTPUser, Me.XTPPOS, Me.XTPServer, Me.XTPProfile, Me.XTPReceipt, Me.XTPSync, Me.XTPVFD, Me.XTPGeneral})
         '
         'XTPRole
         '
@@ -1164,6 +1176,85 @@ Partial Class FormUser
         Me.LabelControl32.TabIndex = 17
         Me.LabelControl32.Text = "Greeting 1"
         '
+        'XTPGeneral
+        '
+        Me.XTPGeneral.Controls.Add(Me.TxtSpeedBarcodeTimer)
+        Me.XTPGeneral.Controls.Add(Me.TxtSpeedBarcode)
+        Me.XTPGeneral.Controls.Add(Me.BtnSaveGeneral)
+        Me.XTPGeneral.Controls.Add(Me.LabelControl37)
+        Me.XTPGeneral.Controls.Add(Me.LabelControl36)
+        Me.XTPGeneral.Controls.Add(Me.CEScannerOnly)
+        Me.XTPGeneral.Controls.Add(Me.LabelControl35)
+        Me.XTPGeneral.Name = "XTPGeneral"
+        Me.XTPGeneral.Size = New System.Drawing.Size(691, 320)
+        Me.XTPGeneral.Text = "General"
+        '
+        'TxtSpeedBarcodeTimer
+        '
+        Me.TxtSpeedBarcodeTimer.Location = New System.Drawing.Point(508, 29)
+        Me.TxtSpeedBarcodeTimer.Name = "TxtSpeedBarcodeTimer"
+        Me.TxtSpeedBarcodeTimer.Size = New System.Drawing.Size(100, 20)
+        Me.TxtSpeedBarcodeTimer.TabIndex = 8
+        '
+        'TxtSpeedBarcode
+        '
+        Me.TxtSpeedBarcode.Location = New System.Drawing.Point(271, 29)
+        Me.TxtSpeedBarcode.Name = "TxtSpeedBarcode"
+        Me.TxtSpeedBarcode.Size = New System.Drawing.Size(100, 20)
+        Me.TxtSpeedBarcode.TabIndex = 7
+        '
+        'BtnSaveGeneral
+        '
+        Me.BtnSaveGeneral.Appearance.BackColor = System.Drawing.Color.DeepSkyBlue
+        Me.BtnSaveGeneral.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BtnSaveGeneral.Appearance.ForeColor = System.Drawing.Color.White
+        Me.BtnSaveGeneral.Appearance.Options.UseBackColor = True
+        Me.BtnSaveGeneral.Appearance.Options.UseFont = True
+        Me.BtnSaveGeneral.Appearance.Options.UseForeColor = True
+        Me.BtnSaveGeneral.Location = New System.Drawing.Point(15, 54)
+        Me.BtnSaveGeneral.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.BtnSaveGeneral.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.BtnSaveGeneral.LookAndFeel.SkinName = "Metropolis"
+        Me.BtnSaveGeneral.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.BtnSaveGeneral.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.BtnSaveGeneral.Name = "BtnSaveGeneral"
+        Me.BtnSaveGeneral.Size = New System.Drawing.Size(58, 20)
+        Me.BtnSaveGeneral.TabIndex = 6
+        Me.BtnSaveGeneral.Text = "Save"
+        '
+        'LabelControl37
+        '
+        Me.LabelControl37.Location = New System.Drawing.Point(377, 32)
+        Me.LabelControl37.Name = "LabelControl37"
+        Me.LabelControl37.Size = New System.Drawing.Size(125, 13)
+        Me.LabelControl37.TabIndex = 4
+        Me.LabelControl37.Text = "Speed Barcode Timer (ms)"
+        '
+        'LabelControl36
+        '
+        Me.LabelControl36.Location = New System.Drawing.Point(169, 32)
+        Me.LabelControl36.Name = "LabelControl36"
+        Me.LabelControl36.Size = New System.Drawing.Size(96, 13)
+        Me.LabelControl36.TabIndex = 2
+        Me.LabelControl36.Text = "Speed Barcode (ms)"
+        '
+        'CEScannerOnly
+        '
+        Me.CEScannerOnly.Location = New System.Drawing.Point(15, 29)
+        Me.CEScannerOnly.Name = "CEScannerOnly"
+        Me.CEScannerOnly.Properties.Caption = "Use Barcode Scanner Only"
+        Me.CEScannerOnly.Size = New System.Drawing.Size(176, 19)
+        Me.CEScannerOnly.TabIndex = 1
+        '
+        'LabelControl35
+        '
+        Me.LabelControl35.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl35.Location = New System.Drawing.Point(15, 10)
+        Me.LabelControl35.Name = "LabelControl35"
+        Me.LabelControl35.Size = New System.Drawing.Size(67, 13)
+        Me.LabelControl35.TabIndex = 0
+        Me.LabelControl35.Text = "Scan Option"
+        '
         'PanelControl1
         '
         Me.PanelControl1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
@@ -1377,6 +1468,11 @@ Partial Class FormUser
         CType(Me.TxtFW2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtGreet2.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TxtGreet1.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.XTPGeneral.ResumeLayout(False)
+        Me.XTPGeneral.PerformLayout()
+        CType(Me.TxtSpeedBarcodeTimer.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TxtSpeedBarcode.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CEScannerOnly.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
         CType(Me.PanelControl2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1499,4 +1595,12 @@ Partial Class FormUser
     Friend WithEvents LabelControl5 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents LabelControl6 As DevExpress.XtraEditors.LabelControl
     Friend WithEvents TxtPOSID As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents XTPGeneral As DevExpress.XtraTab.XtraTabPage
+    Friend WithEvents LabelControl35 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents CEScannerOnly As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents LabelControl36 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents LabelControl37 As DevExpress.XtraEditors.LabelControl
+    Friend WithEvents BtnSaveGeneral As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents TxtSpeedBarcode As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents TxtSpeedBarcodeTimer As DevExpress.XtraEditors.TextEdit
 End Class
