@@ -428,4 +428,10 @@ Public Class FormUser
             stopCustom(ex.ToString)
         End Try
     End Sub
+
+    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
+        Cursor = Cursors.WaitCursor
+        FormResendEmail.ShowDialog()
+        Cursor = Cursors.Default
+    End Sub
 End Class

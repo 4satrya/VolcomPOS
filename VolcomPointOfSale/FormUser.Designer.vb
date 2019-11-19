@@ -116,6 +116,8 @@ Partial Class FormUser
         Me.TxtGreet1 = New DevExpress.XtraEditors.TextEdit()
         Me.LabelControl32 = New DevExpress.XtraEditors.LabelControl()
         Me.XTPGeneral = New DevExpress.XtraTab.XtraTabPage()
+        Me.SimpleButton1 = New DevExpress.XtraEditors.SimpleButton()
+        Me.LabelControl38 = New DevExpress.XtraEditors.LabelControl()
         Me.TxtSpeedBarcodeTimer = New DevExpress.XtraEditors.TextEdit()
         Me.TxtSpeedBarcode = New DevExpress.XtraEditors.TextEdit()
         Me.BtnSaveGeneral = New DevExpress.XtraEditors.SimpleButton()
@@ -1178,6 +1180,8 @@ Partial Class FormUser
         '
         'XTPGeneral
         '
+        Me.XTPGeneral.Controls.Add(Me.SimpleButton1)
+        Me.XTPGeneral.Controls.Add(Me.LabelControl38)
         Me.XTPGeneral.Controls.Add(Me.TxtSpeedBarcodeTimer)
         Me.XTPGeneral.Controls.Add(Me.TxtSpeedBarcode)
         Me.XTPGeneral.Controls.Add(Me.BtnSaveGeneral)
@@ -1188,6 +1192,34 @@ Partial Class FormUser
         Me.XTPGeneral.Name = "XTPGeneral"
         Me.XTPGeneral.Size = New System.Drawing.Size(691, 320)
         Me.XTPGeneral.Text = "General"
+        '
+        'SimpleButton1
+        '
+        Me.SimpleButton1.Appearance.BackColor = System.Drawing.Color.MediumSeaGreen
+        Me.SimpleButton1.Appearance.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SimpleButton1.Appearance.ForeColor = System.Drawing.Color.White
+        Me.SimpleButton1.Appearance.Options.UseBackColor = True
+        Me.SimpleButton1.Appearance.Options.UseFont = True
+        Me.SimpleButton1.Appearance.Options.UseForeColor = True
+        Me.SimpleButton1.Location = New System.Drawing.Point(96, 57)
+        Me.SimpleButton1.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
+        Me.SimpleButton1.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
+        Me.SimpleButton1.LookAndFeel.SkinName = "Metropolis"
+        Me.SimpleButton1.LookAndFeel.Style = DevExpress.LookAndFeel.LookAndFeelStyle.UltraFlat
+        Me.SimpleButton1.LookAndFeel.UseDefaultLookAndFeel = False
+        Me.SimpleButton1.Name = "SimpleButton1"
+        Me.SimpleButton1.Size = New System.Drawing.Size(76, 20)
+        Me.SimpleButton1.TabIndex = 10
+        Me.SimpleButton1.Text = "Open Form"
+        '
+        'LabelControl38
+        '
+        Me.LabelControl38.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelControl38.Location = New System.Drawing.Point(15, 60)
+        Me.LabelControl38.Name = "LabelControl38"
+        Me.LabelControl38.Size = New System.Drawing.Size(75, 13)
+        Me.LabelControl38.TabIndex = 9
+        Me.LabelControl38.Text = "Resend Email"
         '
         'TxtSpeedBarcodeTimer
         '
@@ -1211,7 +1243,7 @@ Partial Class FormUser
         Me.BtnSaveGeneral.Appearance.Options.UseBackColor = True
         Me.BtnSaveGeneral.Appearance.Options.UseFont = True
         Me.BtnSaveGeneral.Appearance.Options.UseForeColor = True
-        Me.BtnSaveGeneral.Location = New System.Drawing.Point(15, 54)
+        Me.BtnSaveGeneral.Location = New System.Drawing.Point(15, 95)
         Me.BtnSaveGeneral.LookAndFeel.SkinMaskColor = System.Drawing.Color.Blue
         Me.BtnSaveGeneral.LookAndFeel.SkinMaskColor2 = System.Drawing.Color.Red
         Me.BtnSaveGeneral.LookAndFeel.SkinName = "Metropolis"
@@ -1603,4 +1635,6 @@ Partial Class FormUser
     Friend WithEvents BtnSaveGeneral As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents TxtSpeedBarcode As DevExpress.XtraEditors.TextEdit
     Friend WithEvents TxtSpeedBarcodeTimer As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents SimpleButton1 As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents LabelControl38 As DevExpress.XtraEditors.LabelControl
 End Class
