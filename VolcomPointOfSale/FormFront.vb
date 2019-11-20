@@ -106,6 +106,8 @@ Public Class FormFront
         Dim dt_comp As DataTable = pos.getPOSDev()
         If dt_comp.Rows.Count <= 0 Then
             str += "This computer is not registered "
+            Close()
+            Exit Sub
         Else
             id_pos_dev = dt_comp.Rows(0)("id_pos_dev").ToString
             str += "POS#" + dt_comp.Rows(0)("pos_dev").ToString + " "
