@@ -45,6 +45,16 @@ Public Class FormUser
         TxtFW1.Text = dopt.Rows(0)("vfd_bye1").ToString
         TxtFW2.Text = dopt.Rows(0)("vfd_bye2").ToString
 
+        'opt - general
+        Dim is_use_keyboard As String = dopt.Rows(0)("is_use_keyboard").ToString
+        If is_use_keyboard = "1" Then
+            CEScannerOnly.EditValue = False
+        Else
+            CEScannerOnly.EditValue = True
+        End If
+        TxtSpeedBarcode.EditValue = dopt.Rows(0)("speed_barcode_read")
+        TxtSpeedBarcodeTimer.EditValue = dopt.Rows(0)("speed_barcode_read_timer")
+
         'sync
         Dim qs As String = "SELECT *, 'No' as `is_select` FROM tb_sync_data a ORDER BY a.id_sync_data ASC "
         Dim ds As DataTable = execute_query(qs, -1, True, "", "", "", "")
@@ -398,6 +408,30 @@ Public Class FormUser
         TxtPOS.Text = ""
         TxtMac.Text = ""
         viewPOS()
+        Cursor = Cursors.Default
+    End Sub
+
+    Private Sub BtnSaveGeneral_Click(sender As Object, e As EventArgs) Handles BtnSaveGeneral.Click
+        Dim is_use_keyboard As String = ""
+        If CEScannerOnly.EditValue = True Then
+            is_use_keyboard = "2"
+        Else
+            is_use_keyboard = "1"
+        End If
+        Dim speed_barcode_read As String = decimalSQL(TxtSpeedBarcode.EditValue.ToString)
+        Dim speed_barcode_read_timer As String = decimalSQL(TxtSpeedBarcodeTimer.EditValue.ToString)
+
+        Try
+            Dim query As String = "UPDATE tb_opt SET is_use_keyboard='" + is_use_keyboard + "', speed_barcode_read='" + speed_barcode_read + "', speed_barcode_read_timer='" + speed_barcode_read_timer + "' "
+            execute_non_query(query, True, "", "", "", "")
+        Catch ex As Exception
+            stopCustom(ex.ToString)
+        End Try
+    End Sub
+
+    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs) Handles SimpleButton1.Click
+        Cursor = Cursors.WaitCursor
+        FormResendEmail.ShowDialog()
         Cursor = Cursors.Default
     End Sub
 End Class

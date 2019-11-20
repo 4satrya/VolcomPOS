@@ -395,6 +395,12 @@
     <Compile Include="FormReportTransSum.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormResendEmail.Designer.vb">
+      <DependentUpon>FormResendEmail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormResendEmail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormRet.Designer.vb">
       <DependentUpon>FormRet.vb</DependentUpon>
     </Compile>
@@ -733,6 +739,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportTransSum.resx">
       <DependentUpon>FormReportTransSum.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormResendEmail.resx">
+      <DependentUpon>FormResendEmail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormRet.resx">
       <DependentUpon>FormRet.vb</DependentUpon>
