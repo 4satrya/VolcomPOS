@@ -20,8 +20,8 @@ Partial Class FormFront
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormFront))
-        Dim TileItemElement3 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
-        Dim TileItemElement4 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
+        Dim TileItemElement1 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
+        Dim TileItemElement2 As DevExpress.XtraEditors.TileItemElement = New DevExpress.XtraEditors.TileItemElement()
         Me.TIExit = New DevExpress.XtraEditors.TileItem()
         Me.TileItem2 = New DevExpress.XtraEditors.TileItem()
         Me.PanelBasic = New DevExpress.XtraEditors.PanelControl()
@@ -64,9 +64,9 @@ Partial Class FormFront
         Me.TIExit.AppearanceItem.Normal.Options.UseBackColor = True
         Me.TIExit.AppearanceItem.Normal.Options.UseBorderColor = True
         Me.TIExit.BackgroundImage = CType(resources.GetObject("TIExit.BackgroundImage"), System.Drawing.Image)
-        TileItemElement3.Text = "Exit"
-        TileItemElement3.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomCenter
-        Me.TIExit.Elements.Add(TileItemElement3)
+        TileItemElement1.Text = "Exit"
+        TileItemElement1.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomCenter
+        Me.TIExit.Elements.Add(TileItemElement1)
         Me.TIExit.Id = 29
         Me.TIExit.ItemSize = DevExpress.XtraEditors.TileItemSize.Medium
         Me.TIExit.Name = "TIExit"
@@ -79,9 +79,9 @@ Partial Class FormFront
         Me.TileItem2.AppearanceItem.Normal.Options.UseBorderColor = True
         Me.TileItem2.BackgroundImage = CType(resources.GetObject("TileItem2.BackgroundImage"), System.Drawing.Image)
         Me.TileItem2.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter
-        TileItemElement4.Text = "Exit Program"
-        TileItemElement4.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
-        Me.TileItem2.Elements.Add(TileItemElement4)
+        TileItemElement2.Text = "Exit Program"
+        TileItemElement2.TextAlignment = DevExpress.XtraEditors.TileItemContentAlignment.BottomLeft
+        Me.TileItem2.Elements.Add(TileItemElement2)
         Me.TileItem2.Id = 45
         Me.TileItem2.ItemSize = DevExpress.XtraEditors.TileItemSize.Wide
         Me.TileItem2.Name = "TileItem2"
